@@ -102,7 +102,7 @@ const StudentSchema = new mongoose.Schema({
   },
   studentTag: {
     type: String,
-    enum: ['NEW', 'SIGNED UP', 'POTENTIAL'],
+    enum: ['NEW', 'SIGNED UP', 'POTENTIAL', 'Not Interested'],
     default: 'NEW', // Default value for new students
   },
   status: {
@@ -114,7 +114,6 @@ const StudentSchema = new mongoose.Schema({
       'documents to send',
       'document received',
     ],
-    default: 'Update Me',
   },
   notes: {
     type: String, // New notes field to store additional information

@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { createStudent } from '../Controller/Student/CreateAStudent.js'
 import { updateStudentDetails } from '../Controller/Student/UpdateStudent.js'
+import { GetNEWStudents } from '../Controller/Student/GetNewStudents.js'
 
 const StudentRouter = Router()
 
@@ -8,4 +9,5 @@ const StudentRouter = Router()
 
 StudentRouter.post('/NewStudent', createStudent)
 StudentRouter.put('/UpdateStudent', updateStudentDetails)
+StudentRouter.get('/GetNewStudents', GetNEWStudents)
 export default StudentRouter
