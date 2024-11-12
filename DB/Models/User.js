@@ -12,27 +12,17 @@ const UserSchema = new mongoose.Schema({
   },
   _id: {
     type: String,
+    required: true, // _id is required to store the Firebase UID
   },
   imageUrl: {
     type: String,
+    default:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png', // Default image if no image is uploaded
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
-  Salary: {
-    type: Number,
-    required: true,
-  },
-  JobDescription: {
-    type: String,
-    required: true,
-  },
-  JobTitle: {
-    type: String,
-    required: true,
-  },
 })
 
-// Create and export the User model
 export const User = mongoose.model('User', UserSchema)
