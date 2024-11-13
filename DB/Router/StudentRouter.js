@@ -2,6 +2,9 @@ import { Router } from 'express'
 import { createStudent } from '../Controller/Student/CreateAStudent.js'
 import { updateStudentDetails } from '../Controller/Student/UpdateStudent.js'
 import { GetNEWStudents } from '../Controller/Student/GetNewStudents.js'
+import { GetSignedUpStudents } from '../Controller/Student/GetSignedStudents.js'
+import { GetPotientialStudents } from '../Controller/Student/GetPotentialStudents.js'
+import { GetNotInterestedStudents } from '../Controller/Student/GetNotInterested.js'
 
 const StudentRouter = Router()
 
@@ -10,4 +13,7 @@ const StudentRouter = Router()
 StudentRouter.post('/NewStudent', createStudent)
 StudentRouter.put('/UpdateStudent', updateStudentDetails)
 StudentRouter.get('/GetNewStudents', GetNEWStudents)
+StudentRouter.get('/GetSignedUpStudents', GetSignedUpStudents)
+StudentRouter.get('/GetPotientialStudents', GetPotientialStudents)
+StudentRouter.get('/GetNotInterested', GetNotInterestedStudents)
 export default StudentRouter
