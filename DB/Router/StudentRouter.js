@@ -5,6 +5,7 @@ import { GetNEWStudents } from '../Controller/Student/GetNewStudents.js'
 import { GetSignedUpStudents } from '../Controller/Student/GetSignedStudents.js'
 import { GetPotientialStudents } from '../Controller/Student/GetPotentialStudents.js'
 import { GetNotInterestedStudents } from '../Controller/Student/GetNotInterested.js'
+import { GetAllStudents } from '../Controller/Student/GetAllStudents.js'
 
 const StudentRouter = Router()
 
@@ -16,4 +17,5 @@ StudentRouter.get('/GetNewStudents', GetNEWStudents)
 StudentRouter.get('/GetSignedUpStudents', GetSignedUpStudents)
 StudentRouter.get('/GetPotientialStudents', GetPotientialStudents)
 StudentRouter.get('/GetNotInterested', GetNotInterestedStudents)
+StudentRouter.get('/GetAllStudents', GetAllStudents)
 export default StudentRouter
