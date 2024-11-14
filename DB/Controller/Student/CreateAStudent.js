@@ -44,7 +44,6 @@ export const createStudent = async (req, res) => {
       email,
       address,
       phone,
-      country,
       city,
       preferredCountry,
       otherCountry,

@@ -16,9 +16,6 @@ const StudentSchema = new mongoose.Schema({
   phone: {
     type: String,
   },
-  country: {
-    type: String,
-  },
   city: {
     type: String,
   },

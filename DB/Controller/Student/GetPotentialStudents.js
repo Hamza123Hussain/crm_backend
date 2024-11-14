@@ -3,7 +3,6 @@ import { User } from '../../Models/User.js'
 
 export const GetPotientialStudents = async (req, res) => {
   // const { email } = req.body // Corrected to match the field name in the request body
-
   try {
     // Check if the user exists by email (Signed up user check)
     // const existingUser = await User.findOne({ email })
