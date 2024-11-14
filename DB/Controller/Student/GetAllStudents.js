@@ -22,7 +22,7 @@ export const GetAllStudents = async (req, res) => {
     }
 
     // Return the found students
-    return res.status(200).json({ AllStudents })
+    return res.status(200).json(AllStudents)
   } catch (error) {
     // Log the error and return a generic server error response
     console.error(error)
