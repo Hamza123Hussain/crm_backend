@@ -1,13 +1,10 @@
 import { Student } from '../../Models/Student.js'
-
-// Create Student Controller
 export const createStudent = async (req, res) => {
   const {
     name,
     email,
     address,
     phone,
-    country,
     city,
     preferredCountry,
     otherCountry,
@@ -33,7 +30,6 @@ export const createStudent = async (req, res) => {
     preferredCounselingMode,
     heardAboutUs,
   } = req.body
-
   try {
     // Check if the student already exists by email
     const existingStudent = await Student.findOne({ email })
@@ -42,7 +38,6 @@ export const createStudent = async (req, res) => {
         .status(400)
         .json({ message: 'Student with this email already exists' })
     }
-
     // Create new student
     const newStudent = new Student({
       name,
@@ -76,10 +71,8 @@ export const createStudent = async (req, res) => {
       heardAboutUs,
       studentTag: 'NEW',
     })
-
     // Save new student to MongoDB
     await newStudent.save()
-
     return res
       .status(201)
       .json({ message: 'Student created successfully', student: newStudent })
