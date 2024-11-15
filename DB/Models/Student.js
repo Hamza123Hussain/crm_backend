@@ -105,13 +105,13 @@ const StudentSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: [
-      '',
-      'not interested',
-      'plan postponed',
-      'next year intake',
-      'documents to send',
-      'document received',
+      'not_interested',
+      'plan_postponed',
+      'next_year_intake',
+      'documents_to_send',
+      'document_received',
     ],
+    default: '',
   },
   notes: {
     type: String, // New notes field to store additional information
