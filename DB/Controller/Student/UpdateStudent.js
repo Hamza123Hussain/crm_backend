@@ -2,7 +2,7 @@ import { Student } from '../../Models/Student.js'
 
 // Update Student Controller
 export const updateStudentDetails = async (req, res) => {
-  const { studentId } = req.params // Get studentId from URL parameter
+  const { studentId } = req.query // Get studentId from URL parameter
   const { studentTag, status, attestedByHEC, attestedByForeignOffice, notes } =
     req.body
 
