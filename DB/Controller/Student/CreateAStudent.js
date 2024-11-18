@@ -1,3 +1,4 @@
+import { v4 } from 'uuid'
 import { Student } from '../../Models/Student.js'
 export const createStudent = async (req, res) => {
   const {
@@ -40,6 +41,7 @@ export const createStudent = async (req, res) => {
     }
     // Create new student
     const newStudent = new Student({
+      _id: v4(),
       name,
       email,
       address,
