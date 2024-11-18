@@ -1,5 +1,6 @@
 import { v4 } from 'uuid'
 import { Student } from '../../Models/Student.js'
+
 export const createStudent = async (req, res) => {
   const {
     name,
@@ -7,8 +8,7 @@ export const createStudent = async (req, res) => {
     address,
     phone,
     city,
-    preferredCountry,
-    otherCountry,
+    preferredCountries, // updated to accept an array
     academicLevel1,
     level1Marks,
     level1Year,
@@ -31,6 +31,7 @@ export const createStudent = async (req, res) => {
     preferredCounselingMode,
     heardAboutUs,
   } = req.body
+
   try {
     // Check if the student already exists by email
     const existingStudent = await Student.findOne({ email })
@@ -39,6 +40,7 @@ export const createStudent = async (req, res) => {
         .status(400)
         .json({ message: 'Student with this email already exists' })
     }
+
     // Create new student
     const newStudent = new Student({
       _id: v4(),
@@ -47,8 +49,7 @@ export const createStudent = async (req, res) => {
       address,
       phone,
       city,
-      preferredCountry,
-      otherCountry,
+      preferredCountries, // directly use array of preferred countries
       academicLevel1,
       level1Marks,
       level1Year,
@@ -72,6 +73,7 @@ export const createStudent = async (req, res) => {
       heardAboutUs,
       studentTag: 'NEW',
     })
+
     // Save new student to MongoDB
     await newStudent.save()
     return res

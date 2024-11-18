@@ -23,11 +23,8 @@ const StudentSchema = new mongoose.Schema({
   city: {
     type: String,
   },
-  preferredCountry: {
-    type: String,
-  },
-  otherCountry: {
-    type: String,
+  preferredCountries: {
+    type: [String], // Array of strings to store multiple countries
   },
   academicLevel1: {
     type: String,
@@ -92,7 +89,6 @@ const StudentSchema = new mongoose.Schema({
   heardAboutUs: {
     type: String,
   },
-  // New fields
   attestedByHEC: {
     type: Boolean,
     default: false,
@@ -104,7 +100,7 @@ const StudentSchema = new mongoose.Schema({
   studentTag: {
     type: String,
     enum: ['NEW', 'SIGNED UP', 'POTENTIAL', 'Not Interested'],
-    default: 'NEW', // Default value for new students
+    default: 'NEW',
   },
   status: {
     type: String,
@@ -119,8 +115,8 @@ const StudentSchema = new mongoose.Schema({
     default: 'All',
   },
   notes: {
-    type: String, // New notes field to store additional information
-    default: 'No Notes Added', // Default to an empty string if no notes are provided
+    type: String,
+    default: 'No Notes Added',
   },
   createdAt: {
     type: Date,
@@ -132,5 +128,4 @@ const StudentSchema = new mongoose.Schema({
   },
 })
 
-// Create and export the Student model
 export const Student = mongoose.model('Student', StudentSchema)
