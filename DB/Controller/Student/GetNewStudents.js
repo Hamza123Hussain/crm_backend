@@ -1,5 +1,4 @@
 import { Student } from '../../Models/Student.js'
-
 export const GetNEWStudents = async (req, res) => {
   try {
     // Fetch all students with studentTag 'NEW'
@@ -9,7 +8,6 @@ export const GetNEWStudents = async (req, res) => {
     if (newStudents.length === 0) {
       return res.status(404).json({ message: 'No new students found' })
     }
-
     // Return the found students
     return res.status(200).json({ newStudents })
   } catch (error) {

@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-
 const StudentSchema = new mongoose.Schema({
   _id: {
     type: String,
@@ -127,5 +126,4 @@ const StudentSchema = new mongoose.Schema({
     default: Date.now,
   },
 })
-
 export const Student = mongoose.model('Student', StudentSchema)
