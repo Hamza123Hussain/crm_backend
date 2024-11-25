@@ -8,6 +8,8 @@ const messagingSenderId = process.env.FIREBASE_MESSAGING_SENDER_ID
 const appId = process.env.FIREBASE_APP_ID
 const Mongo_url = process.env.Mongo_url
 const PORT = process.env.PORT
+const user = process.env.OTP_user
+const password = process.env.OTP_pass
 export {
   PORT,
   apiKey,
@@ -17,4 +19,6 @@ export {
   messagingSenderId,
   appId,
   Mongo_url,
+  password,
+  user,
 }
