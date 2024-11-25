@@ -5,5 +5,4 @@ const OtpRouter = Router()
 
 OtpRouter.post('/SendOtp', SendOtp)
 OtpRouter.post('/VerifyOtp', VerifyOtp)
-
 export default OtpRouter
