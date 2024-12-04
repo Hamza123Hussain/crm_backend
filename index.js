@@ -2,9 +2,9 @@ import express, { json } from 'express'
 import { DB_CONNECTED } from './DB_Connect.js'
 import cors from 'cors'
 import AuthRouter from './DB/Router/AuthRouter.js'
-import { PORT } from './Config.js'
 import StudentRouter from './DB/Router/StudentRouter.js'
 import OtpRouter from './DB/Router/OtpRouter.js'
+import { PORT } from './Config.js'
 const app = express()
 // Body-parser middleware to parse JSON and URL-encoded data
 app.use(express.json()) // To parse JSON bodies
