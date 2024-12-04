@@ -11,7 +11,7 @@ export const GetAllStudents = async (req, res) => {
     // }
 
     // Fetch all students with studentTag 'NEW'
-    const AllStudents = await Student.find({})
+    const AllStudents = await Student.find()
     // Check if there are any 'NEW' students
     if (AllStudents.length === 0) {
       return res.status(404).json({ message: 'No new students found' })
