@@ -1,5 +1,5 @@
-import { v4 } from 'uuid'
 import { Student } from '../../Models/Student.js'
+
 export const createStudent = async (req, res) => {
   const {
     name,
@@ -39,9 +39,20 @@ export const createStudent = async (req, res) => {
         .status(400)
         .json({ message: 'Student with this email already exists' })
     }
+
+    // Generate a unique 4-digit _id
+    let uniqueId
+    let isUnique = false
+
+    while (!isUnique) {
+      uniqueId = Math.floor(1000 + Math.random() * 9000) // Generate a 4-digit number
+      const idExists = await Student.findOne({ _id: uniqueId })
+      if (!idExists) isUnique = true
+    }
+
     // Create new student
     const newStudent = new Student({
-      _id: v4(),
+      _id: uniqueId, // Use the generated 4-digit number
       name,
       email,
       address,
@@ -71,6 +82,7 @@ export const createStudent = async (req, res) => {
       heardAboutUs,
       studentTag: 'NEW',
     })
+
     // Save new student to MongoDB
     await newStudent.save()
     return res
