@@ -97,12 +97,14 @@ const StudentSchema = new mongoose.Schema({
     default: false,
   },
   studentTag: {
-    type: String,
     enum: ['NEW', 'SIGNED UP', 'POTENTIAL', 'Not Interested'],
     default: 'NEW',
   },
+  VistDate: {
+    type: Date,
+  },
   status: {
-    type: String,
+    type: [String],
     enum: [
       'All',
       'not_interested',
@@ -127,6 +129,9 @@ const StudentSchema = new mongoose.Schema({
   updatedAt: {
     type: Date,
     default: Date.now,
+  },
+  updatedBy: {
+    type: String,
   },
 })
 export const Student = mongoose.model('Student', StudentSchema)
