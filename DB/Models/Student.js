@@ -113,6 +113,7 @@ const StudentSchema = new mongoose.Schema({
       'plan_postponed',
       'next_year_intake',
       'documents_to_send',
+      'To_Visit',
       'document_received',
       'To_Call',
       'Contacted',
