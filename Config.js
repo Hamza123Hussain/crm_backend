@@ -10,6 +10,7 @@ const Mongo_url = process.env.Mongo_url
 const PORT = process.env.PORT
 const user = process.env.OTP_user
 const password = process.env.OTP_pass
+const Gemni = process.env.Gemni_Api_Key
 export {
   PORT,
   apiKey,
@@ -21,4 +22,5 @@ export {
   Mongo_url,
   password,
   user,
+  Gemni,
 }
