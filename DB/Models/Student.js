@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+
 const StudentSchema = new mongoose.Schema({
   _id: {
     type: Number,
@@ -97,6 +98,7 @@ const StudentSchema = new mongoose.Schema({
     default: false,
   },
   studentTag: {
+    type: String, // Specify the type explicitly
     enum: ['NEW', 'SIGNED UP', 'POTENTIAL', 'Not Interested'],
     default: 'NEW',
   },
@@ -104,7 +106,7 @@ const StudentSchema = new mongoose.Schema({
     type: Date,
   },
   status: {
-    type: [String],
+    type: [String], // Specify type as an array of strings
     enum: [
       'All',
       'not_interested',
@@ -116,7 +118,7 @@ const StudentSchema = new mongoose.Schema({
       'Contacted',
       'High_Budget',
     ],
-    default: 'All',
+    default: ['All'], // Match the array type
   },
   notes: {
     type: String,
@@ -134,4 +136,5 @@ const StudentSchema = new mongoose.Schema({
     type: String,
   },
 })
+
 export const Student = mongoose.model('Student', StudentSchema)

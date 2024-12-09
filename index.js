@@ -15,7 +15,7 @@ const corsOptions = {
 }
 app.use(cors(corsOptions))
 app.use('/Api/Auth', AuthRouter)
-// app.use('/Api/Student', StudentRouter)
+app.use('/Api/Student', StudentRouter)
 app.use('/Api/Otp', OtpRouter)
 DB_CONNECTED()
 app.listen(PORT, () => {
