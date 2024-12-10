@@ -19,7 +19,6 @@ export const Messageme = async (req, res) => {
     const ExisitngUser = await User.find({ Email })
     if (ExisitngUser) {
       await Message.create({
-        _id: v4(),
         Name: ExisitngUser.Name,
         Role: 'User',
         Message: message,
@@ -59,7 +58,6 @@ export const Messageme = async (req, res) => {
       // The `message` key will contain the response text from Gemini or the fallback message.
       if (geminiResponseText) {
         await Message.create({
-          _id: v4(),
           Name: 'BOT',
           Role: 'BOT',
           Message: geminiResponseText,
