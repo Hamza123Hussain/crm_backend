@@ -1,46 +1,88 @@
-import { v4 as uuidv4 } from 'uuid'
-import { chatSessions } from '../../../GemniConfig.js'
+import { Student } from '../../Models/Student.js'
 
-const sessions = {} // In-memory storage for sessions
-
+// Chatbot handler function
 export const Messageme = async (req, res) => {
   try {
+    // Extract the user's message from the request body
     const { message } = req.body
 
-    // Generate a unique session ID if not present in cookies
-    let sessionId = req.cookies?.sessionId
-    if (!sessionId) {
-      sessionId = uuidv4() // Generate a new session ID
-      res.cookie('sessionId', sessionId, { httpOnly: true, maxAge: 3600000 }) // Set cookie with a 1-hour expiry
+    // Parse the user's message to identify intent (e.g., asking about a student's status)
+    const lowerCaseMessage = message.toLowerCase()
+
+    // Variable to hold the chatbot's response
+    let response = ''
+
+    // Check if the user is asking about a specific student's status
+    if (lowerCaseMessage.includes('status of student')) {
+      // Extract the student name from the message
+      const studentName = extractEntityFromMessage(message, 'name') // Custom function to extract name
+
+      // Query the database for the student by name
+      const student = await Student.findOne({ name: studentName })
+
+      // Check if the student exists in the database
+      if (student) {
+        // Respond with the student's status
+        response = `The status for ${student.name} is: ${student.status.join(
+          ', '
+        )}`
+      } else {
+        // Respond if no student is found
+        response = `No student found with the name "${studentName}".`
+      }
+    }
+    // Check if the user is asking for all students with a specific status
+    else if (lowerCaseMessage.includes('students with status')) {
+      // Extract the status type from the message
+      const statusType = extractEntityFromMessage(message, 'status') // Custom function to extract status
+
+      // Query the database for all students with the specified status
+      const students = await Student.find({ status: statusType })
+
+      // Check if any students are found with the specified status
+      if (students.length > 0) {
+        // Generate a list of student names with the matching status
+        const studentNames = students.map((student) => student.name).join(', ')
+        response = `Students with the status "${statusType}" are: ${studentNames}`
+      } else {
+        // Respond if no students are found with the specified status
+        response = `No students found with the status "${statusType}".`
+      }
+    }
+    // Default response if the query doesn't match the expected formats
+    else {
+      response = `I didn't understand your query. Please ask about the status of a specific student or students with a specific status.`
     }
 
-    // Initialize conversation history for the session if not already present
-    if (!sessions[sessionId]) {
-      sessions[sessionId] = []
-    }
-
-    // Construct the prompt to send to Gemini API (no prior conversation history)
-    const ChatbotPrompt = `
-      You are a helpful assistant. Please answer the following question based on your knowledge:
-      ${message}
-    `
-
-    // Send the prompt to Gemini API and await the response
-    const Gemni_Response = await chatSessions.sendMessage(ChatbotPrompt)
-    const ChatbotReply = Gemni_Response.response.text()
-
-    // Optionally, store the conversation history (if you want to allow history for future requests)
-    sessions[sessionId].push({ role: 'user', content: message })
-    sessions[sessionId].push({ role: 'assistant', content: ChatbotReply })
-
-    // Respond with the chatbot reply
-    res.status(200).json({ message: ChatbotReply })
+    // Respond to the user with the generated response
+    res.status(200).json({ message: response })
   } catch (error) {
+    // Log the error to the console for debugging
     console.error('Error:', error)
+
+    // Respond with a generic error message
     res.status(500).json({
       status: 'error',
       message: 'Internal server error',
       error: error.message,
     })
   }
+}
+
+// Utility function to extract entities (e.g., name or status) from the user's message
+function extractEntityFromMessage(message, entityType) {
+  // Use simple string parsing or regex to extract entities based on context
+  // Example: If the entityType is 'name', extract the student's name from the message
+  if (entityType === 'name') {
+    // Assuming the name is enclosed in quotes, extract it using regex
+    const nameMatch = message.match(/status of student\s+"([^"]+)"/i)
+    return nameMatch ? nameMatch[1] : null
+  } else if (entityType === 'status') {
+    // Assuming the status is enclosed in quotes, extract it using regex
+    const statusMatch = message.match(/students with status\s+"([^"]+)"/i)
+    return statusMatch ? statusMatch[1] : null
+  }
+
+  // Return null if no match is found
+  return null
 }
