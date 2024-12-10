@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-
 const StudentSchema = new mongoose.Schema({
   _id: {
     type: Number,
@@ -137,5 +136,4 @@ const StudentSchema = new mongoose.Schema({
     type: String,
   },
 })
-
 export const Student = mongoose.model('Student', StudentSchema)
