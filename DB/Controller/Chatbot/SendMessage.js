@@ -16,7 +16,7 @@ export const Messageme = async (req, res) => {
     if (!message) {
       return res.status(400).json({ message: 'No message provided' })
     }
-    const ExisitngUser = await User.find({ Email })
+    const ExisitngUser = await User.findOne({ Email })
     if (ExisitngUser) {
       await Message.create({
         Name: ExisitngUser.Name,
