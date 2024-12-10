@@ -1,8 +1,8 @@
-import { v4 as uuidv4 } from 'uuid' // Import UUID properly
 import { chatSessions } from '../../../GemniConfig.js'
 import { Message } from '../../Models/Message.js'
 import { User } from '../../Models/User.js'
 import { fetchAllStudentData } from './StudentInfo.js'
+import { formatGeminiResponse } from './format_Messages.js'
 
 export const Messageme = async (req, res) => {
   try {
@@ -45,13 +45,14 @@ export const Messageme = async (req, res) => {
         'No valid response received'
 
       if (geminiResponseText) {
-        const messageId = uuidv4() // Generating a unique ID for each message
         await Message.create({
           Name: 'BOT',
           Role: 'BOT',
-          Message: geminiResponseText,
+          Message: formatGeminiResponse(geminiResponseText),
         })
-        return res.status(200).json({ message: geminiResponseText })
+        return res
+          .status(200)
+          .json({ message: formatGeminiResponse(geminiResponseText) })
       }
     }
   } catch (error) {
