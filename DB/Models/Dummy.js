@@ -27,6 +27,12 @@ const DummySchema = new Schema({
   'Appointment Method': { type: String, required: false },
   'Hear About us': { type: String, required: false },
   Status: { type: String, required: false },
+
+  studentTag: {
+    type: String,
+    enum: ['NEW', 'SIGNED UP', 'POTENTIAL', 'Not Interested'],
+    default: 'NEW',
+  },
 })
 
 // Create the model from the schema
