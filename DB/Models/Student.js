@@ -135,5 +135,8 @@ const StudentSchema = new mongoose.Schema({
   updatedBy: {
     type: String,
   },
+  YearIntake: {
+    type: String,
+  },
 })
 export const Student = mongoose.model('Student', StudentSchema)

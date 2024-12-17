@@ -2,8 +2,14 @@ import { Student } from '../../Models/Student.js'
 // Update Student Controller
 export const updateStudentDetails = async (req, res) => {
   const { studentId } = req.query // Get studentId from URL parameter
-  const { studentTag, status, attestedByHEC, attestedByForeignOffice, notes } =
-    req.body
+  const {
+    studentTag,
+    status,
+    YearIntake,
+    attestedByHEC,
+    attestedByForeignOffice,
+    notes,
+  } = req.body
   try {
     // Find student by ID
     const student = await Student.findById(studentId)
@@ -18,6 +24,7 @@ export const updateStudentDetails = async (req, res) => {
       student.attestedByForeignOffice = attestedByForeignOffice // Check if it's a boolean value
     if (notes) student.notes = notes
     // Save the updated student record to MongoDB
+    if (YearIntake) student.YearIntake = YearIntake
     await student.save()
     return res
       .status(200)
