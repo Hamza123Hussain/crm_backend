@@ -100,11 +100,15 @@ export const createStudent = async (req, res) => {
     // Save the new student to MongoDB
     await newStudent.save()
 
+    // Get current date for 'createdAt' timestamp
+    const createdAt = new Date().toISOString().slice(0, 19).replace('T', ' ')
+
     // Prepare data for Google Sheets
-    const spreadsheetId = '1466ALrWdBJ9A0a7VPWe0Nfr5FVx-g4lkHVoqYZr1n7A' // Your Google Sheet ID
+    const spreadsheetId = '1cdH7xB54g5LJyxbHZ0c46t8y2p7D4SYPfkyIqF3pqRA' // Your Google Sheet ID
     const range = 'Sheet1!A1' // Starting cell
     const studentData = [
       uniqueId,
+      createdAt, // Adding the 'createdAt' timestamp
       name,
       email,
       address,
