@@ -1,4 +1,19 @@
+import { google } from 'googleapis'
 import { Student } from '../../Models/Student.js'
+import dotenv from 'dotenv'
+
+dotenv.config()
+
+// Set up Google Sheets authentication using embedded credentials
+const auth = new google.auth.GoogleAuth({
+  credentials: {
+    client_email: process.env.client_email,
+    private_key: process.env.private_key.replace(/\\n/g, '\n'), // Handle escaped newlines
+    project_id: process.env.project_id,
+  },
+  scopes: ['https://www.googleapis.com/auth/spreadsheets'], // Required scope for Sheets API
+})
+const sheets = google.sheets({ version: 'v4', auth })
 
 export const createStudent = async (req, res) => {
   const {
@@ -7,7 +22,7 @@ export const createStudent = async (req, res) => {
     address,
     phone,
     city,
-    preferredCountries, // updated to accept an array
+    preferredCountries,
     academicLevel1,
     level1Marks,
     level1Year,
@@ -43,22 +58,21 @@ export const createStudent = async (req, res) => {
     // Generate a unique 4-digit _id
     let uniqueId
     let isUnique = false
-
     while (!isUnique) {
-      uniqueId = Math.floor(1000 + Math.random() * 9000) // Generate a 4-digit number
+      uniqueId = Math.floor(1000 + Math.random() * 9000) // Generate 4-digit ID
       const idExists = await Student.findOne({ _id: uniqueId })
-      if (!idExists) isUnique = true
+      if (!idExists) isUnique = true // Ensure uniqueness
     }
 
-    // Create new student
+    // Create a new student instance
     const newStudent = new Student({
-      _id: uniqueId, // Use the generated 4-digit number
+      _id: uniqueId,
       name,
       email,
       address,
       phone,
       city,
-      preferredCountries, // directly use array of preferred countries
+      preferredCountries,
       academicLevel1,
       level1Marks,
       level1Year,
@@ -83,13 +97,59 @@ export const createStudent = async (req, res) => {
       studentTag: 'NEW',
     })
 
-    // Save new student to MongoDB
+    // Save the new student to MongoDB
     await newStudent.save()
+
+    // Prepare data for Google Sheets
+    const spreadsheetId = '1466ALrWdBJ9A0a7VPWe0Nfr5FVx-g4lkHVoqYZr1n7A' // Your Google Sheet ID
+    const range = 'Sheet1!A1' // Starting cell
+    const studentData = [
+      uniqueId,
+      name,
+      email,
+      address,
+      phone,
+      city,
+      preferredCountries.join(', '), // Convert array to string
+      academicLevel1,
+      level1Marks,
+      level1Year,
+      academicLevel2,
+      level2Marks,
+      level2Year,
+      bachelorDegree,
+      bachelorCGPA,
+      bachelorYear,
+      masterDegree,
+      masterCGPA,
+      masterYear,
+      educationLevel,
+      primaryCoursePreference,
+      secondaryCoursePreference,
+      languageTest,
+      languageTestScore,
+      budget,
+      visaHistory,
+      preferredCounselingMode,
+      heardAboutUs,
+    ]
+
+    // Append data to Google Sheets
+    await sheets.spreadsheets.values.append({
+      spreadsheetId,
+      range,
+      valueInputOption: 'USER_ENTERED', // Format as entered
+      insertDataOption: 'INSERT_ROWS', // Insert new rows
+      resource: {
+        values: [studentData], // Data to append
+      },
+    })
+
     return res
       .status(201)
       .json({ message: 'Student created successfully', student: newStudent })
   } catch (error) {
-    console.error(error)
+    console.error('Error in createStudent:', error)
     return res
       .status(500)
       .json({ message: 'Server error. Please try again later.' })
