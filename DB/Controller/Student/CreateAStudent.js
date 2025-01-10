@@ -55,13 +55,11 @@ export const createStudent = async (req, res) => {
         .json({ message: 'Student with this email already exists' })
     }
 
-    // Generate a unique 4-digit _id
-    let uniqueId
-    let isUnique = false
-    while (!isUnique) {
-      uniqueId = Math.floor(1000 + Math.random() * 9000) // Generate 4-digit ID
-      const idExists = await Student.findOne({ _id: uniqueId })
-      if (!idExists) isUnique = true // Ensure uniqueness
+    // Get the highest current _id and increment it
+    const lastStudent = await Student.findOne().sort({ _id: -1 }).limit(1) // Get the latest student by _id
+    let uniqueId = 1433 // Default to 1432 for the first student
+    if (lastStudent) {
+      uniqueId = lastStudent._id + 1 // Increment the last student's ID
     }
 
     // Create a new student instance
@@ -105,7 +103,7 @@ export const createStudent = async (req, res) => {
 
     // Prepare data for Google Sheets
     const spreadsheetId = '1cdH7xB54g5LJyxbHZ0c46t8y2p7D4SYPfkyIqF3pqRA' // Your Google Sheet ID
-    const range = 'Sheet1!A1' // Starting cell
+    const range = 'Consultation Form!A1' // The correct range to start appending data
     const studentData = [
       uniqueId,
       createdAt, // Adding the 'createdAt' timestamp
