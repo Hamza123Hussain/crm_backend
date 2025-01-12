@@ -85,9 +85,9 @@ const StudentSchema = new mongoose.Schema({
   preferredCounselingMode: {
     type: String,
   },
-  // heardAboutUs: {
-  //   type: String,
-  // },
+  heardAboutUs: {
+    type: String,
+  },
   attestedByHEC: {
     type: Boolean,
     default: false,
