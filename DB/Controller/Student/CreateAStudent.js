@@ -109,7 +109,6 @@ export const createStudent = async (req, res) => {
       createdAt, // Adding the 'createdAt' timestamp
       name,
       email,
-      address,
       phone,
       city,
       preferredCountries.join(', '), // Convert array to string
