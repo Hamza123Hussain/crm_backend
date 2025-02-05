@@ -44,6 +44,7 @@ export const createStudent = async (req, res) => {
     visaHistory,
     preferredCounselingMode,
     heardAboutUs,
+    Refferal,
   } = req.body
 
   try {
@@ -93,6 +94,7 @@ export const createStudent = async (req, res) => {
       preferredCounselingMode,
       heardAboutUs,
       studentTag: 'NEW',
+      Refferal,
     })
 
     // Save the new student to MongoDB

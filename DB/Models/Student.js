@@ -138,5 +138,8 @@ const StudentSchema = new mongoose.Schema({
   YearIntake: {
     type: String,
   },
+  Refferal: {
+    type: String,
+  },
 })
 export const Student = mongoose.model('Student', StudentSchema)
