@@ -8,7 +8,6 @@ export const CreateLog = async (req, userId, Name, Email, action) => {
 
     // Get device/browser information from user-agent header
     const deviceInfo = req.headers['user-agent'] || 'Unknown Device'
-
     // ✅ Create the log entry
     const logEntry = new LogModel({
       userId,
