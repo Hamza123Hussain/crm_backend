@@ -141,5 +141,8 @@ const StudentSchema = new mongoose.Schema({
   Refferal: {
     type: String,
   },
+  StudentVisited: {
+    type: Boolean,
+  },
 })
 export const Student = mongoose.model('Student', StudentSchema)
