@@ -15,6 +15,7 @@ const corsOptions = {
   origin: '*', // Allow requests from any origin; adjust as needed for security
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow only GET and POST methods
 }
+app.set('trust proxy', true)
 app.use(cors(corsOptions))
 app.use('/Api/Auth', AuthRouter)
 app.use('/Api/Student', StudentRouter)
