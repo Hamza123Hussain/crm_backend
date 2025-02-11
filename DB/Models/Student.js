@@ -101,7 +101,7 @@ const StudentSchema = new mongoose.Schema({
     enum: ['NEW', 'SIGNED UP', 'POTENTIAL', 'Not Interested'],
     default: 'NEW',
   },
-  VistDate: {
+  VisitDate: {
     type: Date,
   },
   status: {
