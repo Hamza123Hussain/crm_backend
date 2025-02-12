@@ -144,5 +144,17 @@ const StudentSchema = new mongoose.Schema({
   StudentVisited: {
     type: Boolean,
   },
+  DocumentCheckList: {
+    CV: { type: Boolean, default: false },
+    CoverLetterOrPersonalStatement: { type: Boolean, default: false },
+    CopyOfPassport: { type: Boolean, default: false },
+    MatricOrOLevelTranscript: { type: Boolean, default: false },
+    IntermediateOrALevelTranscript: { type: Boolean, default: false },
+    IELTS6Bands: { type: Boolean, default: false },
+    BSDegree: { type: Boolean, default: false },
+    BSTranscript: { type: Boolean, default: false },
+    languageTest: { type: Boolean, default: false },
+    ReferenceLetters: { type: Boolean, default: false },
+  },
 })
 export const Student = mongoose.model('Student', StudentSchema)
