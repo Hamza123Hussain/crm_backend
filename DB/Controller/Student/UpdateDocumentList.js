@@ -22,6 +22,7 @@ export const UpdateDocumentList = async (req, res) => {
 
     // Step 3: Check if the DocumentCheckList exists for the student
     if (
+      !existingStudent.studentTag !== 'SIGNED UP' ||
       !existingStudent.DocumentCheckList ||
       !(documentname in existingStudent.DocumentCheckList)
     ) {
