@@ -156,5 +156,14 @@ const StudentSchema = new mongoose.Schema({
     languageTest: { type: Boolean, default: false },
     ReferenceLetters: { type: Boolean, default: false },
   },
+  PaymentCheckList: {
+    FirstInstallmentPaid: { type: Boolean, default: false },
+    RemainingPaymentPaid: { type: Boolean, default: false },
+    PackageSelected: { type: String },
+    PackagePrice: { type: Number },
+    PaymentDone: { type: Number },
+    PaymentRemaining: { type: Number },
+    Discount: { type: Number },
+  },
 })
 export const Student = mongoose.model('Student', StudentSchema)
