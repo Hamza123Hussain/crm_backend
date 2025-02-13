@@ -10,6 +10,7 @@ import { GetDummyStudents } from '../Controller/Test/GetStudents.js'
 import { AddAVisitDate } from '../Controller/Student/AddVisitDate.js'
 import { UpdateDocumentList } from '../Controller/Student/UpdateDocumentList.js'
 import { UpdatePaymentList } from '../Controller/Student/UpdatePaymentChecklist.js'
+import { GetPaymentDetails } from '../Controller/Student/GetPaymentDetails.js'
 const StudentRouter = Router()
 // POST endpoint for user registration (without image upload)
 StudentRouter.post('/NewStudent', createStudent)
@@ -23,4 +24,5 @@ StudentRouter.get('/GetAllStudents', GetAllStudents)
 StudentRouter.get('/GetDummy', GetDummyStudents)
 StudentRouter.put('/UpdateDocumentList', UpdateDocumentList)
 StudentRouter.put('/UpdatePaymentList', UpdatePaymentList)
+StudentRouter.get('/GetStudentPaymentCheckList', GetPaymentDetails)
 export default StudentRouter
