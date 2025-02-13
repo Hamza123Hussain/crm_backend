@@ -2,7 +2,8 @@ import { Student } from '../../Models/Student.js'
 import { User } from '../../Models/User.js'
 export const UpdatePaymentList = async (req, res) => {
   const {
-    documentname, // Specific payment-related document to update (e.g., 'InitialPayment', 'FullPayment')
+    FirstInstallmentPaid, // Specific payment-related document to update (e.g., 'InitialPayment', 'FullPayment')
+    RemainingPaymentPaid,
     userid, // ID of the user performing the update
     studentid, // ID of the student whose payment checklist will be updated
     PackagePrice, // Total price of the selected package
@@ -30,8 +31,11 @@ export const UpdatePaymentList = async (req, res) => {
       existingStudent.PaymentCheckList = {} // Initialize if it doesn't exist
     }
     // Step 5: Update the payment-related document (e.g., marking a payment as done)
-    if (documentname) {
-      existingStudent.PaymentCheckList[documentname] = true // Mark the specific document as true
+    if (FirstInstallmentPaid) {
+      existingStudent.PaymentCheckList.FirstInstallmentPaid = true // Mark the specific document as true
+    }
+    if (RemainingPaymentPaid) {
+      existingStudent.PaymentCheckList.RemainingPaymentPaid = true // Mark the specific document as true
     }
     // Step 6: Update additional payment details if provided
     if (Discount !== undefined) {
