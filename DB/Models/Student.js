@@ -107,7 +107,7 @@ const StudentSchema = new mongoose.Schema({
   status: {
     type: [String], // Specify type as an array of strings
     enum: [
-      'All',
+      'None',
       'not_interested',
       'plan_postponed',
       'next_year_intake',
