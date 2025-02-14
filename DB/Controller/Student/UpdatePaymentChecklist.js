@@ -4,7 +4,7 @@ export const UpdatePaymentList = async (req, res) => {
   const {
     FirstInstallmentPaid, // Specific payment-related document to update (e.g., 'InitialPayment', 'FullPayment')
     RemainingPaymentPaid,
-    userid, // ID of the user performing the update
+    Email, // ID of the user performing the update
     studentid, // ID of the student whose payment checklist will be updated
     PackagePrice, // Total price of the selected package
     PackageSelected, // Name or details of the selected package
@@ -13,7 +13,7 @@ export const UpdatePaymentList = async (req, res) => {
   } = req.body
   try {
     // Step 1: Verify if the user exists in the database
-    const userExists = await User.findById(userid)
+    const userExists = await User.findOne({ Email })
     if (!userExists) {
       return res.status(404).json({ message: 'User not found' })
     }
