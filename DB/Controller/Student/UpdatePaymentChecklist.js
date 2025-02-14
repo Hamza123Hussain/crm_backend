@@ -9,7 +9,7 @@ export const UpdatePaymentList = async (req, res) => {
       return res.status(404).json({ message: 'User not found' })
     }
     // Step 2: Find the student by their ID
-    const existingStudent = await Student.findById(studentid)
+    const existingStudent = await Student.findById(PaymentDetails.studentid)
     if (!existingStudent) {
       return res.status(404).json({ message: 'Student not found' })
     }
