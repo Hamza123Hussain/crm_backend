@@ -6,7 +6,7 @@ export const UpdatePaymentList = async (req, res) => {
 
   try {
     // Validate user
-    const user = await User.findOne({ Email: PaymentDetails.Email })
+    const user = await User.findOne({ Email: 'gptprompts87@gmail.com' })
     if (!user) {
       return res.status(404).json({ message: 'User not found' })
     }
