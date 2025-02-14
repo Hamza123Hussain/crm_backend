@@ -1,66 +1,58 @@
 import { Student } from '../../Models/Student.js'
 import { User } from '../../Models/User.js'
+
 export const UpdatePaymentList = async (req, res) => {
   const { PaymentDetails } = req.body
+
   try {
-    // Step 1: Verify if the user exists in the database
-    const userExists = await User.findOne({ Email })
-    if (!userExists) {
+    // Validate user
+    const user = await User.findOne({ Email: PaymentDetails.Email })
+    if (!user) {
       return res.status(404).json({ message: 'User not found' })
     }
-    // Step 2: Find the student by their ID
-    const existingStudent = await Student.findById(PaymentDetails.studentid)
-    if (!existingStudent) {
+
+    // Validate student
+    const student = await Student.findById(PaymentDetails.studentid)
+    if (!student) {
       return res.status(404).json({ message: 'Student not found' })
     }
-    // // Step 3: Ensure the student is signed up before updating payment details
-    // if (existingStudent.studentTag !== 'SIGNED UP') {
-    //   return res.status(400).json({ message: 'Student is not signed up' })
-    // }
-    // Step 4: Validate the existence of the PaymentCheckList object
-    if (!existingStudent.PaymentCheckList) {
-      existingStudent.PaymentCheckList = {} // Initialize if it doesn't exist
+
+    // Initialize PaymentCheckList if missing
+    if (!student.PaymentCheckList) {
+      student.PaymentCheckList = {}
     }
-    // Step 5: Update the payment-related document (e.g., marking a payment as done)
-    if (PaymentDetails.FirstInstallmentPaid) {
-      existingStudent.PaymentCheckList.FirstInstallmentPaid = true // Mark the specific document as true
-    }
-    if (PaymentDetails.RemainingPaymentPaid) {
-      existingStudent.PaymentCheckList.RemainingPaymentPaid = true // Mark the specific document as true
-    }
-    // Step 6: Update additional payment details if provided
-    if (PaymentDetails.Discount !== undefined) {
-      existingStudent.PaymentCheckList.Discount = Discount
-    }
-    if (PaymentDetails.PackageSelected) {
-      existingStudent.PaymentCheckList.PackageSelected = PackageSelected
-    }
-    if (PaymentDetails.PackagePrice !== undefined) {
-      existingStudent.PaymentCheckList.PackagePrice = PackagePrice
-    }
+
+    // Update boolean fields
+    student.PaymentCheckList.FirstInstallmentPaid =
+      !!PaymentDetails.FirstInstallmentPaid
+    student.PaymentCheckList.RemainingPaymentPaid =
+      !!PaymentDetails.RemainingPaymentPaid
+
+    // Update text/number fields
+    student.PaymentCheckList.PackageSelected = PaymentDetails.PackageSelected
+    student.PaymentCheckList.PackagePrice = PaymentDetails.PackagePrice
+    student.PaymentCheckList.PaymentDone = PaymentDetails.PaymentDone
+    student.PaymentCheckList.PaymentRemaining = PaymentDetails.PaymentRemaining
+    student.PaymentCheckList.Discount = PaymentDetails.Discount
+
+    // Calculate the remaining payment if payment done is updated
     if (PaymentDetails.PaymentDone !== undefined) {
-      existingStudent.PaymentCheckList.PaymentDone = PaymentDone
-      // Step 7: Calculate the remaining payment considering the discount
-      const packagePrice = existingStudent.PaymentCheckList.PackagePrice || 0
-      const discountPercentage = existingStudent.PaymentCheckList.Discount || 0
-      // Apply discount as a percentage
-      const discountedAmount = (packagePrice * discountPercentage) / 100
-      const finalPriceAfterDiscount = packagePrice - discountedAmount
-      // Calculate the remaining payment
-      existingStudent.PaymentCheckList.PaymentRemaining =
-        finalPriceAfterDiscount - PaymentDone
+      const { PackagePrice, Discount, PaymentDone } = PaymentDetails
+      const discountedPrice = PackagePrice - (PackagePrice * Discount) / 100
+      student.PaymentCheckList.PaymentRemaining = discountedPrice - PaymentDone
     }
-    // Step 8: Save the updated student record to the database
-    await existingStudent.save()
-    // Step 9: Send a success response with updated payment details
-    return res.status(200).json({
-      message: `Payment details for '${existingStudent.name}' have been updated successfully.`,
-      PaymentCheckList: existingStudent.PaymentCheckList,
+
+    // Save updated student data
+    await student.save()
+
+    res.status(200).json({
+      message: `Payment details for '${student.name}' have been updated successfully.`,
+      PaymentCheckList: student.PaymentCheckList,
     })
   } catch (error) {
     console.error('Error updating payment checklist:', error)
-    return res
+    res
       .status(500)
-      .json({ message: 'Server error. Please try again later.' })
+      .json({ message: 'Server error. Please try again later.', error })
   }
 }
