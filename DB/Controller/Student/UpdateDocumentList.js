@@ -49,6 +49,10 @@ export const UpdateDocumentList = async (req, res) => {
       })
     }
 
+    if (Email) {
+      student.updatedBy = Email
+      student.updatedAt = new Date()
+    }
     // 💾 Step 6: Save the updated student record
     await student.save()
 
