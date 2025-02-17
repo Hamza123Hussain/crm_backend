@@ -1,7 +1,7 @@
 import { Student } from '../../Models/Student.js'
 // Update Student Controller
 export const updateStudentDetails = async (req, res) => {
-  const { studentId } = req.query // Get studentId from URL parameter
+  const { studentId, Email } = req.query // Get studentId from URL parameter
   const {
     studentTag,
     status,
@@ -25,6 +25,10 @@ export const updateStudentDetails = async (req, res) => {
     if (notes) student.notes = notes
     // Save the updated student record to MongoDB
     if (YearIntake) student.YearIntake = YearIntake
+    if (Email) {
+      student.updatedBy = Email
+      student.updatedAt = new Date()
+    }
     await student.save()
     return res
       .status(200)
