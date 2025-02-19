@@ -88,14 +88,6 @@ const StudentSchema = new mongoose.Schema({
   heardAboutUs: {
     type: String,
   },
-  attestedByHEC: {
-    type: Boolean,
-    default: false,
-  },
-  attestedByForeignOffice: {
-    type: Boolean,
-    default: false,
-  },
   studentTag: {
     type: String, // Specify the type explicitly
     enum: ['NEW', 'SIGNED UP', 'POTENTIAL', 'Not Interested'],
@@ -143,6 +135,17 @@ const StudentSchema = new mongoose.Schema({
   },
   StudentVisited: {
     type: Boolean,
+  },
+  LastContacted: {
+    type: Date,
+  },
+  attestedByHEC: {
+    type: Boolean,
+    default: false,
+  },
+  attestedByForeignOffice: {
+    type: Boolean,
+    default: false,
   },
   DocumentCheckList: {
     CV: { type: Boolean, default: false },
