@@ -5,7 +5,7 @@ export const GetSingleStudent = async (req, res) => {
   try {
     // Fetch a single student by ID with only required fields
     const SingleStudent = await Student.findById(studentid).select(
-      'studentTag VisitDate status notes createdAt updatedAt updatedBy YearIntake Refferal StudentVisited LastContacted attestedByHEC attestedByForeignOffice'
+      'studentTag YearIntake status notes attestedByHEC attestedByForeignOffice'
     )
 
     // If student not found
@@ -14,7 +14,7 @@ export const GetSingleStudent = async (req, res) => {
     }
 
     // Return the found student
-    return res.status(200).json({ SingleStudent })
+    return res.status(200).json(SingleStudent)
   } catch (error) {
     console.error('Error fetching student:', error)
     return res
