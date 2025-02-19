@@ -1,6 +1,5 @@
 import { Router } from 'express'
 import { createStudent } from '../Controller/Student/CreateAStudent.js'
-import { updateStudentDetails } from '../Controller/Student/UpdateStudent.js'
 import { GetNEWStudents } from '../Controller/Student/GetNewStudents.js'
 import { GetSignedUpStudents } from '../Controller/Student/GetSignedStudents.js'
 import { GetPotientialStudents } from '../Controller/Student/GetPotentialStudents.js'
@@ -12,10 +11,11 @@ import { UpdateDocumentList } from '../Controller/Student/UpdateDocumentList.js'
 import { UpdatePaymentList } from '../Controller/Student/UpdatePaymentChecklist.js'
 import { GetPaymentDetails } from '../Controller/Student/GetPaymentDetails.js'
 import { GetDocumentDetails } from '../Controller/Student/GetDocumentDetails.js'
+import { UpdateStudentDetails } from '../Controller/Student/UpdateStudentDetails.js'
 const StudentRouter = Router()
 // POST endpoint for user registration (without image upload)
 StudentRouter.post('/NewStudent', createStudent)
-StudentRouter.put('/UpdateStudent', updateStudentDetails)
+StudentRouter.put('/UpdateStudent', UpdateStudentDetails)
 StudentRouter.put('/UpdateVisitDate', AddAVisitDate)
 StudentRouter.get('/GetNewStudents', GetNEWStudents)
 StudentRouter.get('/GetSignedUpStudents', GetSignedUpStudents)
