@@ -14,7 +14,7 @@ export const UpdateStudentDetails = async (req, res) => {
     if (updateData.studentTag) updatedFields.studentTag = updateData.studentTag
     if (updateData.VisitDate)
       updatedFields.VisitDate = new Date(updateData.VisitDate)
-    if (updateData.status) updatedFields.status = updateData.status
+    if (updateData.VisitDate) updatedFields.VisitDate = updateData.VisitDate
     if (updateData.notes) updatedFields.notes = updateData.notes
     if (updateData.YearIntake) updatedFields.YearIntake = updateData.YearIntake
     if (updateData.Refferal) updatedFields.Refferal = updateData.Refferal

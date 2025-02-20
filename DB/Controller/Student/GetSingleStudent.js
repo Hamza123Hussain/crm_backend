@@ -5,7 +5,7 @@ export const GetSingleStudent = async (req, res) => {
   try {
     // Fetch a single student by ID with only required fields
     const SingleStudent = await Student.findById(studentid).select(
-      'studentTag YearIntake status notes attestedByHEC attestedByForeignOffice LastContacted'
+      'studentTag YearIntake status notes attestedByHEC attestedByForeignOffice LastContacted VisitDate'
     )
 
     // If student not found
