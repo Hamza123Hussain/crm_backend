@@ -1,11 +1,11 @@
 import { Student } from '../../Models/Student.js'
 
-export const GetStudentStatus = async (req, res) => {
+export const GetStudentStatusandTag = async (req, res) => {
   const { studentid } = req.query // Use req.params for ID
   try {
     // Fetch a single student by ID with only required fields
     const StudentStatus = await Student.findById(studentid).select(
-      'status updatedBy'
+      'status updatedBy studentTag'
     )
 
     // If student not found

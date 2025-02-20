@@ -1,9 +1,9 @@
 import { Student } from '../../Models/Student.js'
 
-export const UpdatestudentStatus = async (req, res) => {
+export const UpdatestudentStatusandTag = async (req, res) => {
   try {
     const { studentId } = req.query // Extract studentId from URL
-    const { status, updatedBy } = req.body // Extract update data from request body
+    const { status, updatedBy, studentTag } = req.body // Extract update data from request body
     // Check if the student exists
     const student = await Student.findById(studentId)
     if (!student) {
@@ -14,6 +14,7 @@ export const UpdatestudentStatus = async (req, res) => {
     if (status) updatedFields.status = status
     // Always update the updatedAt timestamp and updatedBy field
     updatedFields.updatedAt = Date.now()
+    if (studentTag) updatedFields.studentTag = studentTag
     if (updatedBy) updatedFields.updatedBy = updatedBy
     // Update the student document
     const updatedStudent = await Student.findByIdAndUpdate(
