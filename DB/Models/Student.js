@@ -112,6 +112,14 @@ const StudentSchema = new mongoose.Schema({
     ],
     default: ['All'], // Match the array type
   },
+  options: {
+    type: [String], // Specify type as an array of strings
+    default: [],
+  },
+  optionspresented: {
+    type: Boolean,
+    default: false,
+  },
   notes: {
     type: String,
     default: 'No Notes Added',
