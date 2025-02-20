@@ -13,6 +13,8 @@ import { GetPaymentDetails } from '../Controller/Student/GetPaymentDetails.js'
 import { GetDocumentDetails } from '../Controller/Student/GetDocumentDetails.js'
 import { UpdateStudentDetails } from '../Controller/Student/UpdateStudentDetails.js'
 import { GetSingleStudent } from '../Controller/Student/GetSingleStudent.js'
+import { UpdateOptions } from '../Controller/Student/UpdateOptions.js'
+import { GetOptionDetails } from '../Controller/Student/GetOptions.js'
 const StudentRouter = Router()
 // POST endpoint for user registration (without image upload)
 StudentRouter.post('/NewStudent', createStudent)
@@ -29,4 +31,6 @@ StudentRouter.put('/UpdateDocumentList', UpdateDocumentList)
 StudentRouter.put('/UpdatePaymentList', UpdatePaymentList)
 StudentRouter.get('/GetStudentPaymentCheckList', GetPaymentDetails)
 StudentRouter.get('/GetDocumentCheckList', GetDocumentDetails)
+StudentRouter.put('/UpdateOptions', UpdateOptions)
+StudentRouter.get('/GetStudentOptions', GetOptionDetails)
 export default StudentRouter
