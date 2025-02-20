@@ -5,7 +5,7 @@ export const GetOptionDetails = async (req, res) => {
     // Fetch all students with studentTag 'NEW'
     const RetrieveStudentOptions = await Student.findOne({
       _id: StudentId,
-    }).select('options   optionspresented updatedBy updatedAt')
+    }).select('options optionspresented updatedBy updatedAt')
     // Check if there are any 'NEW' students
     if (!RetrieveStudentOptions) {
       return res.status(404).json({ message: 'No Found With This ID' })
