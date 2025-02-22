@@ -11,7 +11,7 @@ export const GetOptionDetails = async (req, res) => {
       return res.status(404).json({ message: 'No Found With This ID' })
     }
     // Return the found students
-    return res.status(200).json(RetrieveStudentOptionsDetails)
+    return res.status(200).json(RetrieveStudentOptionsDetails.OptionDetails)
   } catch (error) {
     // Log the error and return a generic server error response
     console.error(error)
