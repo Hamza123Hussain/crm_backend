@@ -113,10 +113,12 @@ const StudentSchema = new mongoose.Schema({
     default: ['All'], // Match the array type
   },
   OptionDetails: {
-    options: {
-      type: [String], // Specify type as an array of strings
-      default: [],
-    },
+    options: [
+      {
+        optionName: { type: String },
+        'I20/CAS Recieved': { type: Boolean },
+      },
+    ],
     optionspresented: {
       type: Boolean,
       default: false,
@@ -136,6 +138,21 @@ const StudentSchema = new mongoose.Schema({
       type: Boolean,
       default: false,
     },
+    OptionsFinalized: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  VisaDetails: {
+    VisaApproved: { type: Boolean },
+    VisaAppointmentDate: { type: Date },
+    InterviewPracticeDone: { type: Boolean },
+    'DS160/UK VISA FORM FILLED': { type: Boolean },
+  },
+  TravelDetails: {
+    TicketBooked: { type: Boolean },
+    TravelDate: { type: Date },
+    TicketPaymentDone: { type: Boolean },
   },
   MeetingDetails: [
     {
@@ -193,9 +210,30 @@ const StudentSchema = new mongoose.Schema({
   StudentVisited: {
     type: Boolean,
   },
-  LastContacted: {
-    type: Date,
-  },
+  ContactDetails: [
+    {
+      ContactedDate: {
+        type: Date,
+      },
+      ContactReminder: {
+        type: Date,
+      },
+      FollowUpMessage: {
+        type: Boolean,
+      },
+      ResponseStatus: {
+        type: String,
+        enum: ['No Response', 'Unable To Connect', 'Contacted'],
+      },
+      DiscussedWithFamily: {
+        type: Boolean,
+      },
+      LocationShared: {
+        type: Boolean,
+      },
+    },
+  ],
+
   attestedByHEC: {
     type: Boolean,
     default: false,
