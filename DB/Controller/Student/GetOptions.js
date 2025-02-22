@@ -3,15 +3,15 @@ export const GetOptionDetails = async (req, res) => {
   const { StudentId } = req.query
   try {
     // Fetch all students with studentTag 'NEW'
-    const RetrieveStudentOptions = await Student.findOne({
+    const RetrieveStudentOptionsDetails = await Student.findOne({
       _id: StudentId,
-    }).select('options optionspresented updatedBy updatedAt')
+    }).select('OptionDetails')
     // Check if there are any 'NEW' students
-    if (!RetrieveStudentOptions) {
+    if (!RetrieveStudentOptionsDetails) {
       return res.status(404).json({ message: 'No Found With This ID' })
     }
     // Return the found students
-    return res.status(200).json(RetrieveStudentOptions)
+    return res.status(200).json(RetrieveStudentOptionsDetails)
   } catch (error) {
     // Log the error and return a generic server error response
     console.error(error)
