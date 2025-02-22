@@ -18,6 +18,11 @@ import { GetOptionDetails } from '../Controller/Student/GetOptions.js'
 import { GetStudentStatusandTag } from '../Controller/Student/GetStatus.js'
 import { UpdatestudentStatusandTag } from '../Controller/Student/UpdateStatusandTag.js'
 import { GetAStudent } from '../Controller/Student/GetAStudent.js'
+import { GetMeeting } from '../Controller/Student/Meeting/GetAMeeting.js'
+import { GetAllMeetings } from '../Controller/Student/Meeting/GetAllMeetings.js'
+import { UpdateMeeting } from '../Controller/Student/Meeting/UpdateMeeting.js'
+import { DeleteMeeting } from '../Controller/Student/Meeting/DeleteMeeting.js'
+import { AddMeeting } from '../Controller/Student/Meeting/AddAMeeting.js'
 const StudentRouter = Router()
 // POST endpoint for user registration (without image upload)
 StudentRouter.post('/NewStudent', createStudent)
@@ -39,4 +44,9 @@ StudentRouter.get('/GetStudentOptions', GetOptionDetails)
 StudentRouter.put('/UpdateStatusandTag', UpdatestudentStatusandTag)
 StudentRouter.get('/GetStudentStatusandTag', GetStudentStatusandTag)
 StudentRouter.get('/GetAStudent', GetAStudent)
+StudentRouter.get('/GetASingleMeeting', GetMeeting)
+StudentRouter.get('/GetAllMeeting', GetAllMeetings)
+StudentRouter.put('/UpdateMeeting', UpdateMeeting)
+StudentRouter.delete('/DeleteMeeting', DeleteMeeting)
+StudentRouter.post('/AddMeeting', AddMeeting)
 export default StudentRouter
