@@ -156,7 +156,19 @@ const StudentSchema = new mongoose.Schema({
       },
     },
   ],
-
+  DeadlineDetails: {
+    DeadlineMessageSent: {
+      type: Boolean,
+      default: false,
+    },
+    DeadlineDate: {
+      type: Date,
+    },
+    DeadlineReminder: {
+      type: Boolean,
+      default: false,
+    },
+  },
   notes: {
     type: String,
     default: 'No Notes Added',
