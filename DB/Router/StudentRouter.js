@@ -13,8 +13,6 @@ import { GetPaymentDetails } from '../Controller/Student/GetPaymentDetails.js'
 import { GetDocumentDetails } from '../Controller/Student/GetDocumentDetails.js'
 import { UpdateStudentDetails } from '../Controller/Student/UpdateStudentDetails.js'
 import { GetSingleStudent } from '../Controller/Student/GetSingleStudent.js'
-import { UpdateOptions } from '../Controller/Student/UpdateOptions.js'
-import { GetOptionDetails } from '../Controller/Student/GetOptions.js'
 import { GetStudentStatusandTag } from '../Controller/Student/GetStatus.js'
 import { UpdatestudentStatusandTag } from '../Controller/Student/UpdateStatusandTag.js'
 import { GetAStudent } from '../Controller/Student/GetAStudent.js'
@@ -23,6 +21,17 @@ import { GetAllMeetings } from '../Controller/Student/Meeting/GetAllMeetings.js'
 import { UpdateMeeting } from '../Controller/Student/Meeting/UpdateMeeting.js'
 import { DeleteMeeting } from '../Controller/Student/Meeting/DeleteMeeting.js'
 import { AddMeeting } from '../Controller/Student/Meeting/AddAMeeting.js'
+import { UpdateOptionDetails } from '../Controller/Student/Options/UpdateOption.js'
+import { GetOptionDetails } from '../Controller/Student/Options/GetAllOptions.js'
+import { GetSingleOptionDetail } from '../Controller/Student/Options/GetOption.js'
+import { AddOptionDetails } from '../Controller/Student/Options/AddOption.js'
+import { DeleteOptionDetails } from '../Controller/Student/Options/DeleteOption.js'
+import { UpdateVisaDetails } from '../Controller/Student/Visa/UpdateVisa.js'
+import { GetVisaDetails } from '../Controller/Student/Visa/GetVisaDetails.js'
+import { DeleteVisaDetails } from '../Controller/Student/Visa/DeleteDetails.js'
+import { AddandUpdateTravelDetails } from '../Controller/Student/Travel/AddTravelDetails.js'
+import { GetTravelDetails } from '../Controller/Student/Travel/GetTravelDetails.js'
+import { DeleteTravelDetails } from '../Controller/Student/Travel/DeleteTravelDetails.js'
 const StudentRouter = Router()
 // POST endpoint for user registration (without image upload)
 StudentRouter.post('/NewStudent', createStudent)
@@ -39,8 +48,11 @@ StudentRouter.put('/UpdateDocumentList', UpdateDocumentList)
 StudentRouter.put('/UpdatePaymentList', UpdatePaymentList)
 StudentRouter.get('/GetStudentPaymentCheckList', GetPaymentDetails)
 StudentRouter.get('/GetDocumentCheckList', GetDocumentDetails)
-StudentRouter.put('/UpdateOptions', UpdateOptions)
+StudentRouter.put('/UpdateOptions', UpdateOptionDetails)
 StudentRouter.get('/GetStudentOptions', GetOptionDetails)
+StudentRouter.get('/GetAOption', GetSingleOptionDetail)
+StudentRouter.post('/AddStudentOption', AddOptionDetails)
+StudentRouter.delete('/DeleteAOption', DeleteOptionDetails)
 StudentRouter.put('/UpdateStatusandTag', UpdatestudentStatusandTag)
 StudentRouter.get('/GetStudentStatusandTag', GetStudentStatusandTag)
 StudentRouter.get('/GetAStudent', GetAStudent)
@@ -49,4 +61,10 @@ StudentRouter.get('/GetAllMeeting', GetAllMeetings)
 StudentRouter.put('/UpdateMeeting', UpdateMeeting)
 StudentRouter.delete('/DeleteMeeting', DeleteMeeting)
 StudentRouter.post('/AddMeeting', AddMeeting)
+StudentRouter.post('/Add_Update_Visa', UpdateVisaDetails)
+StudentRouter.get('/GetVisaDetails', GetVisaDetails)
+StudentRouter.delete('/DeleteVisaDetails', DeleteVisaDetails)
+StudentRouter.post('/Add_Update_Travel', AddandUpdateTravelDetails)
+StudentRouter.get('/GetTravelDetails', GetTravelDetails)
+StudentRouter.delete('/DeleteTravelDetails', DeleteTravelDetails)
 export default StudentRouter
