@@ -134,6 +134,25 @@ const StudentSchema = new mongoose.Schema({
       default: false,
     },
   },
+  MeetingDetails: [
+    {
+      MeetingDate: {
+        type: Date, // Specify type as an array of strings
+      },
+      MeetingStatus: {
+        type: String,
+        enum: ['Attended', 'Declined', 'Rescheduled'],
+      },
+      MeetingReminder: {
+        type: Boolean,
+        default: false,
+      },
+      MeetingFeedBack: {
+        type: String,
+        default: false,
+      },
+    },
+  ],
 
   notes: {
     type: String,
