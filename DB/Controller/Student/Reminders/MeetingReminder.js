@@ -1,7 +1,7 @@
 import { Student } from '../../../Models/Student.js'
 import { User } from '../../../Models/User.js'
 export const MeetingReminders = async (req, res) => {
-  const { Tag, UserEmail } = req.body
+  const { Tag, UserEmail } = req.query
 
   // Check if the user exists
   const existingUser = await User.findOne({ Email: UserEmail })
