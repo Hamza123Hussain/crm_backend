@@ -4,7 +4,7 @@ import { User } from '../../../Models/User.js'
 // Controller to fetch students who were last contacted exactly 2 days ago
 export const CallReminders = async (req, res) => {
   try {
-    const { Tag, UserEmail } = req.body // Extract Tag and UserEmail from request body
+    const { Tag, UserEmail } = req.query // Extract Tag and UserEmail from request body
 
     // ✅ Step 1: Check if the user exists in the database
     const existingUser = await User.findOne({ Email: UserEmail })
