@@ -157,11 +157,16 @@ const StudentSchema = new mongoose.Schema({
   MeetingDetails: [
     {
       MeetingDate: {
-        type: Date, // Specify type as an array of strings
+        type: Date,
+        required: true,
+      },
+      MeetingTime: {
+        type: String, // Format: "HH:mm"
+        required: true,
       },
       MeetingStatus: {
         type: String,
-        enum: ['Attended', 'Declined', 'Rescheduled', 'scheduled'],
+        enum: ['Attended', 'Declined', 'Rescheduled', 'Scheduled'],
       },
       MeetingReminder: {
         type: Boolean,
@@ -169,10 +174,11 @@ const StudentSchema = new mongoose.Schema({
       },
       MeetingFeedBack: {
         type: String,
-        default: false,
+        default: '',
       },
     },
   ],
+
   DeadlineDetails: {
     DeadlineMessageSent: {
       type: Boolean,

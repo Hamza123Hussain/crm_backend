@@ -4,8 +4,13 @@ import { Student } from '../../../Models/Student.js'
 export const AddMeeting = async (req, res) => {
   try {
     const { studentId } = req.query
-    const { MeetingDate, MeetingStatus, MeetingReminder, MeetingFeedBack } =
-      req.body
+    const {
+      MeetingDate,
+      MeetingStatus,
+      MeetingTime,
+      MeetingReminder,
+      MeetingFeedBack,
+    } = req.body
 
     const student = await Student.findById(studentId)
     if (!student) {
@@ -16,6 +21,7 @@ export const AddMeeting = async (req, res) => {
     const newMeeting = {
       MeetingDate,
       MeetingStatus,
+      MeetingTime,
       MeetingReminder,
       MeetingFeedBack,
     }
