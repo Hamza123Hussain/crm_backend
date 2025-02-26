@@ -241,7 +241,19 @@ const StudentSchema = new mongoose.Schema({
       },
     },
   ],
-
+  VisitDetails: [
+    {
+      VistDate: {
+        type: Date,
+      },
+      VisitTime: {
+        type: String,
+      },
+      VisitStatus: {
+        type: String,
+      },
+    },
+  ],
   attestedByHEC: {
     type: Boolean,
     default: false,
