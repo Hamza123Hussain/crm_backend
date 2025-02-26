@@ -166,7 +166,7 @@ const StudentSchema = new mongoose.Schema({
       },
       MeetingStatus: {
         type: String,
-        enum: ['Attended', 'Declined', 'Rescheduled', 'Scheduled'],
+        enum: ['Attended', 'Declined', 'Rescheduled', 'scheduled'],
       },
       MeetingReminder: {
         type: Boolean,
