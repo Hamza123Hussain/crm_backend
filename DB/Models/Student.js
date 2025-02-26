@@ -162,7 +162,6 @@ const StudentSchema = new mongoose.Schema({
       },
       MeetingTime: {
         type: String, // Format: "HH:mm"
-        required: true,
       },
       MeetingStatus: {
         type: String,
