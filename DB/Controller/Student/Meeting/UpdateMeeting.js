@@ -4,8 +4,13 @@ import { Student } from '../../../Models/Student.js'
 export const UpdateMeeting = async (req, res) => {
   try {
     const { studentId, meetingId } = req.query
-    const { MeetingDate, MeetingStatus, MeetingReminder, MeetingFeedBack } =
-      req.body
+    const {
+      MeetingDate,
+      MeetingStatus,
+      MeetingTime,
+      MeetingReminder,
+      MeetingFeedBack,
+    } = req.body
 
     const student = await Student.findById(studentId)
     if (!student) {
@@ -23,7 +28,7 @@ export const UpdateMeeting = async (req, res) => {
     if (MeetingStatus !== undefined) meeting.MeetingStatus = MeetingStatus
     if (MeetingReminder !== undefined) meeting.MeetingReminder = MeetingReminder
     if (MeetingFeedBack !== undefined) meeting.MeetingFeedBack = MeetingFeedBack
-
+    if (MeetingTime !== undefined) meeting.MeetingTime = MeetingTime
     // Save changes
     await student.save()
 
