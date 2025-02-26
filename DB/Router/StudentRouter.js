@@ -36,6 +36,10 @@ import { CallReminders } from '../Controller/Student/Reminders/CallReminders.js'
 import { MeetingReminders } from '../Controller/Student/Reminders/MeetingReminder.js'
 import { AddContactDetails } from '../Controller/Student/Contact/AddContact.js'
 import { GetContactDetails } from '../Controller/Student/Contact/GetAllContactDetailsOfStudent.js'
+import { AddVisit } from '../Controller/Student/Visit/AddVisit.js'
+import { UpdateVisit } from '../Controller/Student/Visit/UpdateVisit.js'
+import { GetAllVisits } from '../Controller/Student/Visit/GetAllVisits.js'
+import { DeleteVisit } from '../Controller/Student/Visit/DeleteVisit.js'
 const StudentRouter = Router()
 // POST endpoint for user registration (without image upload)
 StudentRouter.post('/NewStudent', createStudent)
@@ -78,5 +82,8 @@ StudentRouter.post('/AddAContact', AddContactDetails)
 StudentRouter.get('/GetAllContact', GetContactDetails)
 StudentRouter.put('/UpdateContact', UpdateMeeting)
 StudentRouter.delete('/DeleteContact', DeleteMeeting)
-
+StudentRouter.post('/AddANewVisit', AddVisit)
+StudentRouter.put('/UpdateVisit', UpdateVisit)
+StudentRouter.get('/GetAllVisits', GetAllVisits)
+StudentRouter.delete('/DeleteAVisit', DeleteVisit)
 export default StudentRouter
