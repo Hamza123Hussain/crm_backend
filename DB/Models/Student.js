@@ -220,6 +220,9 @@ const StudentSchema = new mongoose.Schema({
       ContactedDate: {
         type: Date,
       },
+      ContactedTime: {
+        type: String,
+      },
       ContactReminder: {
         type: Date,
       },

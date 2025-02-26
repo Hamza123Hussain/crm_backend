@@ -10,6 +10,7 @@ export const AddContactDetails = async (req, res) => {
       ResponseStatus,
       DiscussedWithFamily,
       LocationShared,
+      ContactedTime,
     } = req.body
 
     // Check if student exists
@@ -31,6 +32,7 @@ export const AddContactDetails = async (req, res) => {
       ResponseStatus: ResponseStatus || 'No Response',
       DiscussedWithFamily: DiscussedWithFamily || false,
       LocationShared: LocationShared || false,
+      ContactedTime: ContactedTime | '',
     }
 
     // Add the new contact record
