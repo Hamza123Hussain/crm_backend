@@ -240,7 +240,7 @@ const StudentSchema = new mongoose.Schema({
   ],
   VisitDetails: [
     {
-      VistDate: {
+      VisitDate: {
         type: Date,
       },
       VisitTime: {
