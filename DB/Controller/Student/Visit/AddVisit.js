@@ -3,14 +3,14 @@ import { Student } from '../../../Models/Student.js'
 export const AddVisit = async (req, res) => {
   try {
     const { studentId } = req.query
-    const { VistDate, VisitTime, VisitStatus } = req.body
+    const { VisitDate, VisitTime, VisitStatus } = req.body
     const student = await Student.findById(studentId)
     if (!student) {
       return res.status(404).json({ message: 'Student not found' })
     }
     // Create new Visit object
     const newVisit = {
-      VistDate,
+      VisitDate,
       VisitStatus,
       VisitTime,
     }
