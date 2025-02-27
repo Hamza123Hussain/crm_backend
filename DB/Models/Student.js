@@ -144,7 +144,7 @@ const StudentSchema = new mongoose.Schema({
     VisaApproved: { type: Boolean },
     VisaAppointmentDate: { type: Date },
     InterviewPracticeDone: { type: Boolean },
-    'DS160/UK VISA FORM FILLED': { type: Boolean },
+    VISAFORMFILLED: { type: Boolean },
   },
   TravelDetails: {
     TicketBooked: { type: Boolean },

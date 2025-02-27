@@ -7,7 +7,7 @@ export const UpdateVisaDetails = async (req, res) => {
       VisaApproved,
       VisaAppointmentDate,
       InterviewPracticeDone,
-      DS160_UK_VISA_FORM_FILLED,
+      VISAFORMFILLED,
     } = req.body
 
     // Find student
