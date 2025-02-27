@@ -3,7 +3,7 @@ import { Student } from '../../../Models/Student.js'
 export const UpdateVisit = async (req, res) => {
   try {
     const { studentId, VisitId } = req.query
-    const { VistDate, VisitTime, VisitStatus } = req.body
+    const { VisitDate, VisitTime, VisitStatus } = req.body
     const student = await Student.findById(studentId)
     if (!student) {
       return res.status(404).json({ message: 'Student not found' })
@@ -14,7 +14,7 @@ export const UpdateVisit = async (req, res) => {
       return res.status(404).json({ message: 'Visit not found' })
     }
     // Update only provided fields
-    if (VistDate !== undefined) Visit.VistDate = VistDate
+    if (VisitDate !== undefined) Visit.VisitDate = VisitDate
     if (VisitStatus !== undefined) Visit.VisitStatus = VisitStatus
     if (VisitTime !== undefined) Visit.VisitTime = VisitTime
     // Save changes
