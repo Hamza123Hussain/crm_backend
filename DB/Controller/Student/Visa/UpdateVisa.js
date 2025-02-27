@@ -29,9 +29,7 @@ export const UpdateVisaDetails = async (req, res) => {
     if (InterviewPracticeDone !== undefined)
       student.VisaDetails.InterviewPracticeDone = InterviewPracticeDone
     if (DS160_UK_VISA_FORM_FILLED !== undefined)
-      student.VisaDetails['DS160/UK VISA FORM FILLED'] =
-        DS160_UK_VISA_FORM_FILLED
-
+      student.VisaDetails.VISAFORMFILLED = VISAFORMFILLED
     student.updatedAt = Date.now()
     await student.save()
 
