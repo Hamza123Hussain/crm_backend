@@ -13,7 +13,7 @@ export const UpdateOptionDetails = async (req, res) => {
 
     // Replace entire OptionDetails with new data
     student.OptionDetails = {
-      options: newOptionDetails.options || [], // Replace entire options array
+      options: newOptionDetails.options, // Replace entire options array
       optionspresented: newOptionDetails.optionspresented || false,
       optionspresentedDate: newOptionDetails.optionspresentedDate || '',
       MOIOptions: newOptionDetails.MOIOptions || false,

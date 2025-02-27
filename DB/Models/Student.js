@@ -113,12 +113,9 @@ const StudentSchema = new mongoose.Schema({
     default: ['All'], // Match the array type
   },
   OptionDetails: {
-    options: [
-      {
-        optionName: { type: String },
-        'I20/CAS Recieved': { type: Boolean },
-      },
-    ],
+    options: {
+      type: String,
+    },
     optionspresented: {
       type: Boolean,
       default: false,
