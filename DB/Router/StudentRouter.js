@@ -45,6 +45,10 @@ import { GetStudyAbroad } from '../Controller/Student/Education/GetStudyAbroadDe
 import { GetAcademicLevels } from '../Controller/Student/Education/GetAcademicLevels.js'
 import { GetuniversityDetails } from '../Controller/Student/Education/GetUniDetails.js'
 import { GetTestDetails } from '../Controller/Student/Education/GetTestDetails.js'
+import { UpdateUniversityDetails } from '../Controller/Student/Education/UpdateUniversity.js'
+import { UpdateStudyAbroad } from '../Controller/Student/Education/UpdateStudyAbroad.js'
+import { UpdateAcademicLevels } from '../Controller/Student/Education/UpdateAcademic.js'
+import { UpdateTestDetails } from '../Controller/Student/Education/UpdateTest.js'
 const StudentRouter = Router()
 // POST endpoint for user registration (without image upload)
 StudentRouter.post('/NewStudent', createStudent)
@@ -96,4 +100,9 @@ StudentRouter.get('/GetStudyAbroadDetails', GetStudyAbroad)
 StudentRouter.get('/GetAcademicLevels', GetAcademicLevels)
 StudentRouter.get('/GetUniversityDetails', GetuniversityDetails)
 StudentRouter.get('/GetTestDetails', GetTestDetails)
+StudentRouter.put('/UpdateUniversityDetails', UpdateUniversityDetails)
+StudentRouter.put('/UpdateStudyAbroad', UpdateStudyAbroad)
+StudentRouter.put('/updateAcademicLevels', UpdateAcademicLevels)
+StudentRouter.put('/UpdateTestDetails', UpdateTestDetails)
+
 export default StudentRouter
