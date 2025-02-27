@@ -41,6 +41,10 @@ import { UpdateVisit } from '../Controller/Student/Visit/UpdateVisit.js'
 import { GetAllVisits } from '../Controller/Student/Visit/GetAllVisits.js'
 import { DeleteVisit } from '../Controller/Student/Visit/DeleteVisit.js'
 import { VisitReminders } from '../Controller/Student/Reminders/VisitReminders.js'
+import { GetStudyAbroad } from '../Controller/Student/Education/GetStudyAbroadDetails.js'
+import { GetAcademicLevels } from '../Controller/Student/Education/GetAcademicLevels.js'
+import { GetuniversityDetails } from '../Controller/Student/Education/GetUniDetails.js'
+import { GetTestDetails } from '../Controller/Student/Education/GetTestDetails.js'
 const StudentRouter = Router()
 // POST endpoint for user registration (without image upload)
 StudentRouter.post('/NewStudent', createStudent)
@@ -88,4 +92,8 @@ StudentRouter.put('/UpdateVisit', UpdateVisit)
 StudentRouter.get('/GetAllVisits', GetAllVisits)
 StudentRouter.delete('/DeleteAVisit', DeleteVisit)
 StudentRouter.get('/GetVisitReminders', VisitReminders)
+StudentRouter.get('/GetStudyAbroadDetails', GetStudyAbroad)
+StudentRouter.get('/GetAcademicLevels', GetAcademicLevels)
+StudentRouter.get('/GetUniversityDetails', GetuniversityDetails)
+StudentRouter.get('/GetTestDetails', GetTestDetails)
 export default StudentRouter
