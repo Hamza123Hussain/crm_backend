@@ -19,7 +19,6 @@ export const MeetingReminders = async (req, res) => {
       },
       studentTag: Tag, // Ensure the tag is correctly applied
     }).select('name  MeetingDetails')
-
     if (!students.length) {
       return res
         .status(404)
