@@ -7,7 +7,7 @@ export const UpdateVisaDetails = async (req, res) => {
       VisaApproved,
       VisaAppointmentDate,
       InterviewPracticeDone,
-      VISAFORMFILLED,
+      VISAFORMFILLED, // Ensure correct variable name
     } = req.body
 
     // Find student
@@ -28,8 +28,10 @@ export const UpdateVisaDetails = async (req, res) => {
       student.VisaDetails.VisaAppointmentDate = VisaAppointmentDate
     if (InterviewPracticeDone !== undefined)
       student.VisaDetails.InterviewPracticeDone = InterviewPracticeDone
-    if (DS160_UK_VISA_FORM_FILLED !== undefined)
+    if (VISAFORMFILLED !== undefined)
+      // Fix: Use the correct variable name
       student.VisaDetails.VISAFORMFILLED = VISAFORMFILLED
+
     student.updatedAt = Date.now()
     await student.save()
 
