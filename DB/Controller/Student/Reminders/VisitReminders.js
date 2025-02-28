@@ -18,10 +18,26 @@ export const VisitReminders = async (req, res) => {
       },
       StudentTag: Tag,
     })
-    return res.status(200).json({
-      message: 'Visit reminders fetched successfully',
-      VisitReminders: GetVisitReminders,
+
+    // ✅ Step 4: Sort by MeetingDate (latest first), then.VisitTime (latest first)
+    GetVisitReminders.sort((a, b) => {
+      const dateA = new Date(a.VisitDate).getTime()
+      const dateB = new Date(b.VisitDate).getTime()
+
+      if (dateA !== dateB) {
+        return dateB - dateA // Sort by date (latest first)
+      }
+
+      // Convert.VisitTime (string like "14:30") to minutes
+      const [hourA, minuteA] = a.VisitTime.split(':').map(Number)
+      const [hourB, minuteB] = b.VisitTime.split(':').map(Number)
+      const timeA = hourA * 60 + minuteA
+      const timeB = hourB * 60 + minuteB
+
+      return timeA - timeB // Sort by time (latest first)
     })
+
+    return res.status(200).json(GetVisitReminders)
   } catch (error) {
     console.error('Error fetching students for Visit reminders:', error)
     return res
