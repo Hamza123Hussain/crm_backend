@@ -25,6 +25,7 @@ export const AddVisit = async (req, res) => {
       VisitDate,
       VisitTime,
       VisitStatus,
+      StudentTag: student.studentTag,
     })
     await newVisitreminder.save()
 
