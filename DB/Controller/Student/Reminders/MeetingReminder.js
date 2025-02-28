@@ -1,5 +1,4 @@
 import { MeetingReminderModel } from '../../../Models/Reminders.js'
-import { Student } from '../../../Models/Student.js'
 import { User } from '../../../Models/User.js'
 export const MeetingReminders = async (req, res) => {
   const { UserEmail } = req.query

@@ -19,10 +19,7 @@ export const CallReminders = async (req, res) => {
     const GetCallReminders = await ContactReminderModel.find({
       ContactedDate: { $gte: twoDaysAgo, $lte: endOfDay },
     })
-    return res.status(200).json({
-      message: 'Call reminders fetched successfully',
-      callReminders: GetCallReminders,
-    })
+    return res.status(200).json(GetCallReminders)
   } catch (error) {
     console.error('Error fetching call reminders:', error)
     return res
