@@ -1,3 +1,4 @@
+import mongoose from 'mongoose'
 import { VisitReminderModel } from '../../../Models/Reminders.js'
 import { Student } from '../../../Models/Student.js'
 
@@ -11,13 +12,14 @@ export const AddVisit = async (req, res) => {
     if (!student) {
       return res.status(404).json({ message: 'Student not found' })
     }
-
+    const VisitId = new mongoose.Types.ObjectId()
     // Create new Visit object for the student
-    const newVisit = { VisitDate, VisitTime, VisitStatus }
+    const newVisit = { _id: VisitId, VisitDate, VisitTime, VisitStatus }
     student.VisitDetails.push(newVisit)
     await student.save()
-
+    // Generate a new ObjectId to use for both records
     const newVisitreminder = await VisitReminderModel.create({
+      _id: VisitId,
       UserID: studentId,
       UserName: student.name,
       VisitDate,
