@@ -54,6 +54,7 @@ export const AddContactDetails = async (req, res) => {
       DiscussedWithFamily,
       LocationShared,
       ContactedTime,
+      StudentTag: student.studentTag,
     })
     await NewContactReminder.save()
     return res.status(201).json({
