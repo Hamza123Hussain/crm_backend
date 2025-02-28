@@ -1,3 +1,4 @@
+import { MeetingReminderModel } from '../../../Models/Reminders.js'
 import { Student } from '../../../Models/Student.js'
 // 🟠 Update an existing meeting
 export const UpdateMeeting = async (req, res) => {
@@ -27,6 +28,22 @@ export const UpdateMeeting = async (req, res) => {
     if (MeetingTime !== undefined) meeting.MeetingTime = MeetingTime
     // Save changes
     await student.save()
+
+    const MeetingReminderID = await MeetingReminderModel.findById(meetingId)
+    if (!meeting) {
+      return res.status(404).json({ message: 'Meeting not found' })
+    }
+    // Update only provided fields
+    if (MeetingDate !== undefined) MeetingReminderID.MeetingDate = MeetingDate
+    if (MeetingStatus !== undefined)
+      MeetingReminderID.MeetingStatus = MeetingStatus
+    if (MeetingReminder !== undefined)
+      MeetingReminderID.MeetingReminder = MeetingReminder
+    if (MeetingFeedBack !== undefined)
+      MeetingReminderID.MeetingFeedBack = MeetingFeedBack
+    if (MeetingTime !== undefined) MeetingReminderIDg.MeetingTime = MeetingTime
+    // Save changes
+    await MeetingReminderID.save()
     return res.status(200).json({
       message: 'Meeting updated successfully',
       updatedMeeting: meeting,
