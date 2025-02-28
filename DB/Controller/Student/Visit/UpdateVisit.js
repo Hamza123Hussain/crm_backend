@@ -1,3 +1,4 @@
+import { VisitReminderModel } from '../../../Models/Reminders.js'
 import { Student } from '../../../Models/Student.js'
 // 🟠 Update an existing Visit
 export const UpdateVisit = async (req, res) => {
@@ -19,6 +20,16 @@ export const UpdateVisit = async (req, res) => {
     if (VisitTime !== undefined) Visit.VisitTime = VisitTime
     // Save changes
     await student.save()
+
+    const VisitReminder = await VisitReminderModel.findById(VisitId)
+    if (!VisitReminder) {
+      return res.status(404).json({ message: 'Visit not found' })
+    }
+    if (VisitDate !== undefined) VisitReminder.VisitDate = VisitDate
+    if (VisitStatus !== undefined) VisitReminder.VisitStatus = VisitStatus
+    if (VisitTime !== undefined) VisitReminder.VisitTime = VisitTime
+    // Save changes
+    await VisitReminder.save()
     return res.status(200).json({
       message: 'Visit updated successfully',
       updatedVisit: Visit,
