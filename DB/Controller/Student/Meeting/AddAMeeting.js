@@ -1,3 +1,4 @@
+import mongoose from 'mongoose'
 import { MeetingReminderModel } from '../../../Models/Reminders.js'
 import { Student } from '../../../Models/Student.js'
 // 🟢 Add a new meeting
@@ -15,8 +16,11 @@ export const AddMeeting = async (req, res) => {
     if (!student) {
       return res.status(404).json({ message: 'Student not found' })
     }
+    // Generate a new ObjectId to use for both records
+    const MeetingId = new mongoose.Types.ObjectId()
     // Create new meeting object
     const newMeeting = {
+      _id: MeetingId,
       MeetingDate,
       MeetingStatus,
       MeetingTime,
@@ -27,8 +31,8 @@ export const AddMeeting = async (req, res) => {
     student.MeetingDetails.push(newMeeting)
     // Save the updated student document
     await student.save()
-
     const newmeetingreminder = await MeetingReminderModel.create({
+      _id: MeetingId,
       UserID: studentId,
       UserName: student.name,
       MeetingDate,
