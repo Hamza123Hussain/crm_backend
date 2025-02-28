@@ -39,7 +39,6 @@ export const MeetingReminders = async (req, res) => {
     // ✅ Step 3: Query database for meetings where MeetingDate is today
     const GetMeetingReminders = await MeetingReminderModel.find({
       MeetingDate: { $gte: startOfDay, $lte: endOfDay },
-      StudentTag: Tag,
     })
 
     return res.status(200).json(GetMeetingReminders)
