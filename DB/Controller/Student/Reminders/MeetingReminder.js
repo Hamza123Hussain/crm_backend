@@ -42,6 +42,24 @@ export const MeetingReminders = async (req, res) => {
       StudentTag: Tag,
     })
 
+    // ✅ Step 4: Sort by MeetingDate (latest first), then MeetingTime (latest first)
+    GetMeetingReminders.sort((a, b) => {
+      const dateA = new Date(a.MeetingDate).getTime()
+      const dateB = new Date(b.MeetingDate).getTime()
+
+      if (dateA !== dateB) {
+        return dateB - dateA // Sort by date (latest first)
+      }
+
+      // Convert MeetingTime (string like "14:30") to minutes
+      const [hourA, minuteA] = a.MeetingTime.split(':').map(Number)
+      const [hourB, minuteB] = b.MeetingTime.split(':').map(Number)
+      const timeA = hourA * 60 + minuteA
+      const timeB = hourB * 60 + minuteB
+
+      return timeA - timeB // Sort by time (latest first)
+    })
+
     return res.status(200).json(GetMeetingReminders)
   } catch (error) {
     console.error('Error fetching meeting reminders:', error)
