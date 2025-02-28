@@ -40,6 +40,7 @@ export const AddMeeting = async (req, res) => {
       MeetingTime,
       MeetingReminder,
       MeetingFeedBack,
+      StudentTag: student.studentTag,
     })
     await newmeetingreminder.save()
     return res.status(200).json({
