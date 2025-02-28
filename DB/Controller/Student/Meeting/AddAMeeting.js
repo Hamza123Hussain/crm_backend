@@ -1,3 +1,4 @@
+import { ReminderModel } from '../../../Models/Reminders.js'
 import { Student } from '../../../Models/Student.js'
 // 🟢 Add a new meeting
 export const AddMeeting = async (req, res) => {
@@ -24,6 +25,32 @@ export const AddMeeting = async (req, res) => {
     }
     // Add to MeetingDetails array
     student.MeetingDetails.push(newMeeting)
+    // Find the existing Reminder document or create a new one
+    let reminder = await ReminderModel.findOne({
+      'MeetingReminder.UserID': studentId,
+    })
+
+    if (!reminder) {
+      // Create a new Reminder document if it doesn't exist
+      reminder = new ReminderModel({
+        VisitReminder: [],
+        ContactReminder: [],
+        MeetingReminder: [],
+      })
+    }
+
+    // Push new visit reminder
+    reminder.MeetingReminder.push({
+      UserID: studentId,
+      UserName: student.name,
+      MeetingDate,
+      MeetingStatus,
+      MeetingTime,
+      MeetingReminder,
+      MeetingFeedBack,
+    })
+
+    await reminder.save()
     // Save the updated student document
     await student.save()
     return res.status(200).json({
