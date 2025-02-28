@@ -21,7 +21,6 @@ const MeetingReminderSchema = new mongoose.Schema({
   UserName: { type: String },
   MeetingDate: {
     type: Date,
-    required: true,
   },
   MeetingTime: {
     type: String, // Format: "HH:mm"
