@@ -11,6 +11,7 @@ const VisitReminderSchema = new mongoose.Schema({
   VisitStatus: {
     type: String,
   },
+  StudentTag: { type: String },
 })
 export const VisitReminderModel = mongoose.model(
   'VisitReminder',
@@ -37,6 +38,7 @@ const MeetingReminderSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  StudentTag: { type: String },
 })
 export const MeetingReminderModel = mongoose.model(
   'MeetingReminder',
@@ -66,6 +68,9 @@ const ContactReminderSchema = new mongoose.Schema({
   },
   LocationShared: {
     type: Boolean,
+  },
+  StudentTag: {
+    type: String,
   },
 })
 export const ContactReminderModel = mongoose.model(
