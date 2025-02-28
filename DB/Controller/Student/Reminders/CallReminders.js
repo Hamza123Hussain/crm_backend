@@ -20,6 +20,18 @@ export const CallReminders = async (req, res) => {
       ContactedDate: { $gte: twoDaysAgo, $lte: endOfDay },
       StudentTag: Tag,
     })
+    // ✅ Step 5: Sort by MeetingDate (latest first), then.ContactedTime (latest first)
+    GetCallReminders.sort((a, b) => {
+      const dateA = new Date(a.ContactedDate).getTime()
+      const dateB = new Date(b.ContactedDate).getTime()
+
+      if (dateB !== dateA) {
+        return dateA - dateB // Sort by date (latest first)
+      }
+
+      // Convert.ContactedTime (string like "14:30") to minutes
+    })
+
     return res.status(200).json(GetCallReminders)
   } catch (error) {
     console.error('Error fetching call reminders:', error)
