@@ -1,3 +1,4 @@
+import { ReminderModel } from '../../../Models/Reminders.js'
 import { Student } from '../../../Models/Student.js'
 
 export const AddContactDetails = async (req, res) => {
@@ -39,7 +40,34 @@ export const AddContactDetails = async (req, res) => {
     student.ContactDetails.push(newContact)
     student.markModified('ContactDetails') // Mark array as modified
     await student.save()
+    // Find the existing Reminder document or create a new one
+    let reminder = await ReminderModel.findOne({
+      'ContactReminder.UserID': studentId,
+    })
 
+    if (!reminder) {
+      // Create a new Reminder document if it doesn't exist
+      reminder = new ReminderModel({
+        VisitReminder: [],
+        ContactReminder: [],
+        MeetingReminder: [],
+      })
+    }
+
+    // Push new visit reminder
+    reminder.ContactReminder.push({
+      UserID: studentId,
+      UserName: student.name,
+      ContactedDate,
+      ContactReminder,
+      FollowUpMessage,
+      ResponseStatus,
+      DiscussedWithFamily,
+      LocationShared,
+      ContactedTime,
+    })
+
+    await reminder.save()
     return res.status(201).json({
       message: 'Contact record added successfully',
       contactDetails: student.ContactDetails,
