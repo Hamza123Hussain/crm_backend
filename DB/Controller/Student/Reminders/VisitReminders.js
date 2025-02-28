@@ -2,7 +2,6 @@ import { VisitReminderModel } from '../../../Models/Reminders.js'
 import { User } from '../../../Models/User.js'
 export const VisitReminders = async (req, res) => {
   const { UserEmail, Tag } = req.query
-
   // Check if the user exists
   const existingUser = await User.findOne({ Email: UserEmail })
   if (!existingUser) {
