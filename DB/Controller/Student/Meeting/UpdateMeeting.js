@@ -41,7 +41,7 @@ export const UpdateMeeting = async (req, res) => {
       MeetingReminderID.MeetingReminder = MeetingReminder
     if (MeetingFeedBack !== undefined)
       MeetingReminderID.MeetingFeedBack = MeetingFeedBack
-    if (MeetingTime !== undefined) MeetingReminderIDg.MeetingTime = MeetingTime
+    if (MeetingTime !== undefined) MeetingReminderID.MeetingTime = MeetingTime
     // Save changes
     await MeetingReminderID.save()
     return res.status(200).json({
