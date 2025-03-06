@@ -1,26 +1,22 @@
 import mongoose from 'mongoose'
 import { ContactReminderModel } from '../../../Models/Reminders.js'
 import { Student } from '../../../Models/Student.js'
-
 export const AddContactDetails = async (req, res) => {
   try {
     const { studentId } = req.query // Extract studentId from query parameters
     const {
       ContactedDate,
-      ContactReminder,
       FollowUpMessage,
       ResponseStatus,
       DiscussedWithFamily,
       LocationShared,
       ContactedTime,
     } = req.body
-
     // Check if student exists
     const student = await Student.findById(studentId)
     if (!student) {
       return res.status(404).json({ message: 'Student not found' })
     }
-
     // Initialize ContactDetails array if not present
     if (!student.ContactDetails) {
       student.ContactDetails = []
@@ -31,14 +27,12 @@ export const AddContactDetails = async (req, res) => {
     const newContact = {
       _id: contactId,
       ContactedDate: ContactedDate || null,
-      ContactReminder: ContactReminder || null,
       FollowUpMessage: FollowUpMessage || false,
       ResponseStatus: ResponseStatus || 'No Response',
       DiscussedWithFamily: DiscussedWithFamily || false,
       LocationShared: LocationShared || false,
       ContactedTime: ContactedTime | '',
     }
-
     // Add the new contact record
     student.ContactDetails.push(newContact)
     student.markModified('ContactDetails') // Mark array as modified
@@ -48,7 +42,6 @@ export const AddContactDetails = async (req, res) => {
       UserID: studentId,
       UserName: student.name,
       ContactedDate,
-      ContactReminder,
       FollowUpMessage,
       ResponseStatus,
       DiscussedWithFamily,
