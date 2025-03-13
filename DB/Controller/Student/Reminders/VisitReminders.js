@@ -10,7 +10,7 @@ export const VisitReminders = async (req, res) => {
     }
     // ✅ Step 2: Get the date exactly 2 days ago in UTC
     const currentDate = new Date()
-    currentDate.setDate(currentDate.getDate() - 2)
+    currentDate.setDate(currentDate.getDate())
     const startOfDay = new Date(
       Date.UTC(
         currentDate.getUTCFullYear(),
