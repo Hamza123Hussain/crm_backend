@@ -2,7 +2,7 @@ import { ContactReminderModel } from '../../../Models/Reminders.js'
 import { User } from '../../../Models/User.js'
 export const CallReminders = async (req, res) => {
   try {
-    const { UserEmail, Tag } = req.query // Extract UserEmail from request
+    const { UserEmail } = req.query // Extract UserEmail from request
     // ✅ Step 1: Check if the user exists
     const existingUser = await User.findOne({ Email: UserEmail })
     if (!existingUser) {
@@ -18,7 +18,6 @@ export const CallReminders = async (req, res) => {
     // ✅ Step 4: Query database for contacts where ContactedDate is exactly 2 days ago
     const GetCallReminders = await ContactReminderModel.find({
       ContactedDate: { $gte: twoDaysAgo, $lte: endOfDay },
-      StudentTag: Tag,
     })
     // ✅ Step 5: Sort by MeetingDate (latest first), then.ContactedTime (latest first)
     GetCallReminders.sort((a, b) => {
