@@ -23,7 +23,7 @@ export const MeetingReminders = async (req, res) => {
     // ✅ Step 4: Flatten meetings & filter only today's meetings
     const todayMeetings = studentsWithMeetings.flatMap(
       (
-        { _id, UserID, UserName, StudentTag, MeetingDetails, __v } // Destructure student details
+        { _id, name, StudentTag, MeetingDetails, __v } // Destructure student details
       ) =>
         // 🔹 Filter meetings to include only those scheduled for today
         MeetingDetails.filter(
@@ -40,8 +40,7 @@ export const MeetingReminders = async (req, res) => {
           }) => ({
             // 🔹 Restructure the data to create a flattened list of meetings
             _id, // Keep student ID
-            UserID, // Keep user ID
-            UserName, // Keep user name
+            name,
             MeetingDate, // Include the meeting date (already filtered for today)
             MeetingTime, // Include meeting time
             MeetingStatus, // Include meeting status (e.g., 'scheduled', 'declined')
