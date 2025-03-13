@@ -39,14 +39,13 @@ export const VisitReminders = async (req, res) => {
     })
     // ✅ Step 4: Flatten the visit data for a structured response
     const visitReminders = studentsWithVisits.flatMap(
-      ({ _id, UserID, UserName, StudentTag, VisitDetails, __v }) =>
+      ({ _id, name, StudentTag, VisitDetails, __v }) =>
         VisitDetails.filter(
           ({ VisitDate }) =>
             new Date(VisitDate) >= startOfDay && new Date(VisitDate) <= endOfDay
         ).map(({ VisitDate, VisitTime, VisitStatus }) => ({
           _id, // Student ID
-          UserID, // Unique User ID
-          UserName, // Name of the user
+          name,
           VisitDate, // The date of the visit (filtered for 2 days ago)
           VisitTime, // Visit time in HH:mm format
           VisitStatus, // Status of the visit (e.g., 'Completed', 'Pending')
