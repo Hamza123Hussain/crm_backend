@@ -3,7 +3,7 @@ import { User } from '../../../Models/User.js'
 
 export const MeetingReminders = async (req, res) => {
   try {
-    const { UserEmail, Tag } = req.query // Extract UserEmail from request
+    const { UserEmail } = req.query // Extract UserEmail from request
 
     // ✅ Step 1: Check if the user exists
     const existingUser = await User.findOne({ Email: UserEmail })
@@ -39,7 +39,6 @@ export const MeetingReminders = async (req, res) => {
     // ✅ Step 3: Query database for meetings where MeetingDate is today
     const GetMeetingReminders = await MeetingReminderModel.find({
       MeetingDate: { $gte: startOfDay, $lte: endOfDay },
-      StudentTag: Tag,
     })
 
     // ✅ Step 4: Sort by MeetingDate (latest first), then MeetingTime (latest first)
