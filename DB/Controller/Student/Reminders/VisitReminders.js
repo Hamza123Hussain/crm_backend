@@ -1,7 +1,7 @@
 import { VisitReminderModel } from '../../../Models/Reminders.js'
 import { User } from '../../../Models/User.js'
 export const VisitReminders = async (req, res) => {
-  const { UserEmail, Tag } = req.query
+  const { UserEmail } = req.query
   // Check if the user exists
   const existingUser = await User.findOne({ Email: UserEmail })
   if (!existingUser) {
@@ -16,7 +16,6 @@ export const VisitReminders = async (req, res) => {
         $gte: new Date(CureentDate.setHours(0, 0, 0, 0)), // Start of the day
         $lte: new Date(CureentDate.setHours(23, 59, 59, 999)),
       },
-      StudentTag: Tag,
     })
 
     // ✅ Step 4: Sort by MeetingDate (latest first), then.VisitTime (latest first)
