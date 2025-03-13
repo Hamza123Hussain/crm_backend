@@ -174,7 +174,6 @@ const StudentSchema = new mongoose.Schema({
       },
     },
   ],
-
   DeadlineDetails: {
     DeadlineMessageSent: {
       type: Boolean,
