@@ -40,15 +40,14 @@ export const CallReminders = async (req, res) => {
     })
     // ✅ Step 5: Flatten and filter the contact data for a structured response
     const callReminders = studentsWithContacts.flatMap(
-      ({ _id, UserID, UserName, StudentTag, ContactDetails, __v }) =>
+      ({ _id, name, StudentTag, ContactDetails, __v }) =>
         ContactDetails.filter(
           ({ ContactedDate }) =>
             new Date(ContactedDate) >= startOfDay &&
             new Date(ContactedDate) <= endOfDay
         ).map(({ ContactedDate, ContactedTime, ResponseStatus }) => ({
           _id, // Student ID
-          UserID, // Unique User ID
-          UserName, // Name of the user
+          name,
           ContactedDate, // The date the student was contacted
           ContactedTime, // Contact time in HH:mm format
           ResponseStatus, // Status of the response (e.g., 'No Response', 'Contacted')
