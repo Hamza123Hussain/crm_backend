@@ -28,6 +28,7 @@ export const UpdatePaymentList = async (req, res) => {
     student.PaymentCheckList.PaymentDone = PaymentDetails.PaymentDone
     student.PaymentCheckList.PaymentRemaining = PaymentDetails.PaymentRemaining
     student.PaymentCheckList.Discount = PaymentDetails.Discount
+    student.PaymentCheckList.DiscountedPrice = PaymentDetails.DiscountedPrice
     // Calculate the remaining payment if payment done is updated
     if (PaymentDetails.PaymentDone !== undefined) {
       const { PackagePrice, Discount, PaymentDone } = PaymentDetails
