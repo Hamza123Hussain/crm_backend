@@ -277,6 +277,7 @@ const StudentSchema = new mongoose.Schema({
     PackagePrice: { type: Number },
     PaymentDone: { type: Number },
     PaymentRemaining: { type: Number },
+    DiscountedPrice: { type: Number },
     Discount: { type: Number },
   },
 })
