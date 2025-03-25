@@ -100,14 +100,18 @@ const StudentSchema = new mongoose.Schema({
     type: [String], // Specify type as an array of strings
     enum: [
       'All',
-      'not_interested',
-      'plan_postponed',
+      'interested',
+      'Low_Budget',
+      'After_Intermedidate',
+      'After_Bachelors',
+      'Call_Later',
+      'Not_Responding',
+      'Text_Dropped',
       'next_year_intake',
-      'documents_to_send',
-      'To_Visit',
+      'plan_postponed',
+
       'document_received',
-      'To_Call',
-      'Contacted',
+
       'High_Budget',
     ],
     default: ['All'], // Match the array type
