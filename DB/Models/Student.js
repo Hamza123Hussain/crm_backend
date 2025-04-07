@@ -109,7 +109,8 @@ const StudentSchema = new mongoose.Schema({
       'Text_Dropped',
       'next_year_intake',
       'plan_postponed',
-
+      'will_visit',
+      'let_us_know',
       'document_received',
 
       'High_Budget',
