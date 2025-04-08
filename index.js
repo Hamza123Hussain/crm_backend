@@ -7,6 +7,7 @@ import OtpRouter from './DB/Router/OtpRouter.js'
 import { PORT } from './Config.js'
 import { GemniRouter } from './DB/Router/GemniRouter.js'
 import InternRouter from './DB/Router/InternRouter.js'
+import NotificationRouter from './DB/Router/NotificationRouter.js'
 const app = express()
 // Body-parser middleware to parse JSON and URL-encoded data
 app.use(express.json()) // To parse JSON bodies
@@ -22,6 +23,7 @@ app.use('/Api/Student', StudentRouter)
 app.use('/Api/Otp', OtpRouter)
 app.use('/Api/Gemni', GemniRouter)
 app.use('/Api/Intern', InternRouter)
+app.use('/Api/Notification', NotificationRouter)
 DB_CONNECTED()
 app.listen(PORT, () => {
   console.log('port is on')
