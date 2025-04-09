@@ -3,7 +3,7 @@ import { GetAllCallReminders } from '../Controller/Student/Reminders/GetCallRemi
 import { GetAllVisitReminders } from '../Controller/Student/Reminders/GetAllVisitReminders.js'
 import { GetAllMeetingReminders } from '../Controller/Student/Reminders/GetMeetingReminders.js'
 const ReminderRouter = Router()
-ReminderRouter.post('/GetCallReminders', GetAllCallReminders) // No image upload needed
-ReminderRouter.post('/GetVisitReminders', GetAllVisitReminders)
+ReminderRouter.get('/GetCallReminders', GetAllCallReminders) // No image upload needed
+ReminderRouter.get('/GetVisitReminders', GetAllVisitReminders)
 ReminderRouter.get('/GetMeetingReminders', GetAllMeetingReminders)
 export default ReminderRouter
