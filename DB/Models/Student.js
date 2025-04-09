@@ -112,7 +112,7 @@ const StudentSchema = new mongoose.Schema({
       'will_visit',
       'let_us_know',
       'document_received',
-
+      'Options Shared',
       'High_Budget',
     ],
     default: ['All'], // Match the array type
