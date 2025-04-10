@@ -161,7 +161,7 @@ const StudentSchema = new mongoose.Schema({
         { ProgressName: 'Waiting For Offer', Completion: false },
         { ProgressName: 'Offer received', Completion: false },
         { ProgressName: 'Deposit Done', Completion: false },
-        { ProgressName: 'Waiting For i20/ Cas', Completion: false },
+        { ProgressName: 'Waiting For I20/ CAS', Completion: false },
         { ProgressName: 'I20/ CAS RECEIVED', Completion: false },
         { ProgressName: 'VISA BOOKING', Completion: false },
         { ProgressName: 'VISA STATUS', Completion: false },
