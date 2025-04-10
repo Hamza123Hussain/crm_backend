@@ -145,6 +145,31 @@ const StudentSchema = new mongoose.Schema({
       default: false,
     },
   },
+  ProgressStatus: {
+    type: [
+      {
+        ProgressName: { type: String },
+        Completion: { type: Boolean, default: false },
+      },
+    ],
+    default: function () {
+      return [
+        { ProgressName: 'AwaitingDocs', Completion: false },
+        { ProgressName: 'University Selection', Completion: false },
+        { ProgressName: 'Applied To Uni', Completion: false },
+        { ProgressName: 'Waiting For Offer', Completion: false },
+        { ProgressName: 'Offer received', Completion: false },
+        { ProgressName: 'Deposit Done', Completion: false },
+        { ProgressName: 'Waiting For i20/ Cas', Completion: false },
+        { ProgressName: 'I20/ CAS RECEIVED', Completion: false },
+        { ProgressName: 'VISA BOOKING', Completion: false },
+        { ProgressName: 'VISA STATUS', Completion: false },
+        { ProgressName: 'FLIGHT BOOKING', Completion: false },
+        { ProgressName: 'CASE CLOSED', Completion: false },
+      ]
+    },
+  },
+
   VisaDetails: {
     VisaApproved: { type: Boolean },
     VisaAppointmentDate: { type: Date },
