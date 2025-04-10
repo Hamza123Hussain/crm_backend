@@ -156,6 +156,7 @@ const StudentSchema = new mongoose.Schema({
       return [
         { ProgressName: 'AwaitingDocs', Completion: false },
         { ProgressName: 'University Selection', Completion: false },
+        { ProgressName: 'Signed Up', Completion: false },
         { ProgressName: 'Applied To Uni', Completion: false },
         { ProgressName: 'Waiting For Offer', Completion: false },
         { ProgressName: 'Offer received', Completion: false },
