@@ -23,6 +23,7 @@ async function addProgressStatusToAllStudents() {
     const defaultProgressStatus = [
       { ProgressName: 'AwaitingDocs', Completion: false },
       { ProgressName: 'University Selection', Completion: false },
+      { ProgressName: 'Signed Up', Completion: false },
       { ProgressName: 'Applied To Uni', Completion: false },
       { ProgressName: 'Waiting For Offer', Completion: false },
       { ProgressName: 'Offer received', Completion: false },
@@ -38,7 +39,7 @@ async function addProgressStatusToAllStudents() {
     const result = await Student.updateMany(
       {
         $or: [
-          { ProgressStatus: { $exists: false } },
+          { ProgressStatus: { $exists: true } },
           { ProgressStatus: { $size: 0 } },
         ],
       },
