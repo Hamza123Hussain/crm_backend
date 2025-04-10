@@ -1,11 +1,10 @@
-import DummyModel from './DB/Models/Dummy.js'
-
+import { Student } from './DB/Models/Student.js'
 async function addStudentTagToAll() {
   try {
     // Update all documents to include the `studentTag` field with the default value 'NEW'
-    const result = await DummyModel.updateMany(
+    const result = await Student.updateMany(
       {}, // Empty filter object means "select all documents"
-      { $set: { studentTag: 'NEW' } } // Set the `studentTag` field to 'NEW'
+      { $set: { ProgressStatus: [{}] } } // Set the `studentTag` field to 'NEW'
     )
 
     console.log(`${result.modifiedCount} documents updated.`)
