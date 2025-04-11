@@ -18,12 +18,13 @@ export const MeetingEmail = (student, meeting) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'globalgrads.org@gmail.com',
-      pass: 'tbcj kliy paua mszb',
+      user: 'hamzahussain14.hh@gmail.com',
+      pass: 'oqhk wnvs ptsf mdse',
     },
   })
+
   const mailOptions = {
-    from: 'globalgrads.org@gmail.com',
+    from: 'hamzahussain14.hh@gmail.com',
     to: student.email,
     subject: 'Your Meeting with Global Grads is Confirmed',
     html: generateMeetingEmailHTML(
