@@ -22,7 +22,6 @@ export const MeetingEmail = (student, meeting) => {
       pass: 'tbcj kliy paua mszb',
     },
   })
-
   const mailOptions = {
     from: 'globalgrads.org@gmail.com',
     to: student.email,
