@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer'
 import { generateMeetingEmailHTML } from './DB/Controller/Student/Meeting/EmailStructure.js'
-import { MeetingAppPass, MeetingEmails } from './Config.js'
+
 export const MeetingEmail = (student, meeting) => {
   const formattedDate = new Date(meeting.MeetingDate).toLocaleDateString(
     'en-GB',
@@ -11,17 +11,20 @@ export const MeetingEmail = (student, meeting) => {
       day: 'numeric',
     }
   )
+
   const logoUrl =
     'https://globalgrads.org/wp-content/uploads/2023/09/4-e1694180342836.png'
+
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: MeetingEmails,
-      pass: MeetingAppPass,
+      user: 'globalgrads.org@gmail.com',
+      pass: 'tbcj kliy paua mszb',
     },
   })
+
   const mailOptions = {
-    from: MeetingEmails,
+    from: 'globalgrads.org@gmail.com',
     to: student.email,
     subject: 'Your Meeting with Global Grads is Confirmed',
     html: generateMeetingEmailHTML(
@@ -31,6 +34,7 @@ export const MeetingEmail = (student, meeting) => {
       formattedDate
     ),
   }
+
   transporter.sendMail(mailOptions, (err, info) => {
     if (err) {
       return console.error('❌ Error sending email:', err)
