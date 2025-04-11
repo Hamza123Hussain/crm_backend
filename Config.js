@@ -11,6 +11,8 @@ const PORT = process.env.PORT
 const user = process.env.OTP_user
 const password = process.env.OTP_pass
 const Gemni = process.env.Gemni_Api_Key
+const MeetingEmails = process.env.MeetingEmail
+const MeetingAppPass = process.env.MeetingAppPass
 export {
   PORT,
   apiKey,
@@ -18,6 +20,8 @@ export {
   projectId,
   storageBucket,
   messagingSenderId,
+  MeetingAppPass,
+  MeetingEmails,
   appId,
   Mongo_url,
   password,
