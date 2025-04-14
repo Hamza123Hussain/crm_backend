@@ -28,7 +28,10 @@ export const AddContactDetails = async (req, res) => {
       _id: contactId,
       ContactedDate: ContactedDate || null,
       FollowUpMessage: FollowUpMessage || false,
-      ResponseStatus: ResponseStatus || 'No Response',
+      ResponseStatus:
+        ResponseStatus === 'Unable To Connect'
+          ? 'Powered off'
+          : ResponseStatus || 'No Response',
       DiscussedWithFamily: DiscussedWithFamily || false,
       LocationShared: LocationShared || false,
       ContactedTime: ContactedTime | '',
