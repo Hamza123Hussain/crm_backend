@@ -50,6 +50,7 @@ import { UpdateStudyAbroad } from '../Controller/Student/Education/UpdateStudyAb
 import { UpdateAcademicLevels } from '../Controller/Student/Education/UpdateAcademic.js'
 import { UpdateTestDetails } from '../Controller/Student/Education/UpdateTest.js'
 import { UpdateStudentProgress } from '../Controller/Student/Progress/UpdateProgress.js'
+import { UpdateContactDetails } from '../Controller/Student/Contact/UpdateContact.js'
 const StudentRouter = Router()
 // POST endpoint for user registration (without image upload)
 StudentRouter.post('/NewStudent', createStudent)
@@ -106,4 +107,6 @@ StudentRouter.put('/UpdateStudyAbroad', UpdateStudyAbroad)
 StudentRouter.put('/updateAcademicLevels', UpdateAcademicLevels)
 StudentRouter.put('/UpdateTestDetails', UpdateTestDetails)
 StudentRouter.put('/UpdateStudentProgress', UpdateStudentProgress)
+StudentRouter.put('/UpdateContactDetails', UpdateContactDetails)
+
 export default StudentRouter
