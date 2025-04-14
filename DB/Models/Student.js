@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-const StudentSchema = new mongoose.Schema({
+export const StudentSchema = new mongoose.Schema({
   _id: {
     type: Number,
     required: true,
@@ -257,7 +257,7 @@ const StudentSchema = new mongoose.Schema({
       },
       ResponseStatus: {
         type: String,
-        enum: ['No Response', 'Unable To Connect', 'Contacted'],
+        enum: ['No Response', 'Unable To Connect', 'Contacted', 'Powered off'],
       },
       DiscussedWithFamily: {
         type: Boolean,
