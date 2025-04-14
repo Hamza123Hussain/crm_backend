@@ -1,7 +1,6 @@
 import mongoose from 'mongoose'
 import { MeetingReminderModel } from '../../../Models/Reminders.js'
 import { Student } from '../../../Models/Student.js'
-import { MeetingEmail } from '../../../../MeetingEmail.js'
 
 // 🟢 Add a new meeting
 export const AddMeeting = async (req, res) => {
@@ -47,8 +46,6 @@ export const AddMeeting = async (req, res) => {
     })
 
     await newReminder.save()
-
-    MeetingEmail(student, newMeeting)
 
     return res.status(200).json({
       message: 'Meeting added successfully',
