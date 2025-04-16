@@ -1,6 +1,7 @@
 import Notifications from '../../Models/Notifications.js'
 import { User } from '../../Models/User.js'
-// Utility to convert month name to index (0 = Jan, 11 = Dec)
+
+// ✅ Utility to convert month name (e.g. "April") to JavaScript month index (0 = Jan)
 const monthNameToIndex = {
   january: 0,
   february: 1,
@@ -15,45 +16,70 @@ const monthNameToIndex = {
   november: 10,
   december: 11,
 }
-// ✅ Get notifications
+
+// ✅ Controller to fetch notifications for a specific user and month
 export const GetMonthlyNotifcations = async (req, res) => {
   try {
-    // ✅ Extract the email, year, and month from the query parameters
+    // ✅ Step 1: Extract email, year, and month from query parameters
     const { UserEmail, year, month } = req.query
-    // If you want to fetch notifications for a specific user, you can uncomment below
+
+    // ✅ Step 2: Check if user with the given email exists in the database
     const existingUser = await User.findOne({ Email: UserEmail })
     if (!existingUser) {
       return res.status(404).json({ message: 'User not found' })
     }
-    // ✅ Step 2: Convert year and month
+
+    // ✅ Step 3: Convert year to integer and month name to index (0-11)
     const selectedYear = parseInt(year)
-    const selectedMonth = monthNameToIndex[month?.toLowerCase()] // convert string month to index
-    // ✅ Step 3: Validate inputs
+    const selectedMonth = monthNameToIndex[month?.toLowerCase()]
+
+    // ✅ Step 4: Validate year and month inputs
     if (isNaN(selectedYear) || selectedMonth === undefined) {
       return res.status(400).json({ message: 'Invalid year or month name' })
     }
-    // ✅ Step 4: Create date range for that month
+
+    // ✅ Step 5: Create date range (start and end of the selected month)
     const startOfMonth = new Date(selectedYear, selectedMonth, 1)
     const endOfMonth = new Date(selectedYear, selectedMonth + 1, 0, 23, 59, 59)
-    // ✅ Step 5: Fetch all notifications from the database, sorted by newest first
+
+    // ✅ Step 6: Query the database for notifications created within the date range
     const notifications = await Notifications.find({
       createdAt: {
         $gte: startOfMonth,
         $lte: endOfMonth,
       },
-    }).sort({ createdAt: -1 })
+    }).sort({ createdAt: -1 }) // Sort by most recent
 
-    // ✅ Step 6: Check if notifications exist
+    // ✅ Step 7: If no notifications are found, return 404
     if (!notifications || notifications.length === 0) {
       return res.status(404).json({ message: 'No notifications found' })
     }
 
-    // ✅ Step 7: Return the notifications
+    // ✅ Step 8: Count how many times each StudentTag appears
+    const tagCounts = {
+      NEW: 0,
+      'SIGNED UP': 0,
+      POTENTIAL: 0,
+      'Not Interested': 0,
+    }
+
+    // ✅ Loop through notifications and update tag count
+    notifications.forEach((notif) => {
+      const tag = notif.StudentTag
+      if (tagCounts.hasOwnProperty(tag)) {
+        tagCounts[tag] += 1
+      }
+    })
+
+    // ✅ Step 9: Send successful response with notifications and tag summary
     return res.status(200).json({
       message: 'Notifications fetched successfully',
-      notifications: notifications,
+      total: notifications.length,
+      tagCounts,
+      notifications,
     })
   } catch (error) {
+    // ✅ Step 10: Handle any unexpected server error
     console.error('Error fetching notifications:', error)
     return res.status(500).json({
       message: 'Server error. Please try again later.',
