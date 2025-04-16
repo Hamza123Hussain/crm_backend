@@ -11,54 +11,73 @@ export const OldStudents = new mongoose.Schema({
   },
   address: {
     type: String,
+
+    default: '',
   },
   phone: {
     type: String,
   },
   city: {
     type: String,
+    default: '',
   },
   preferredCountries: {
     type: [String], // Array of strings to store multiple countries
   },
+  lastresult: {
+    type: String,
+  },
   academicLevel1: {
     type: String,
+    default: '',
   },
   level1Marks: {
     type: String,
+    default: '',
   },
   level1Year: {
     type: String,
+    default: '',
   },
   academicLevel2: {
     type: String,
+    default: '',
   },
   level2Marks: {
     type: String,
+    default: '',
   },
   level2Year: {
     type: String,
+    default: '',
   },
   bachelorDegree: {
     type: String,
+    default: '',
   },
   bachelorCGPA: {
     type: String,
+    default: '',
   },
   bachelorYear: {
     type: String,
+    default: '',
   },
   masterDegree: {
     type: String,
+    default: '',
   },
   masterCGPA: {
     type: String,
+    default: '',
   },
   masterYear: {
     type: String,
+    default: '',
   },
   educationLevel: {
     type: String,
+    default: '',
   },
   primaryCoursePreference: {
     type: String,
@@ -71,6 +90,7 @@ export const OldStudents = new mongoose.Schema({
   },
   languageTestScore: {
     type: String,
+    default: '',
   },
   budget: {
     type: String,
@@ -80,6 +100,7 @@ export const OldStudents = new mongoose.Schema({
   },
   preferredCounselingMode: {
     type: String,
+    default: '',
   },
   heardAboutUs: {
     type: String,
@@ -141,6 +162,7 @@ export const OldStudents = new mongoose.Schema({
       default: false,
     },
   },
+  Degree: { type: String },
   ProgressStatus: {
     type: [
       {
@@ -232,6 +254,7 @@ export const OldStudents = new mongoose.Schema({
   },
   Refferal: {
     type: String,
+    default: '',
   },
   StudentVisited: {
     type: Boolean,
