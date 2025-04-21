@@ -51,6 +51,7 @@ import { UpdateAcademicLevels } from '../Controller/Student/Education/UpdateAcad
 import { UpdateTestDetails } from '../Controller/Student/Education/UpdateTest.js'
 import { UpdateStudentProgress } from '../Controller/Student/Progress/UpdateProgress.js'
 import { UpdateContactDetails } from '../Controller/Student/Contact/UpdateContact.js'
+import { UpdateNotes } from '../Controller/Student/UpdateNotes.js'
 const StudentRouter = Router()
 // POST endpoint for user registration (without image upload)
 StudentRouter.post('/NewStudent', createStudent)
