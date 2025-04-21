@@ -114,6 +114,7 @@ export const StudentSchema = new mongoose.Schema({
       'document_received',
       'Options Shared',
       'High_Budget',
+      'Competitor Gain',
     ],
     default: ['All'], // Match the array type
   },
