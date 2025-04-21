@@ -108,5 +108,5 @@ StudentRouter.put('/updateAcademicLevels', UpdateAcademicLevels)
 StudentRouter.put('/UpdateTestDetails', UpdateTestDetails)
 StudentRouter.put('/UpdateStudentProgress', UpdateStudentProgress)
 StudentRouter.put('/UpdateContactDetails', UpdateContactDetails)
-
+StudentRouter.put('/UpdateStudentNotes', UpdateNotes)
 export default StudentRouter
