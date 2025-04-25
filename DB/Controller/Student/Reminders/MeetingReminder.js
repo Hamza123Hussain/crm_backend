@@ -1,36 +1,44 @@
 import { User } from '../../../Models/User.js'
-import { Student } from '../../../Models/Student.js' // Assuming meetings are stored in Student model
+import { Student } from '../../../Models/Student.js'
+
 export const MeetingReminders = async (req, res) => {
   try {
     const { UserEmail } = req.query
-    // ✅ Step 1: Validate User Existence
+
+    // ✅ Step 1: Validate User
     const existingUser = await User.findOne({ Email: UserEmail })
-    if (!existingUser)
+    if (!existingUser) {
       return res.status(404).json({ message: 'User not found' })
-    // ✅ Step 2: Get today's UTC start & end time
-    const today = new Date()
-    const [year, month, day] = [
-      today.getUTCFullYear(),
-      today.getUTCMonth(),
-      today.getUTCDate(),
-    ]
-    const startOfDay = new Date(Date.UTC(year, month, day, 0, 0, 0, 0))
-    const endOfDay = new Date(Date.UTC(year, month, day, 23, 59, 59, 999))
-    // ✅ Step 3: Fetch students who have meetings today
+    }
+
+    // ✅ Step 2: Calculate Start and End of Day in Pakistan Standard Time (UTC+5)
+    const now = new Date()
+    const PKT_OFFSET = 5 * 60 * 60 * 1000
+    const nowPKT = new Date(now.getTime() + PKT_OFFSET)
+
+    const year = nowPKT.getUTCFullYear()
+    const month = nowPKT.getUTCMonth()
+    const day = nowPKT.getUTCDate()
+
+    const startOfDayPKT = new Date(
+      Date.UTC(year, month, day, 0, 0, 0, 0) - PKT_OFFSET
+    )
+    const endOfDayPKT = new Date(
+      Date.UTC(year, month, day, 23, 59, 59, 999) - PKT_OFFSET
+    )
+
+    // ✅ Step 3: Find students with meetings today
     const studentsWithMeetings = await Student.find({
-      'MeetingDetails.MeetingDate': { $gte: startOfDay, $lte: endOfDay },
+      'MeetingDetails.MeetingDate': { $gte: startOfDayPKT, $lte: endOfDayPKT },
     })
-    // ✅ Step 4: Flatten meetings & filter only today's meetings
+
+    // ✅ Step 4: Flatten and filter meetings for today
     const todayMeetings = studentsWithMeetings.flatMap(
-      (
-        { _id, name, StudentTag, MeetingDetails, __v } // Destructure student details
-      ) =>
-        // 🔹 Filter meetings to include only those scheduled for today
-        MeetingDetails.filter(
-          ({ MeetingDate }) =>
-            new Date(MeetingDate) >= startOfDay &&
-            new Date(MeetingDate) <= endOfDay
-        ).map(
+      ({ _id, name, StudentTag, MeetingDetails, __v }) =>
+        MeetingDetails.filter(({ MeetingDate }) => {
+          const date = new Date(MeetingDate)
+          return date >= startOfDayPKT && date <= endOfDayPKT
+        }).map(
           ({
             MeetingDate,
             MeetingTime,
@@ -38,30 +46,31 @@ export const MeetingReminders = async (req, res) => {
             MeetingReminder,
             MeetingFeedBack,
           }) => ({
-            // 🔹 Restructure the data to create a flattened list of meetings
-            _id, // Keep student ID
+            _id,
             name,
-            MeetingDate, // Include the meeting date (already filtered for today)
-            MeetingTime, // Include meeting time
-            MeetingStatus, // Include meeting status (e.g., 'scheduled', 'declined')
-            MeetingReminder, // Include reminder status (true/false)
-            MeetingFeedBack, // Include any feedback from the meeting
-            StudentTag, // Keep student tag (e.g., 'NEW', 'FOLLOW-UP')
-            __v, // Keep version key (for MongoDB)
+            MeetingDate,
+            MeetingTime,
+            MeetingStatus,
+            MeetingReminder,
+            MeetingFeedBack,
+            StudentTag,
+            __v,
           })
         )
     )
-    // ✅ Step 5: Sort meetings by MeetingTime (earliest first)
+
+    // ✅ Step 5: Sort by MeetingTime (earliest first)
     todayMeetings.sort((a, b) => {
       const [hourA, minA] = a.MeetingTime.split(':').map(Number)
       const [hourB, minB] = b.MeetingTime.split(':').map(Number)
       return hourA * 60 + minA - (hourB * 60 + minB)
     })
+
     return res.status(200).json(todayMeetings)
   } catch (error) {
     console.error('Error fetching meeting reminders:', error)
-    return res
-      .status(500)
-      .json({ message: 'Server error. Please try again later.' })
+    return res.status(500).json({
+      message: 'Server error. Please try again later.',
+    })
   }
 }
