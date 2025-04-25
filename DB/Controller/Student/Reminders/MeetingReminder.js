@@ -1,31 +1,48 @@
 import { User } from '../../../Models/User.js'
-import { Student } from '../../../Models/Student.js' // Assuming meetings are stored in Student model
+import { Student } from '../../../Models/Student.js'
+
+// Helper to get PKT start and end time for today
+const getPakistanStartAndEndOfDay = () => {
+  const now = new Date()
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Asia/Karachi',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+
+  const parts = formatter.formatToParts(now)
+  const year = parseInt(parts.find((p) => p.type === 'year')?.value || '0', 10)
+  const month =
+    parseInt(parts.find((p) => p.type === 'month')?.value || '1', 10) - 1
+  const day = parseInt(parts.find((p) => p.type === 'day')?.value || '1', 10)
+
+  const startOfDay = new Date(Date.UTC(year, month, day, 19, 0, 0, 0)) // 00:00 PKT = 19:00 UTC (previous day)
+  const endOfDay = new Date(Date.UTC(year, month, day + 1, 18, 59, 59, 999)) // 23:59:59 PKT = 18:59:59 UTC (same day)
+
+  return { startOfDay, endOfDay }
+}
+
 export const MeetingReminders = async (req, res) => {
   try {
     const { UserEmail } = req.query
-    // ✅ Step 1: Validate User Existence
+
+    // ✅ Step 1: Validate User
     const existingUser = await User.findOne({ Email: UserEmail })
     if (!existingUser)
       return res.status(404).json({ message: 'User not found' })
-    // ✅ Step 2: Get today's UTC start & end time
-    const today = new Date()
-    const [year, month, day] = [
-      today.getUTCFullYear(),
-      today.getUTCMonth(),
-      today.getUTCDate(),
-    ]
-    const startOfDay = new Date(Date.UTC(year, month, day, 0, 0, 0, 0))
-    const endOfDay = new Date(Date.UTC(year, month, day, 23, 59, 59, 999))
-    // ✅ Step 3: Fetch students who have meetings today
+
+    // ✅ Step 2: Get PKT day boundaries
+    const { startOfDay, endOfDay } = getPakistanStartAndEndOfDay()
+
+    // ✅ Step 3: Fetch students with meetings today
     const studentsWithMeetings = await Student.find({
       'MeetingDetails.MeetingDate': { $gte: startOfDay, $lte: endOfDay },
     })
-    // ✅ Step 4: Flatten meetings & filter only today's meetings
+
+    // ✅ Step 4: Flatten & filter meetings
     const todayMeetings = studentsWithMeetings.flatMap(
-      (
-        { _id, name, StudentTag, MeetingDetails, __v } // Destructure student details
-      ) =>
-        // 🔹 Filter meetings to include only those scheduled for today
+      ({ _id, name, StudentTag, MeetingDetails, __v }) =>
         MeetingDetails.filter(
           ({ MeetingDate }) =>
             new Date(MeetingDate) >= startOfDay &&
@@ -38,25 +55,26 @@ export const MeetingReminders = async (req, res) => {
             MeetingReminder,
             MeetingFeedBack,
           }) => ({
-            // 🔹 Restructure the data to create a flattened list of meetings
-            _id, // Keep student ID
+            _id,
             name,
-            MeetingDate, // Include the meeting date (already filtered for today)
-            MeetingTime, // Include meeting time
-            MeetingStatus, // Include meeting status (e.g., 'scheduled', 'declined')
-            MeetingReminder, // Include reminder status (true/false)
-            MeetingFeedBack, // Include any feedback from the meeting
-            StudentTag, // Keep student tag (e.g., 'NEW', 'FOLLOW-UP')
-            __v, // Keep version key (for MongoDB)
+            MeetingDate,
+            MeetingTime,
+            MeetingStatus,
+            MeetingReminder,
+            MeetingFeedBack,
+            StudentTag,
+            __v,
           })
         )
     )
-    // ✅ Step 5: Sort meetings by MeetingTime (earliest first)
+
+    // ✅ Step 5: Sort by MeetingTime
     todayMeetings.sort((a, b) => {
       const [hourA, minA] = a.MeetingTime.split(':').map(Number)
       const [hourB, minB] = b.MeetingTime.split(':').map(Number)
       return hourA * 60 + minA - (hourB * 60 + minB)
     })
+
     return res.status(200).json(todayMeetings)
   } catch (error) {
     console.error('Error fetching meeting reminders:', error)
