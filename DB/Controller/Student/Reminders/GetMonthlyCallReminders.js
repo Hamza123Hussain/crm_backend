@@ -1,6 +1,6 @@
 import { ContactReminderModel } from '../../../Models/Reminders.js'
 import { User } from '../../../Models/User.js'
-// Month to index map
+// Utility to convert month name to index (0 = Jan, 11 = Dec)
 const monthNameToIndex = {
   january: 0,
   february: 1,
@@ -17,57 +17,41 @@ const monthNameToIndex = {
 }
 export const GetMonthlyCallReminders = async (req, res) => {
   try {
+    // ✅ Extract the email, year, and month from the query parameters
     const { UserEmail, year, month } = req.query
-    // Step 1: Validate User
+    // ✅ Step 1: Check if the user exists
     const existingUser = await User.findOne({ Email: UserEmail })
     if (!existingUser) {
       return res.status(404).json({ message: 'User not found' })
     }
-    // Step 2: Parse dates
+    // ✅ Step 2: Convert year and month
     const selectedYear = parseInt(year)
-    const selectedMonth = monthNameToIndex[month?.toLowerCase()]
+    const selectedMonth = monthNameToIndex[month?.toLowerCase()] // convert string month to index
+    // ✅ Step 3: Validate inputs
     if (isNaN(selectedYear) || selectedMonth === undefined) {
       return res.status(400).json({ message: 'Invalid year or month name' })
     }
+    // ✅ Step 4: Create date range for that month
     const startOfMonth = new Date(selectedYear, selectedMonth, 1)
     const endOfMonth = new Date(selectedYear, selectedMonth + 1, 0, 23, 59, 59)
-    // Step 3: Aggregate to get latest reminders by UserID + StudentTag
-    const reminders = await ContactReminderModel.aggregate([
-      {
-        $match: {
-          ContactedDate: { $gte: startOfMonth, $lte: endOfMonth },
-        },
+    // ✅ Step 5: Fetch reminders (add sort + pagination)
+    const callReminders = await ContactReminderModel.find({
+      ContactedDate: {
+        $gte: startOfMonth,
+        $lte: endOfMonth,
       },
-      {
-        $sort: {
-          ContactedDate: -1, // Sort latest first
-        },
-      },
-      {
-        $group: {
-          _id: {
-            UserID: '$UserID',
-            StudentTag: '$StudentTag',
-          },
-          latestReminder: { $first: '$$ROOT' }, // Pick latest after sorting
-        },
-      },
-      {
-        $replaceRoot: { newRoot: '$latestReminder' },
-      },
-      {
-        $sort: {
-          ContactedDate: -1, // Optional: sort final results by latest
-        },
-      },
-    ])
+    }).sort({
+      ContactedDate: 1,
+    }) // update the key as per your schema
+    //   .skip(parseInt(skip))
+    //   .limit(parseInt(limit))
     return res.status(200).json({
-      message: 'Latest contact reminders per tag fetched successfully',
-      count: reminders.length,
-      data: reminders,
+      message: 'Call reminders fetched successfully',
+      count: callReminders.length,
+      data: callReminders,
     })
   } catch (error) {
-    console.error('[GetLatestCallRemindersPerTag Error]', error)
+    console.error(`[CallReminders Error] ${error.message}`, error.stack)
     return res
       .status(500)
       .json({ message: 'Server error. Please try again later.' })
