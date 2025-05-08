@@ -1,9 +1,10 @@
+import { Notes } from '../../Models/Notes.js'
 import { User } from '../../Models/User.js'
 export const UpdateNote = async (req, res) => {
   try {
-    const { id } = req.query
+    const { id, Email } = req.query
     const updateData = req.body
-    const UserFound = await User.findOne({ Email: updateData.Email })
+    const UserFound = await User.findOne({ Email })
     if (!UserFound) {
       res.status(404).json({ Message: 'USER NOT FOUND' })
     }
