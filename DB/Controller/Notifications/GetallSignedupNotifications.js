@@ -23,6 +23,7 @@ export const GetSignedUpNotifcations = async (req, res) => {
     return res.status(200).json({
       message: 'Signed Up Notfications fetched successfully',
       total: notifications.length,
+      notifications,
     })
   } catch (error) {
     // ✅ Step 10: Handle any unexpected server error
