@@ -58,7 +58,7 @@ export const GetMonthlyNotifcations = async (req, res) => {
     // ✅ Step 8: Count how many times each StudentTag appears
     const tagCounts = {
       NEW: 0,
-      'SIGNED UP': 0,
+      'Signed Up': 0,
       POTENTIAL: 0,
       'Not Interested': 0,
     }
