@@ -9,9 +9,8 @@ export const GetAllStudents = async (req, res) => {
     //     .status(400)
     //     .json({ message: 'Only signed-up users can access this' })
     // }
-
     // Fetch all students with studentTag 'NEW'
-    const AllStudents = await (await Student.find()).reverse()
+    const AllStudents = await Student.find()
     // Check if there are any 'NEW' students
     if (AllStudents.length === 0) {
       return res.status(404).json({ message: 'No new students found' })
