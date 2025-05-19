@@ -1,14 +1,16 @@
 import Notifications from '../../Models/Notifications.js'
+import { Student } from '../../Models/Student.js'
 
 export const CreateNotification = async (req, res) => {
   const { StudentName, StudentID, StudentTag, NotificationType } = req.body
   try {
-    // Create a new notification
+    const ExisitingStudent = await Student.findOne({ _id: StudentID }) // Create a new notification
     const newNotification = new Notifications({
       StudentName,
       StudentID,
       StudentTag,
       NotificationType,
+      FormFilledOn: ExisitingStudent.createdAt,
     })
     await newNotification.save()
     res.status(201).json({
