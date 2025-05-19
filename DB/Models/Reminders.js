@@ -61,7 +61,7 @@ const ContactReminderSchema = new mongoose.Schema({
   },
   ResponseStatus: {
     type: String,
-    enum: ['No Response', 'Unable To Connect', 'Contacted'],
+    enum: ['No Response', 'Unable To Connect', 'Contacted', 'Text Dropped'],
   },
   DiscussedWithFamily: {
     type: Boolean,
