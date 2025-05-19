@@ -261,7 +261,13 @@ export const StudentSchema = new mongoose.Schema({
       },
       ResponseStatus: {
         type: String,
-        enum: ['No Response', 'Unable To Connect', 'Contacted', 'Powered off'],
+        enum: [
+          'No Response',
+          'Unable To Connect',
+          'Contacted',
+          'Powered off',
+          'Text Dropped',
+        ],
       },
       DiscussedWithFamily: {
         type: Boolean,
