@@ -1,9 +1,10 @@
 import mongoose from 'mongoose'
 import { ContactReminderModel } from '../../../Models/Reminders.js'
 import { Student } from '../../../Models/Student.js'
+
 export const AddContactDetails = async (req, res) => {
   try {
-    const { studentId } = req.query // Extract studentId from query parameters
+    const { studentId } = req.query
     const {
       ContactedDate,
       FollowUpMessage,
@@ -12,18 +13,22 @@ export const AddContactDetails = async (req, res) => {
       LocationShared,
       ContactedTime,
     } = req.body
+
     // Check if student exists
     const student = await Student.findById(studentId)
     if (!student) {
       return res.status(404).json({ message: 'Student not found' })
     }
+
     // Initialize ContactDetails array if not present
     if (!student.ContactDetails) {
       student.ContactDetails = []
     }
-    // Generate a new ObjectId to use for both records
+
+    // Generate shared ObjectId for both records
     const contactId = new mongoose.Types.ObjectId()
-    // Create a new contact record
+
+    // Create a new contact object
     const newContact = {
       _id: contactId,
       ContactedDate: ContactedDate || null,
@@ -34,13 +39,16 @@ export const AddContactDetails = async (req, res) => {
           : ResponseStatus || 'No Response',
       DiscussedWithFamily: DiscussedWithFamily || false,
       LocationShared: LocationShared || false,
-      ContactedTime: ContactedTime | '',
+      ContactedTime: ContactedTime || '',
     }
-    // Add the new contact record
+
+    // Push new contact into student record
     student.ContactDetails.push(newContact)
-    student.markModified('ContactDetails') // Mark array as modified
+    student.markModified('ContactDetails')
     await student.save()
-    const NewContactReminder = await ContactReminderModel.create({
+
+    // Create new contact reminder document
+    await ContactReminderModel.create({
       _id: contactId,
       UserID: studentId,
       UserName: student.name,
@@ -52,10 +60,10 @@ export const AddContactDetails = async (req, res) => {
       ContactedTime,
       StudentTag: student.studentTag,
     })
-    await NewContactReminder.save()
+
     return res.status(201).json({
       message: 'Contact record added successfully',
-      contactDetails: student.ContactDetails,
+      contactDetails: newContact,
     })
   } catch (error) {
     console.error('Error adding contact details:', error)
