@@ -320,5 +320,9 @@ export const StudentSchema = new mongoose.Schema({
     DiscountedPrice: { type: Number },
     Discount: { type: Number },
   },
+  ContactReminder: {
+    type: Date,
+    default: null,
+  },
 })
 export const Student = mongoose.model('Student', StudentSchema)
