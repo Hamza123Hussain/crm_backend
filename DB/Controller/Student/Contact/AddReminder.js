@@ -44,6 +44,7 @@ export const AddContactReminder = async (req, res) => {
       UserName: student.name,
       ContactedDate: ContactReminder,
       StudentTag: student.studentTag,
+      PhoneNumber: student.phone,
     })
 
     return res.status(201).json({
