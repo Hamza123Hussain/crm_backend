@@ -47,19 +47,19 @@ export const AddContactDetails = async (req, res) => {
     student.markModified('ContactDetails')
     await student.save()
 
-    // Create new contact reminder document
-    await ContactReminderModel.create({
-      _id: contactId,
-      UserID: studentId,
-      UserName: student.name,
-      ContactedDate,
-      FollowUpMessage,
-      ResponseStatus,
-      DiscussedWithFamily,
-      LocationShared,
-      ContactedTime,
-      StudentTag: student.studentTag,
-    })
+    // // Create new contact reminder document
+    // await ContactReminderModel.create({
+    //   _id: contactId,
+    //   UserID: studentId,
+    //   UserName: student.name,
+    //   ContactedDate,
+    //   FollowUpMessage,
+    //   ResponseStatus,
+    //   DiscussedWithFamily,
+    //   LocationShared,
+    //   ContactedTime,
+    //   StudentTag: student.studentTag,
+    // })
 
     return res.status(201).json({
       message: 'Contact record added successfully',

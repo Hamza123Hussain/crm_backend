@@ -20,18 +20,18 @@ export const UpdateContactDetails = async (req, res) => {
     }
     // Step 4: Save changes
     await student.save()
-    const NewContactReminder = await ContactReminderModel.create({
-      UserID: studentId,
-      UserName: student.name,
-      ContactedDate: contact.ContactedDate,
-      FollowUpMessage: contact.FollowUpMessage,
-      ResponseStatus: contact.ResponseStatus,
-      DiscussedWithFamily: contact.DiscussedWithFamily,
-      LocationShared: contact.LocationShared,
-      ContactedTime: contact.ContactedTime,
-      StudentTag: student.status[0],
-    })
-    await NewContactReminder.save()
+    // const NewContactReminder = await ContactReminderModel.create({
+    //   UserID: studentId,
+    //   UserName: student.name,
+    //   ContactedDate: contact.ContactedDate,
+    //   FollowUpMessage: contact.FollowUpMessage,
+    //   ResponseStatus: contact.ResponseStatus,
+    //   DiscussedWithFamily: contact.DiscussedWithFamily,
+    //   LocationShared: contact.LocationShared,
+    //   ContactedTime: contact.ContactedTime,
+    //   StudentTag: student.status[0],
+    // })
+    // await NewContactReminder.save()
     return res.status(200).json({
       message: 'Contact record updated successfully',
       contactDetails: student.ContactDetails,
