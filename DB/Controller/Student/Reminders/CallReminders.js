@@ -1,19 +1,15 @@
-import { Student } from '../../../Models/Student.js'
+import { ContactReminderModel } from '../../../Models/Reminders.js'
 import { User } from '../../../Models/User.js'
-
 export const CallReminders = async (req, res) => {
   try {
     const { UserEmail } = req.query // Extract UserEmail from request query
-
     // ✅ Step 1: Check if the user exists
     const existingUser = await User.findOne({ Email: UserEmail })
     if (!existingUser) {
       return res.status(404).json({ message: 'User not found' })
     }
-
     // ✅ Step 2: Get current UTC date
     const currentDate = new Date()
-
     // ✅ Step 3: Define today's UTC range: 00:00 to 23:59
     const startOfDay = new Date(
       Date.UTC(
@@ -26,7 +22,6 @@ export const CallReminders = async (req, res) => {
         0
       )
     )
-
     const endOfDay = new Date(
       Date.UTC(
         currentDate.getUTCFullYear(),
@@ -38,29 +33,10 @@ export const CallReminders = async (req, res) => {
         999
       )
     )
-
     // ✅ Step 4: Fetch students who were contacted today
-    const studentsWithContacts = await Student.find({
-      'ContactDetails.ContactedDate': { $gte: startOfDay, $lte: endOfDay },
+    const callReminders = await ContactReminderModel.find({
+      ContactedDate: { $gte: startOfDay, $lte: endOfDay },
     })
-
-    // ✅ Step 5: Flatten and filter the contact data
-    const callReminders = studentsWithContacts.flatMap(
-      ({ _id, name, StudentTag, ContactDetails, __v }) =>
-        ContactDetails.filter(
-          ({ ContactedDate }) =>
-            new Date(ContactedDate) >= startOfDay &&
-            new Date(ContactedDate) <= endOfDay
-        ).map(({ ContactedDate, ContactedTime, ResponseStatus }) => ({
-          _id, // Student ID
-          name,
-          ContactedDate,
-          ContactedTime,
-          ResponseStatus,
-          StudentTag,
-          __v,
-        }))
-    )
 
     // ✅ Step 6: Sort reminders by date and time
     callReminders.sort((a, b) => {
