@@ -66,6 +66,9 @@ const ContactReminderSchema = new mongoose.Schema({
   DiscussedWithFamily: {
     type: Boolean,
   },
+  PhoneNumber: {
+    type: Number,
+  },
   LocationShared: {
     type: Boolean,
   },
