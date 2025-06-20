@@ -1,6 +1,6 @@
-import { ContactReminderModel } from '../../../Models/Reminders.js'
+import { CallReminders } from '../../../Models/CallReminders.js'
 import { User } from '../../../Models/User.js'
-export const CallReminders = async (req, res) => {
+export const OnlyCallReminders = async (req, res) => {
   try {
     const { UserEmail } = req.query // Extract UserEmail from request query
     // ✅ Step 1: Check if the user exists
@@ -34,7 +34,7 @@ export const CallReminders = async (req, res) => {
       )
     )
     // ✅ Step 4: Fetch students who were contacted today
-    const callReminders = await ContactReminderModel.find({
+    const callReminders = await CallReminders.find({
       ContactedDate: { $gte: startOfDay, $lte: endOfDay },
     })
 
