@@ -1,6 +1,6 @@
 // controllers/Student/ContactReminderController.js
 
-import { ContactReminderModel } from '../../../Models/Reminders.js'
+import { CallReminders } from '../../../Models/CallReminders.js'
 import { Student } from '../../../Models/Student.js'
 
 /**
@@ -34,12 +34,13 @@ export const AddContactReminder = async (req, res) => {
 
     // Set the ContactReminder
     student.ContactReminder = ContactReminder
+    student.updatedAt = new Date() // This sets updatedAt to the current date and time.
 
     // Save the changes
     await student.save()
 
     // Create new contact reminder document
-    await ContactReminderModel.create({
+    await CallReminders.create({
       UserID: studentId,
       UserName: student.name,
       ContactedDate: ContactReminder,
