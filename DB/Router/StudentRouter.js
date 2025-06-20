@@ -57,6 +57,7 @@ import { UpdateLastMeeting } from '../Controller/Student/Meeting/UpdateLastMeeti
 import { GetPaymentStudents } from '../Controller/Student/GetPaymentStudents.js'
 import { AddContactReminder } from '../Controller/Student/Contact/AddReminder.js'
 import { UpdateContactReminder } from '../Controller/Student/Contact/UpdateReminder.js'
+import { GetNoCallsstudents } from '../Controller/Student/GetNoCalls&NotesStudent.js'
 const StudentRouter = Router()
 // POST endpoint for user registration (without image upload)
 StudentRouter.post('/NewStudent', createStudent)
@@ -116,6 +117,7 @@ StudentRouter.put('/UpdateStudentProgress', UpdateStudentProgress)
 StudentRouter.put('/UpdateContactDetails', UpdateContactDetails)
 StudentRouter.put('/UpdateStudentNotes', UpdateNotes)
 StudentRouter.put('/UpdateLastMeeting', UpdateLastMeeting)
+StudentRouter.get('/GetNoCallsstudents', GetNoCallsstudents)
 StudentRouter.get('/LastContactedstudents', async (req, res) => {
   try {
     const students = await getStudentsContactedTwoDaysAgo()
