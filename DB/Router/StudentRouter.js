@@ -32,7 +32,7 @@ import { DeleteVisaDetails } from '../Controller/Student/Visa/DeleteDetails.js'
 import { AddandUpdateTravelDetails } from '../Controller/Student/Travel/AddTravelDetails.js'
 import { GetTravelDetails } from '../Controller/Student/Travel/GetTravelDetails.js'
 import { DeleteTravelDetails } from '../Controller/Student/Travel/DeleteTravelDetails.js'
-import { CallReminders } from '../Controller/Student/Reminders/CallReminders.js'
+import { OnlyCallReminders } from '../Controller/Student/Reminders/CallReminders.js'
 import { MeetingReminders } from '../Controller/Student/Reminders/MeetingReminder.js'
 import { AddContactDetails } from '../Controller/Student/Contact/AddContact.js'
 import { GetContactDetails } from '../Controller/Student/Contact/GetAllContactDetailsOfStudent.js'
@@ -93,7 +93,7 @@ StudentRouter.delete('/DeleteVisaDetails', DeleteVisaDetails)
 StudentRouter.post('/Add_Update_Travel', AddandUpdateTravelDetails)
 StudentRouter.get('/GetTravelDetails', GetTravelDetails)
 StudentRouter.delete('/DeleteTravelDetails', DeleteTravelDetails)
-StudentRouter.get('/GetCallReminders', CallReminders)
+StudentRouter.get('/GetCallReminders', OnlyCallReminders)
 StudentRouter.get('/GetMeetingReminders', MeetingReminders)
 StudentRouter.get('/GetASingleContact', GetMeeting)
 StudentRouter.post('/AddAContact', AddContactDetails)
