@@ -1,4 +1,5 @@
 import { CallReminders } from '../../../Models/CallReminders.js'
+import { Student } from '../../../Models/Student.js'
 import { User } from '../../../Models/User.js'
 export const OnlyCallReminders = async (req, res) => {
   try {
@@ -34,23 +35,9 @@ export const OnlyCallReminders = async (req, res) => {
       )
     )
     // ✅ Step 4: Fetch students who were contacted today
-    const callReminders = await CallReminders.find({
-      ContactedDate: { $gte: startOfDay, $lte: endOfDay },
+    const callReminders = await Student.find({
+      ContactReminder: { $gte: startOfDay, $lte: endOfDay },
     })
-
-    // ✅ Step 6: Sort reminders by date and time
-    callReminders.sort((a, b) => {
-      const dateA = new Date(a.ContactedDate).getTime()
-      const dateB = new Date(b.ContactedDate).getTime()
-      if (dateA !== dateB) return dateB - dateA // Sort by date
-
-      const [hourA, minuteA] = a.ContactedTime.split(':').map(Number)
-      const [hourB, minuteB] = b.ContactedTime.split(':').map(Number)
-      const timeA = hourA * 60 + minuteA
-      const timeB = hourB * 60 + minuteB
-      return timeB - timeA // Sort by time
-    })
-
     return res.status(200).json(callReminders)
   } catch (error) {
     console.error('Error fetching call reminders:', error)
