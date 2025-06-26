@@ -12,6 +12,7 @@ export const AddContactDetails = async (req, res) => {
       DiscussedWithFamily,
       LocationShared,
       ContactedTime,
+      ContactText,
     } = req.body
 
     // Check if student exists
@@ -40,11 +41,13 @@ export const AddContactDetails = async (req, res) => {
       DiscussedWithFamily: DiscussedWithFamily || false,
       LocationShared: LocationShared || false,
       ContactedTime: ContactedTime || '',
+      ContactText: ContactText || '',
     }
 
     // Push new contact into student record
     student.ContactDetails.push(newContact)
     student.markModified('ContactDetails')
+
     await student.save()
 
     // Create new contact reminder document
