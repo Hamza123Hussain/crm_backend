@@ -30,6 +30,7 @@ const ContactReminderSchema = new mongoose.Schema({
   StudentTag: {
     type: String,
   },
+  UpdatedBy: { type: String, default: '' },
 })
 export const CallReminders = mongoose.model(
   'CallReminder',

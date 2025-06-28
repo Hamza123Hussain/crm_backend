@@ -7,6 +7,7 @@ const NotificationsSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }, // Notifications expires in 5 minutes (300 seconds)
   NotificationType: { type: String, required: true }, // Type of notification (e.g., "New", "Update", etc.)
   FormFilledOn: { type: Date }, // Date when the form was filled
+  UpdatedBy: { type: String, default: '' },
 })
 // Notifications Model
 const Notifications = mongoose.model('Notifications', NotificationsSchema)

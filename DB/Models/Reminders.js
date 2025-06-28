@@ -39,6 +39,7 @@ const MeetingReminderSchema = new mongoose.Schema({
     default: '',
   },
   StudentTag: { type: String },
+  UpdatedBy: { type: String, default: '' },
 })
 export const MeetingReminderModel = mongoose.model(
   'MeetingReminder',
@@ -75,6 +76,7 @@ const ContactReminderSchema = new mongoose.Schema({
   StudentTag: {
     type: String,
   },
+  UpdatedBy: { type: String, default: '' },
 })
 export const ContactReminderModel = mongoose.model(
   'ContactReminder',
