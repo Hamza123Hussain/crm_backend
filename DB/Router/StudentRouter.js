@@ -58,6 +58,7 @@ import { GetPaymentStudents } from '../Controller/Student/GetPaymentStudents.js'
 import { AddContactReminder } from '../Controller/Student/Contact/AddReminder.js'
 import { UpdateContactReminder } from '../Controller/Student/Contact/UpdateReminder.js'
 import { GetNoCallsstudents } from '../Controller/Student/GetNoCalls&NotesStudent.js'
+import { createNotificationsForRecentStudents } from '../../recentstudents.js'
 const StudentRouter = Router()
 // POST endpoint for user registration (without image upload)
 StudentRouter.post('/NewStudent', createStudent)
@@ -129,4 +130,5 @@ StudentRouter.get('/LastContactedstudents', async (req, res) => {
 StudentRouter.post('/AddContactReminder', AddContactReminder)
 StudentRouter.put('/UpdateContactReminder', UpdateContactReminder)
 StudentRouter.get('/GetPaymentStudents', GetPaymentStudents)
+StudentRouter.post('/RecentStudents', createNotificationsForRecentStudents)
 export default StudentRouter
