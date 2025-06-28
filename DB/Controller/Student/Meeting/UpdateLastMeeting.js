@@ -44,6 +44,8 @@ export const UpdateLastMeeting = async (req, res) => {
         MeetingReminderDoc.MeetingFeedBack = MeetingFeedBack
       if (MeetingTime !== undefined)
         MeetingReminderDoc.MeetingTime = MeetingTime
+
+      MeetingReminderDoc.UpdatedBy = student.updatedBy
       await MeetingReminderDoc.save()
     }
     return res.status(200).json(lastMeeting)

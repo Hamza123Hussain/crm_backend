@@ -51,6 +51,7 @@ export const CreateNotification = async (req, res) => {
       StudentID,
       StudentTag,
       NotificationType,
+      UpdatedBy: ExisitingStudent.updatedBy,
       FormFilledOn: ExisitingStudent.createdAt, // optional field referencing when form was first filled
     })
     // 💾 Save the new notification to database

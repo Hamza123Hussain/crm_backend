@@ -29,6 +29,7 @@ export const UpdateContactReminder = async (req, res) => {
       ContactedDate: ContactReminder,
       StudentTag: student.studentTag,
       PhoneNumber: student.phone,
+      UpdatedBy: student.updatedBy,
     })
     return res.status(200).json({
       message: 'ContactReminder updated successfully',

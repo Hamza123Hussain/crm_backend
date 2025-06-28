@@ -30,6 +30,7 @@ export const UpdateContactDetails = async (req, res) => {
       LocationShared: contact.LocationShared,
       ContactedTime: contact.ContactedTime,
       StudentTag: student.status[0],
+      UpdatedBy: student.updatedBy,
     })
     await NewContactReminder.save()
     return res.status(200).json({

@@ -43,6 +43,7 @@ export const AddMeeting = async (req, res) => {
       MeetingReminder,
       MeetingFeedBack,
       StudentTag: student.studentTag,
+      UpdatedBy: student.updatedBy,
     })
 
     await newReminder.save()
