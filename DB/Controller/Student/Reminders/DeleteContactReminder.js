@@ -1,13 +1,15 @@
-import { CallReminders } from '../../../Models/CallReminders.js'
+import { Student } from '../../../Models/Student.js'
 
 export const DeleteContactReminder = async (req, res) => {
   try {
-    const { reminderid } = req.query
+    const { studentid } = req.query
 
-    const ContactReminder = await CallReminders.findByIdAndDelete(reminderid)
-    if (!ContactReminder) {
-      return res.status(404).json({ message: 'ContactReminder not found' })
+    const SingleStudent = await Student.findById(studentid)
+    if (!SingleStudent) {
+      return res.status(404).json({ message: 'Student not found' })
     }
+    SingleStudent.ContactReminder = null
+    await SingleStudent.save()
 
     return res
       .status(200)
