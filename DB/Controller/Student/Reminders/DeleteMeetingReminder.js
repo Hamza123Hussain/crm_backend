@@ -2,7 +2,7 @@ import { MeetingReminderModel } from '../../../Models/Reminders.js'
 // 🔴 Delete a specific meeting
 export const DeleteMeetingReminder = async (req, res) => {
   try {
-    const { reminderid } = req.query
+    const { meetingid, studentid } = req.query
 
     const MeetingReminder = await MeetingReminderModel.findById(reminderid)
     if (!MeetingReminder) {
