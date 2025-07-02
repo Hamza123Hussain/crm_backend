@@ -2,21 +2,23 @@ import { ContactReminderModel } from '../../../Models/Reminders.js'
 import { Student } from '../../../Models/Student.js'
 export const UpdateContactDetails = async (req, res) => {
   try {
-    const { studentId, contactid } = req.query
-    const { ResponseStatus } = req.body
+    const { studentId, contactIndex } = req.query
+    const { ResponseStatus, ContactText, ContactedTime } = req.body
     // Step 1: Fetch the student
     const student = await Student.findById(studentId)
     if (!student) {
       return res.status(404).json({ message: 'Student not found' })
     }
     // Step 2: Find contact by ObjectId
-    const contact = student.ContactDetails.id(contactid)
+    const contact = student.ContactDetails[contactIndex]
     if (!contact) {
       return res.status(404).json({ message: 'Contact record not found' })
     }
     // Step 3: Update only if field is provided
     if (ResponseStatus !== undefined) {
       contact.ResponseStatus = ResponseStatus
+      contact.ContactText = ContactText
+      contact.ContactedTime = ContactedTime
     }
     // Step 4: Save changes
     await student.save()
