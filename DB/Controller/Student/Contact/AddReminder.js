@@ -5,54 +5,48 @@ import { Student } from '../../../Models/Student.js'
 
 /**
  * Adds a ContactReminder date to a student's record.
+ * If the student already has a ContactReminder, you can skip or allow overwriting.
  */
 export const AddContactReminder = async (req, res) => {
   try {
-    const { studentId, useremail } = req.query
+    const { studentId } = req.query
     const { ContactReminder } = req.body
 
+    // Validate input
     if (!ContactReminder) {
       return res
         .status(400)
         .json({ message: 'ContactReminder date is required' })
     }
 
-    // Log inputs for debugging
-    console.log(
-      `AddContactReminder called for studentId: ${studentId}, ContactReminder: ${ContactReminder}`
-    )
-
-    // Validate MongoDB ObjectId (to prevent cast errors)
-    if (!studentId.match(/^[0-9a-fA-F]{24}$/)) {
-      return res.status(400).json({ message: 'Invalid student ID format' })
-    }
-
+    // Check if student exists
     const student = await Student.findById(studentId)
     if (!student) {
       return res.status(404).json({ message: 'Student not found' })
     }
 
-    // Optional check to prevent overwrite
+    // Optional: Check if already exists
     if (student.ContactReminder) {
       return res.status(400).json({
         message: 'ContactReminder already exists. Use update endpoint.',
       })
     }
 
-    // Assign and save
-    student.ContactReminder = new Date(ContactReminder)
-    student.updatedAt = new Date()
+    // Set the ContactReminder
+    student.ContactReminder = ContactReminder
+    student.updatedAt = new Date() // This sets updatedAt to the current date and time.
 
+    // Save the changes
     await student.save()
 
-    // Create associated reminder log
+    // Create new contact reminder document
     await CallReminders.create({
       UserID: studentId,
       UserName: student.name,
-      ContactedDate: student.ContactReminder,
+      ContactedDate: ContactReminder,
       StudentTag: student.studentTag,
       PhoneNumber: student.phone,
-      UpdatedBy: useremail,
+      UpdatedBy: student.updatedBy,
     })
 
     return res.status(201).json({
@@ -60,13 +54,7 @@ export const AddContactReminder = async (req, res) => {
       contactReminder: student.ContactReminder,
     })
   } catch (error) {
-    console.error('❌ Error in AddContactReminder:', error)
-
-    // If it's a CastError, e.g., bad ObjectId
-    if (error.name === 'CastError') {
-      return res.status(400).json({ message: 'Invalid student ID' })
-    }
-
+    console.error('Error adding ContactReminder:', error)
     return res.status(500).json({ message: 'Server error. Please try again.' })
   }
 }
