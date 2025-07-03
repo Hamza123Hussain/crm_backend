@@ -70,6 +70,7 @@ export const StudentSchema = new mongoose.Schema(
         'Signed Up',
         'Potential',
         'Not Interested',
+        'Ineligible',
       ],
       default: ['All'],
     },
