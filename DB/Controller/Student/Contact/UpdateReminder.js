@@ -1,9 +1,8 @@
 import { CallReminders } from '../../../Models/CallReminders.js'
 import { Student } from '../../../Models/Student.js'
-
 export const UpdateContactReminder = async (req, res) => {
   try {
-    const { studentId } = req.query
+    const { studentId, UserEmail } = req.query
     const { ContactReminder } = req.body
     // Validate input
     if (!ContactReminder) {
@@ -18,8 +17,6 @@ export const UpdateContactReminder = async (req, res) => {
     }
     // Update the ContactReminder date
     student.ContactReminder = ContactReminder
-    student.updatedAt = new Date() // This sets updatedAt to the current date and time.
-
     // Save the changes
     await student.save()
     // Create new contact reminder document
@@ -29,7 +26,7 @@ export const UpdateContactReminder = async (req, res) => {
       ContactedDate: ContactReminder,
       StudentTag: student.studentTag,
       PhoneNumber: student.phone,
-      UpdatedBy: student.updatedBy,
+      UpdatedBy: UserEmail,
     })
     return res.status(200).json({
       message: 'ContactReminder updated successfully',
