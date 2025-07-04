@@ -1,44 +1,35 @@
 // controllers/Student/ContactReminderController.js
-
 import { CallReminders } from '../../../Models/CallReminders.js'
 import { Student } from '../../../Models/Student.js'
-
 /**
  * Adds a ContactReminder date to a student's record.
  * If the student already has a ContactReminder, you can skip or allow overwriting.
  */
 export const AddContactReminder = async (req, res) => {
   try {
-    const { studentId } = req.query
+    const { studentId, UserEmail } = req.query
     const { ContactReminder } = req.body
-
     // Validate input
     if (!ContactReminder) {
       return res
         .status(400)
         .json({ message: 'ContactReminder date is required' })
     }
-
     // Check if student exists
     const student = await Student.findById(studentId)
     if (!student) {
       return res.status(404).json({ message: 'Student not found' })
     }
-
     // Optional: Check if already exists
     if (student.ContactReminder) {
       return res.status(400).json({
         message: 'ContactReminder already exists. Use update endpoint.',
       })
     }
-
     // Set the ContactReminder
     student.ContactReminder = ContactReminder
-    student.updatedAt = new Date() // This sets updatedAt to the current date and time.
-
     // Save the changes
     await student.save()
-
     // Create new contact reminder document
     await CallReminders.create({
       UserID: studentId,
@@ -46,9 +37,8 @@ export const AddContactReminder = async (req, res) => {
       ContactedDate: ContactReminder,
       StudentTag: student.studentTag,
       PhoneNumber: student.phone,
-      UpdatedBy: student.updatedBy,
+      UpdatedBy: UserEmail,
     })
-
     return res.status(201).json({
       message: 'ContactReminder added successfully',
       contactReminder: student.ContactReminder,
