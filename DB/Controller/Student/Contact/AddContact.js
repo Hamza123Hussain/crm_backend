@@ -13,6 +13,7 @@ export const AddContactDetails = async (req, res) => {
       LocationShared,
       ContactedTime,
       ContactText,
+      username,
     } = req.body
 
     // Check if student exists
@@ -42,6 +43,7 @@ export const AddContactDetails = async (req, res) => {
       LocationShared: LocationShared || false,
       ContactedTime: ContactedTime || '',
       ContactText: ContactText || '',
+      AddedBy: username,
     }
 
     // Push new contact into student record

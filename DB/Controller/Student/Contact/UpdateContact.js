@@ -3,7 +3,7 @@ import { Student } from '../../../Models/Student.js'
 export const UpdateContactDetails = async (req, res) => {
   try {
     const { studentId, contactIndex } = req.query
-    const { ResponseStatus, ContactText, ContactedTime } = req.body
+    const { ResponseStatus, ContactText, ContactedTime, username } = req.body
     // Step 1: Fetch the student
     const student = await Student.findById(studentId)
     if (!student) {
@@ -19,6 +19,7 @@ export const UpdateContactDetails = async (req, res) => {
       contact.ResponseStatus = ResponseStatus
       contact.ContactText = ContactText
       contact.ContactedTime = ContactedTime
+      contact.AddedBy = username
     }
     // Step 4: Save changes
     await student.save()
