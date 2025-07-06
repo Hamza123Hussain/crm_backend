@@ -159,6 +159,7 @@ export const StudentSchema = new mongoose.Schema(
         DiscussedWithFamily: { type: Boolean },
         LocationShared: { type: Boolean },
         ContactText: { type: String, default: null },
+        AddedBy: { type: String, default: null },
       },
     ],
     VisitDetails: [
