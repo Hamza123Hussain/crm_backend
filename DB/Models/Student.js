@@ -44,7 +44,7 @@ export const StudentSchema = new mongoose.Schema(
     heardAboutUs: { type: String },
     studentTag: {
       type: String,
-      enum: ['NEW', 'SIGNED UP', 'POTENTIAL', 'Not Interested'],
+      enum: ['NEW', 'SIGNED UP', 'Serious', 'POTENTIAL', ``, 'Not Interested'],
       default: 'NEW',
     },
     VisitDate: { type: Date },
