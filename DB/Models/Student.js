@@ -198,6 +198,19 @@ export const StudentSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    Credentials: {
+      type: [
+        {
+          UniversityName: { type: String, default: '' },
+          UniversityLink: { type: String, default: '' },
+          CourseName: { type: String, default: '' },
+          Email: { type: String, default: '' },
+          Password: { type: String, default: '' },
+          AddedBy: { type: String, default: null },
+        },
+      ],
+      default: [],
+    },
   },
   {
     timestamps: true, // ✅ Automatically handles createdAt and updatedAt
