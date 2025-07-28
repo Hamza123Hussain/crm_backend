@@ -64,6 +64,7 @@ import { DeleteContactReminder } from '../Controller/Student/Reminders/DeleteCon
 import { AddCredentials } from '../Controller/Student/Credentials/AddCredentials.js'
 import { UpdateCredentials } from '../Controller/Student/Credentials/UpdateCredentials.js'
 import { DeleteCredentials } from '../Controller/Student/Credentials/DeleteCredentials.js'
+import { GetAStudentCredentials } from '../Controller/Student/Credentials/GetCredentials.js'
 const StudentRouter = Router()
 // POST endpoint for user registration (without image upload)
 StudentRouter.post('/NewStudent', createStudent)
@@ -141,4 +142,5 @@ StudentRouter.delete('/DeleteContactReminder', DeleteContactReminder)
 StudentRouter.post('/AddCredentials', AddCredentials)
 StudentRouter.put('/UpdateCredentials', UpdateCredentials)
 StudentRouter.delete('/DeleteCredentials', DeleteCredentials)
+StudentRouter.get('/GetStudentCredentials', GetAStudentCredentials)
 export default StudentRouter
