@@ -61,6 +61,9 @@ import { GetNoCallsstudents } from '../Controller/Student/GetNoCalls&NotesStuden
 import { createNotificationsForRecentStudents } from '../../recentstudents.js'
 import { DeleteMeetingReminder } from '../Controller/Student/Reminders/DeleteMeetingReminder.js'
 import { DeleteContactReminder } from '../Controller/Student/Reminders/DeleteContactReminder.js'
+import { AddCredentials } from '../Controller/Student/Credentials/AddCredentials.js'
+import { UpdateCredentials } from '../Controller/Student/Credentials/UpdateCredentials.js'
+import { DeleteCredentials } from '../Controller/Student/Credentials/DeleteCredentials.js'
 const StudentRouter = Router()
 // POST endpoint for user registration (without image upload)
 StudentRouter.post('/NewStudent', createStudent)
@@ -135,4 +138,7 @@ StudentRouter.get('/GetPaymentStudents', GetPaymentStudents)
 StudentRouter.post('/RecentStudents', createNotificationsForRecentStudents)
 StudentRouter.delete('/DeleteMeetingReminder', DeleteMeetingReminder)
 StudentRouter.delete('/DeleteContactReminder', DeleteContactReminder)
+StudentRouter.post('/AddCredentials', AddCredentials)
+StudentRouter.put('/UpdateCredentials', UpdateCredentials)
+StudentRouter.delete('/DeleteCredentials', DeleteCredentials)
 export default StudentRouter
