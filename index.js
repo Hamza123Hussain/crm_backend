@@ -28,6 +28,7 @@ app.use('/Api/Intern', InternRouter)
 app.use('/Api/Notification', NotificationRouter)
 app.use('/Api/Reminder', ReminderRouter)
 app.use('/Api/Notes', NotesRouter)
+
 DB_CONNECTED()
 app.listen(PORT, () => {
   console.log('port is on')

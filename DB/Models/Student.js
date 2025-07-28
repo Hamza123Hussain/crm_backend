@@ -213,7 +213,7 @@ export const StudentSchema = new mongoose.Schema(
     },
     ConsentForm: {
       type: Boolean,
-      default: false,
+      default: null,
     },
   },
   {
