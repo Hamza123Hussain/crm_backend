@@ -211,6 +211,10 @@ export const StudentSchema = new mongoose.Schema(
       ],
       default: [],
     },
+    ConsentForm: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true, // ✅ Automatically handles createdAt and updatedAt

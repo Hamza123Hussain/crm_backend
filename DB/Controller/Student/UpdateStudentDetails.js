@@ -26,6 +26,9 @@ export const UpdateStudentDetails = async (req, res) => {
       updatedFields.attestedByHEC = updateData.attestedByHEC
     if (updateData.attestedByForeignOffice !== undefined)
       updatedFields.attestedByForeignOffice = updateData.attestedByForeignOffice
+    if (updateData.ConsentForm !== undefined) {
+      updatedFields.ConsentForm = ConsentForm
+    }
     // Always update the updatedAt timestamp and updatedBy field
     updatedFields.updatedAt = Date.now()
     if (updateData.updatedBy) updatedFields.updatedBy = updateData.updatedBy
