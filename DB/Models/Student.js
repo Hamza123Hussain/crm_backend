@@ -215,10 +215,6 @@ export const StudentSchema = new mongoose.Schema(
       type: Boolean,
       default: null,
     },
-    GoogleReview: {
-      type: Boolean,
-      default: null,
-    },
   },
   {
     timestamps: true, // ✅ Automatically handles createdAt and updatedAt
