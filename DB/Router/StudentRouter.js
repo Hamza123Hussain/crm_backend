@@ -145,4 +145,5 @@ StudentRouter.put('/UpdateCredentials', UpdateCredentials)
 StudentRouter.delete('/DeleteCredentials', DeleteCredentials)
 StudentRouter.get('/GetStudentCredentials', GetAStudentCredentials)
 StudentRouter.put('/UpdateConsentForm', UpdateStudentConsentForm)
+StudentRouter.put('/UpdateGoogleReview', UpdateStudentGoogleReview)
 export default StudentRouter
