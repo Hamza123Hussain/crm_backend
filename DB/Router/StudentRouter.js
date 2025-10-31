@@ -58,7 +58,6 @@ import { GetPaymentStudents } from '../Controller/Student/GetPaymentStudents.js'
 import { AddContactReminder } from '../Controller/Student/Contact/AddReminder.js'
 import { UpdateContactReminder } from '../Controller/Student/Contact/UpdateReminder.js'
 import { GetNoCallsstudents } from '../Controller/Student/GetNoCalls&NotesStudent.js'
-import { createNotificationsForRecentStudents } from '../../recentstudents.js'
 import { DeleteMeetingReminder } from '../Controller/Student/Reminders/DeleteMeetingReminder.js'
 import { DeleteContactReminder } from '../Controller/Student/Reminders/DeleteContactReminder.js'
 import { AddCredentials } from '../Controller/Student/Credentials/AddCredentials.js'
@@ -138,7 +137,6 @@ StudentRouter.get('/LastContactedstudents', async (req, res) => {
 StudentRouter.post('/AddContactReminder', AddContactReminder)
 StudentRouter.put('/UpdateContactReminder', UpdateContactReminder)
 StudentRouter.get('/GetPaymentStudents', GetPaymentStudents)
-StudentRouter.post('/RecentStudents', createNotificationsForRecentStudents)
 StudentRouter.delete('/DeleteMeetingReminder', DeleteMeetingReminder)
 StudentRouter.delete('/DeleteContactReminder', DeleteContactReminder)
 StudentRouter.post('/AddCredentials', AddCredentials)
