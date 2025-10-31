@@ -66,6 +66,7 @@ import { DeleteCredentials } from '../Controller/Student/Credentials/DeleteCrede
 import { GetAStudentCredentials } from '../Controller/Student/Credentials/GetCredentials.js'
 import { UpdateStudentConsentForm } from '../Controller/Student/UpdateConsentForm.js'
 import { UpdateStudentGoogleReview } from '../Controller/Student/UpdateGoogleReview.js'
+import { UpdateEDULevelandcourses } from '../Controller/Student/Education/UpdateEduLevelandCourses.js'
 const StudentRouter = Router()
 // POST endpoint for user registration (without image upload)
 StudentRouter.post('/NewStudent', createStudent)
@@ -145,4 +146,5 @@ StudentRouter.delete('/DeleteCredentials', DeleteCredentials)
 StudentRouter.get('/GetStudentCredentials', GetAStudentCredentials)
 StudentRouter.put('/UpdateConsentForm', UpdateStudentConsentForm)
 StudentRouter.put('/UpdateGoogleReview', UpdateStudentGoogleReview)
+StudentRouter.put('/UpdateEduandCourses', UpdateEDULevelandcourses)
 export default StudentRouter
