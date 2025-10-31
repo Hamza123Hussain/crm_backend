@@ -8,7 +8,7 @@ export const UpdateAcademicLevels = async (req, res) => {
       new: true,
       runValidators: true,
       select:
-        'academicLevel1 level1Marks level1Year academicLevel2 level2Marks level2Year',
+        'academicLevel1 level1Marks level1Year academicLevel2 level2Marks level2Year bachelorDegree bachelorCGPA bachelorYear masterDegree masterCGPA masterYear',
     })
     if (!updatedStudent) {
       return res.status(404).json({ message: 'Student not found' })
