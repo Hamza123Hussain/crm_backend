@@ -31,6 +31,7 @@ export const StudentSchema = new mongoose.Schema(
     bachelorCGPA: { type: String },
     bachelorYear: { type: String },
     masterDegree: { type: String },
+    country: { type: String, default: '' },
     masterCGPA: { type: String },
     masterYear: { type: String },
     educationLevel: { type: String },
