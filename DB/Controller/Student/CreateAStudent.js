@@ -20,6 +20,7 @@ export const createStudent = async (req, res) => {
     name,
     email,
     address,
+    country,
     phone,
     city,
     preferredCountries,
@@ -66,6 +67,7 @@ export const createStudent = async (req, res) => {
     // Create a new student instance
     const newStudent = new Student({
       _id: uniqueId,
+      country,
       name,
       email,
       address,
@@ -110,6 +112,7 @@ export const createStudent = async (req, res) => {
       uniqueId,
       createdAt, // Adding the 'createdAt' timestamp
       name,
+      country,
       email,
       phone,
       city,
