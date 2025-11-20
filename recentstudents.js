@@ -1,38 +1,56 @@
+// createNotifications.js
+import mongoose from 'mongoose'
 import Notifications from './DB/Models/Notifications.js'
 import { Student } from './DB/Models/Student.js'
 
-export const createNotificationsForRecentStudents = async (req, res) => {
-  try {
-    // 📅 Define start date (18 June)
-    const startDate = new Date('2025-06-14T00:00:00Z') // Change year if needed
+const MONGO_URI =
+  'mongodb+srv://octtoppus1:OCTTOPPUS1@gg1208crm.dy2kw.mongodb.net/?retryWrites=true&w=majority&appName=GG1208CRM' // 🔹 replace with your DB
 
-    // 🔍 Find all students created on or after 18th June
+// 📌 Function to create notifications
+const createNotificationsForRecentStudents = async () => {
+  try {
+    console.log('📡 Connecting to database...')
+    await mongoose.connect(MONGO_URI)
+
+    // 📅 Define July date range
+    const startDate = new Date('2025-11-04T00:00:00Z')
+    const endDate = new Date('2025-11-09T23:59:59Z')
+
+    console.log('🔍 Fetching students ...')
     const students = await Student.find({
-      createdAt: { $gte: startDate },
+      createdAt: { $gte: startDate, $lte: endDate },
     })
 
     if (!students.length) {
-      return res
-        .status(404)
-        .json({ message: 'No students found since 18th June.' })
+      console.log('⚠️ No students found in July.')
+      return
     }
 
-    // 🔁 Create notifications for each student
-    for (const student of students) {
-      await Notifications.create({
-        StudentName: student.name,
-        StudentID: student._id, // Assuming _id is used as StudentID
-        StudentTag: student.studentTag,
-        NotificationType: 'New', // or "Update", based on your context
-        FormFilledOn: student.formFilledOn || student.createdAt, // Use a specific field or fallback
-      })
-    }
+    console.log(
+      `✅ Found ${students.length} students. Creating notifications...`
+    )
 
-    res.status(200).json({
-      message: `Created notifications for ${students.length} students.`,
-    })
+    // 🔁 Create notifications in parallel
+    const notifications = await Promise.all(
+      students.map((student) =>
+        Notifications.create({
+          StudentName: student.name,
+          StudentID: student._id,
+          StudentTag: student.studentTag,
+          NotificationType: 'New',
+          FormFilledOn: student.formFilledOn || student.createdAt,
+          createdAt: student.createdAt, // 👈 match notification timestamp to student
+        })
+      )
+    )
+
+    console.log(`🎉 Success! Created ${notifications.length} notifications.`)
+    process.exit(0) // ✅ Exit when done
   } catch (error) {
-    console.error('Error creating notifications:', error)
-    res.status(500).json({ error: 'Internal server error' })
+    console.error('❌ Error creating notifications:', error)
+    process.exit(1) // ❌ Exit with error
   }
 }
+
+// Run function directly
+createNotificationsForRecentStudents()
