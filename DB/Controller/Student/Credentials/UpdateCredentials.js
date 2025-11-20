@@ -3,7 +3,7 @@ import { Student } from '../../../Models/Student.js'
 export const UpdateCredentials = async (req, res) => {
   try {
     // Extract student ID and credential ID from the request query
-    const { studentId, Credentialid } = req.query
+    const { studentId, CredentialID } = req.query
 
     // Extract credential fields from the request body
     const {
@@ -23,7 +23,7 @@ export const UpdateCredentials = async (req, res) => {
 
     // Step 2: Find the specific credential by comparing ObjectId (converted to string)
     const Credential = student.Credentials.find(
-      (credential) => credential._id.toString() === Credentialid
+      (credential) => credential._id.toString() === CredentialID
     )
     if (!Credential) {
       return res.status(404).json({ message: 'Credential record not found' })
