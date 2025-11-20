@@ -11,17 +11,18 @@ export const UpdateStudentDetails = async (req, res) => {
     }
     // Prepare update object (only update provided fields)
     const updatedFields = {}
-    if (updateData.studentTag) updatedFields.studentTag = updateData.studentTag
-    if (updateData.VisitDate)
-      updatedFields.VisitDate = new Date(updateData.VisitDate)
-    if (updateData.VisitDate) updatedFields.VisitDate = updateData.VisitDate
-    if (updateData.notes) updatedFields.notes = updateData.notes
-    updatedFields.YearIntake = updateData.YearIntake
-    if (updateData.Refferal) updatedFields.Refferal = updateData.Refferal
-    if (updateData.StudentVisited !== undefined)
-      updatedFields.StudentVisited = updateData.StudentVisited
-    if (updateData.LastContacted)
-      updatedFields.LastContacted = new Date(updateData.LastContacted)
+    if (updateData.DocumentCheckList)
+      updatedFields.DocumentCheckList = updateData.DocumentCheckList
+    if (updateData.PaymentCheckList)
+      updatedFields.PaymentCheckList = updateData.PaymentCheckList
+    if (updateData.VisaDetails)
+      updatedFields.VisaDetails = updateData.VisaDetails
+    if (updateData.TravelDetails)
+      updatedFields.TravelDetails = updateData.TravelDetails
+    if (updateData.OptionDetails)
+      updatedFields.OptionDetails = updateData.OptionDetails
+    if (updateData.GoogleReview)
+      updatedFields.GoogleReview = updateData.GoogleReview
     if (updateData.attestedByHEC !== undefined)
       updatedFields.attestedByHEC = updateData.attestedByHEC
     if (updateData.attestedByForeignOffice !== undefined)
