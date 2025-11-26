@@ -9,7 +9,6 @@ import { Transaction } from '../../Models/TransactionModel.js'
 export const addTransaction = async (req, res) => {
   try {
     const {
-      studentId,
       amount,
       category,
       description,
@@ -32,7 +31,7 @@ export const addTransaction = async (req, res) => {
     }
 
     const tx = new Transaction({
-      studentId: studentId || undefined,
+      type: type,
       amount: Number(amount),
       category,
       description: description || '',
