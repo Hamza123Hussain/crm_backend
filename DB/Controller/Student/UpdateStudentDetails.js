@@ -23,12 +23,13 @@ export const UpdateStudentDetails = async (req, res) => {
       updatedFields.OptionDetails = updateData.OptionDetails
     if (updateData.GoogleReview)
       updatedFields.GoogleReview = updateData.GoogleReview
+    if (updateData.YearIntake) updatedFields.YearIntake = updateData.YearIntake
     if (updateData.attestedByHEC !== undefined)
       updatedFields.attestedByHEC = updateData.attestedByHEC
     if (updateData.attestedByForeignOffice !== undefined)
       updatedFields.attestedByForeignOffice = updateData.attestedByForeignOffice
     if (updateData.ConsentForm !== undefined) {
-      updatedFields.ConsentForm = ConsentForm
+      updatedFields.ConsentForm = updateData.ConsentForm
     }
     // Always update the updatedAt timestamp and updatedBy field
     updatedFields.updatedAt = Date.now()
