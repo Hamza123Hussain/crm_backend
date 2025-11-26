@@ -3,12 +3,6 @@ import mongoose from 'mongoose'
 
 const TransactionSchema = new mongoose.Schema(
   {
-    studentId: {
-      // optional - reference to Student._id (Number in your schema). Use Number or String based on your Student model.
-      type: Number,
-      required: false,
-      index: true,
-    },
     amount: {
       type: Number,
       required: true,
