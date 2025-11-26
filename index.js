@@ -10,6 +10,7 @@ import InternRouter from './DB/Router/InternRouter.js'
 import NotificationRouter from './DB/Router/NotificationRouter.js'
 import ReminderRouter from './DB/Router/ReminderRouter.js'
 import NotesRouter from './DB/Router/NotesRouter.js'
+import { TransactionRouter } from './DB/Router/TransactionRouter.js'
 const app = express()
 // Body-parser middleware to parse JSON and URL-encoded data
 app.use(express.json()) // To parse JSON bodies
@@ -28,7 +29,7 @@ app.use('/Api/Intern', InternRouter)
 app.use('/Api/Notification', NotificationRouter)
 app.use('/Api/Reminder', ReminderRouter)
 app.use('/Api/Notes', NotesRouter)
-
+app.use('/Api/Transaction', TransactionRouter)
 DB_CONNECTED()
 app.listen(PORT, () => {
   console.log('port is on')
