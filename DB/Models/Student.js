@@ -196,6 +196,7 @@ export const StudentSchema = new mongoose.Schema(
       Discount: { type: Number },
       CommissionReceived: { type: Boolean, default: false },
       CommissionFromUniversity: { type: Number, default: 0 },
+      UniversityName: { type: String, default: '' },
     },
     ContactReminder: {
       type: Date,
