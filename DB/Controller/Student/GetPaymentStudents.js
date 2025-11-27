@@ -1,24 +1,31 @@
 import { Student } from '../../Models/Student.js'
 import { User } from '../../Models/User.js'
+
 export const GetPaymentStudents = async (req, res) => {
   const { UserEmail } = req.query
+
   try {
+    // Find the user
     const SingleUser = await User.findOne({ Email: UserEmail })
     if (!SingleUser) {
-      return res.status(404).json({ message: 'No Found With This ID' })
+      return res.status(404).json({ message: 'User not found with this email' })
     }
-    // Fetch all students with studentTag 'NEW'
+
+    // Fetch all students where PaymentDone > 0
     const SingleStudent = await Student.find({
-      'PaymentCheckList.FirstInstallmentPaid': true,
+      'PaymentCheckList.PaymentDone': { $gt: 0 },
     })
-    // Check if there are any 'NEW' students
-    if (!SingleStudent) {
-      return res.status(404).json({ message: 'No Found With This ID' })
+
+    // Check if any students found
+    if (SingleStudent.length === 0) {
+      return res
+        .status(404)
+        .json({ message: 'No students found with payments done' })
     }
+
     // Return the found students
     return res.status(200).json(SingleStudent)
   } catch (error) {
-    // Log the error and return a generic server error response
     console.error(error)
     return res
       .status(500)
