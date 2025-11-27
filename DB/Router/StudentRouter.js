@@ -67,6 +67,7 @@ import { GetAStudentCredentials } from '../Controller/Student/Credentials/GetCre
 import { UpdateStudentConsentForm } from '../Controller/Student/UpdateConsentForm.js'
 import { UpdateStudentGoogleReview } from '../Controller/Student/UpdateGoogleReview.js'
 import { UpdateEDULevelandcourses } from '../Controller/Student/Education/UpdateEduLevelandCourses.js'
+import { GetCommissionStudents } from '../Controller/Student/GetCommisionStudents.js'
 const StudentRouter = Router()
 // POST endpoint for user registration (without image upload)
 StudentRouter.post('/NewStudent', createStudent)
@@ -147,4 +148,5 @@ StudentRouter.get('/GetStudentCredentials', GetAStudentCredentials)
 StudentRouter.put('/UpdateConsentForm', UpdateStudentConsentForm)
 StudentRouter.put('/UpdateGoogleReview', UpdateStudentGoogleReview)
 StudentRouter.put('/UpdateEduandCourses', UpdateEDULevelandcourses)
+StudentRouter.get('/GetCommissionStudents', GetCommissionStudents)
 export default StudentRouter
