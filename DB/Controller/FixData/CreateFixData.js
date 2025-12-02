@@ -12,7 +12,6 @@ export const CreateFixData = async (req, res) => {
       email,
       phone,
       country,
-      PaymentCheckList,
     })
 
     await newStudent.save()
