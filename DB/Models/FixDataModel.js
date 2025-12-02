@@ -2,7 +2,6 @@ import mongoose from 'mongoose'
 
 const FixDataSchema = new mongoose.Schema(
   {
-    studentId: { type: Number, required: true },
     name: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String, default: '' },
