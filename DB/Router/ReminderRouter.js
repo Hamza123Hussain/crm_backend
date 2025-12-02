@@ -9,6 +9,8 @@ import { GetBanglaMonthlyCallReminders } from '../Controller/Student/Reminders/B
 import { GetBanglaMonthlyMeetings } from '../Controller/Student/Reminders/GetBanglaMeetingReminders.js'
 import { GetBanglaSignedUpNotifications } from '../Controller/Student/Reminders/BanglaSignedup.js'
 import { GetBanglaMonthlyNotifcations } from '../Controller/Student/Reminders/BanglaMonthlyNotifcations.js'
+import { GetBanglaaAllCallReminders } from '../Controller/Student/Reminders/GetAllBanglaCallReminders.js'
+import { GetBanglaaAllMeetingReminders } from '../Controller/Student/Reminders/GetAllBanglaMeetingReminders.js'
 
 const ReminderRouter = Router()
 ReminderRouter.get('/GetCallReminders', GetAllCallReminders) // No image upload needed
@@ -24,4 +26,9 @@ ReminderRouter.get(
   GetBanglaMonthlyNotifcations
 )
 ReminderRouter.get('/GetBanglaSignedup', GetBanglaSignedUpNotifications)
+ReminderRouter.get('/GetAllBanglaCallReminders', GetBanglaaAllCallReminders)
+ReminderRouter.get(
+  '/GetAllBanglaaMeetingReminders',
+  GetBanglaaAllMeetingReminders
+)
 export default ReminderRouter
