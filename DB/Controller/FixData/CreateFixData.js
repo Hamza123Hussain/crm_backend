@@ -5,12 +5,6 @@ export const CreateFixData = async (req, res) => {
   try {
     const { studentId, name, email, phone, country } = req.body
 
-    // ✅ Check if student already exists
-    const existingStudent = await Student.findOne({ studentId })
-    if (existingStudent) {
-      return res.status(400).json({ message: 'Student already exists' })
-    }
-
     // ✅ Create new student
     const newStudent = new FixData({
       studentId,
