@@ -3,11 +3,10 @@ import { Student } from '../../Models/Student.js'
 
 export const CreateFixData = async (req, res) => {
   try {
-    const { studentId, name, email, phone, country } = req.body
+    const { name, email, phone, country } = req.body
 
     // ✅ Create new student
     const newStudent = new FixData({
-      studentId,
       name,
       email,
       phone,
