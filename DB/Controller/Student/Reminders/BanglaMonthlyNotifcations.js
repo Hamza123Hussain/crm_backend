@@ -1,5 +1,5 @@
-import Notifications from '../../Models/Notifications.js'
-import { User } from '../../Models/User.js'
+import Notifications from '../../../Models/Notifications.js'
+import { User } from '../../../Models/User.js'
 
 const monthNameToIndex = {
   january: 0,
