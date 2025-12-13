@@ -17,6 +17,7 @@ export const addTransaction = async (req, res) => {
       createdBy,
       meta,
       type,
+      country,
     } = req.body
 
     // basic validation
@@ -39,6 +40,7 @@ export const addTransaction = async (req, res) => {
       bankName: bankName || '',
       createdBy: createdBy || null,
       meta: meta || {},
+      country: country,
     })
 
     const saved = await tx.save()
