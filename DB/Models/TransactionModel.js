@@ -35,6 +35,7 @@ const TransactionSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    country: { type: String, default: '' },
     // optional metadata
     meta: {
       type: mongoose.Schema.Types.Mixed,
