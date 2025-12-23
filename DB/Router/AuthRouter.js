@@ -15,6 +15,6 @@ AuthRouter.get('/Signout', Signout)
 AuthRouter.post('/Reset', ResetPass)
 AuthRouter.get('/GetUser', GetUser)
 AuthRouter.get('/AllUsers', AllUsers)
-AuthRouter.post('/UpdateUser', UpdateUser) // Assuming UpdateUser doesn't require image anymore
+AuthRouter.put('/UpdateUser', UpdateUser) // Assuming UpdateUser doesn't require image anymore
 AuthRouter.delete('/DeleteUser', DeleteUser)
 export default AuthRouter
