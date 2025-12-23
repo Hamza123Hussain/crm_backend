@@ -1,5 +1,6 @@
 import { MeetingReminderModel } from '../../../Models/Reminders.js'
 import { User } from '../../../Models/User.js'
+
 // Utility to convert month name to index (0 = Jan, 11 = Dec)
 const monthNameToIndex = {
   january: 0,
@@ -15,33 +16,42 @@ const monthNameToIndex = {
   november: 10,
   december: 11,
 }
+
 export const GetMonthlyMeetings = async (req, res) => {
   try {
-    // ✅ Extract the email, year, and month from the query parameters
-    const { UserEmail, year, month } = req.query
-    // ✅ Step 1: Check if a user with the given email exists
+    const { UserEmail, year, month, email } = req.query // optional email
+
+    // Step 1: Check if user exists
     const existingUser = await User.findOne({ Email: UserEmail })
     if (!existingUser) {
       return res.status(404).json({ message: 'User not found' })
     }
-    // ✅ Step 2: Convert year and month
+
+    // Step 2: Convert year and month
     const selectedYear = parseInt(year)
-    const selectedMonth = monthNameToIndex[month?.toLowerCase()] // convert string month to index
-    // ✅ Step 3: Validate inputs
+    const selectedMonth = monthNameToIndex[month?.toLowerCase()]
     if (isNaN(selectedYear) || selectedMonth === undefined) {
       return res.status(400).json({ message: 'Invalid year or month name' })
     }
-    // ✅ Step 4: Create date range for that month
+
+    // Step 3: Create date range for the month
     const startOfMonth = new Date(selectedYear, selectedMonth, 1)
     const endOfMonth = new Date(selectedYear, selectedMonth + 1, 0, 23, 59, 59)
-    // ✅ Step 5: Find meetings in date range
-    const MeetingReminders = await MeetingReminderModel.find({
-      MeetingDate: {
-        $gte: startOfMonth,
-        $lte: endOfMonth,
-      },
-    }).sort({ MeetingDate: 1 })
-    // ✅ Step 6: Return results
+
+    // Step 4: Build dynamic query
+    const query = {
+      MeetingDate: { $gte: startOfMonth, $lte: endOfMonth },
+    }
+
+    if (email && email.trim() !== '') {
+      query.UpdatedBy = email
+    }
+
+    // Step 5: Fetch meetings
+    const MeetingReminders = await MeetingReminderModel.find(query).sort({
+      MeetingDate: 1,
+    })
+
     return res.status(200).json({
       message: 'Meeting reminders fetched successfully',
       count: MeetingReminders.length,
