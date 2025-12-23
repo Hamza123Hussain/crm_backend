@@ -35,6 +35,11 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+
+  Country: {
+    type: String,
+    default: '',
+  },
 })
 
 export const User = mongoose.model('User', UserSchema)
