@@ -23,6 +23,18 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  Role: {
+    type: String,
+    default: 'User',
+  },
+  startrange: {
+    type: Number,
+    default: 0,
+  },
+  endrange: {
+    type: Number,
+    default: 0,
+  },
 })
 
 export const User = mongoose.model('User', UserSchema)
