@@ -2,7 +2,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { User } from '../../Models/User.js'
 import { Storage } from '../../../FireBaseConfig.js'
 export const UpdateUser = async (req, res) => {
-  const { Email, JobTitle, Name } = req.body
+  const { Email, Role, Name, startrange, endrange } = req.body
   const Image = req.file // The uploaded image file
   try {
     // Check if user already exists
@@ -22,9 +22,11 @@ export const UpdateUser = async (req, res) => {
       const updatedUser = await User.findByIdAndUpdate(
         existingUser._id,
         {
-          JobTitle,
+          Role,
           Name,
           imageUrl,
+          startrange,
+          endrange,
         },
         { new: true } // Return the updated document
       )
