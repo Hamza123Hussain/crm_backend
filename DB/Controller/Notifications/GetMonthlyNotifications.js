@@ -44,7 +44,7 @@ export const GetMonthlyNotifcations = async (req, res) => {
       createdAt: { $gte: startOfMonth, $lte: endOfMonth },
     }
 
-    if (email) {
+    if (email && email.trim() !== '') {
       query.UpdatedBy = email
     }
 
