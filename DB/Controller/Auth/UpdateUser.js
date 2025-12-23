@@ -40,7 +40,7 @@ export const UpdateUser = async (req, res) => {
         return res.status(400).json({ message: 'User update failed' })
       }
     } else {
-      return res.status(400).json({ message: 'User does not exist' })
+      return res.status(404).json({ message: 'User does not exist' })
     }
   } catch (error) {
     console.error(error)
