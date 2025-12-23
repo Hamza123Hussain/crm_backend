@@ -27,6 +27,7 @@ export const UpdateUser = async (req, res) => {
           imageUrl,
           startrange,
           endrange,
+          Country,
         },
         { new: true } // Return the updated document
       )
