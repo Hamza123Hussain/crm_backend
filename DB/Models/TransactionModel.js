@@ -35,6 +35,11 @@ const TransactionSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+
+    currency: {
+      type: String,
+      default: '',
+    },
     country: { type: String, default: '' },
     // optional metadata
     meta: {
