@@ -18,7 +18,7 @@ const monthNameToIndex = {
 }
 
 // Controller to fetch notifications for a specific user and month
-export const GetMonthlyNotifications = async (req, res) => {
+export const GetMonthlyNotifcations = async (req, res) => {
   try {
     const { UserEmail, year, month, email } = req.query
 
