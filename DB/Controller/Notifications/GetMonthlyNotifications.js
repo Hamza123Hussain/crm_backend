@@ -18,7 +18,7 @@ const monthNameToIndex = {
 }
 
 // Controller to fetch notifications for a specific user and month
-export const GetMonthlyNotifcations = async (req, res) => {
+export const GetMonthlyNotifications = async (req, res) => {
   try {
     const { UserEmail, year, month, email } = req.query
 
@@ -53,10 +53,6 @@ export const GetMonthlyNotifcations = async (req, res) => {
       createdAt: -1,
     })
 
-    if (!notifications || notifications.length === 0) {
-      return res.status(404).json({ message: 'No notifications found' })
-    }
-
     // Count StudentTag occurrences
     const tagCounts = {
       NEW: 0,
@@ -72,8 +68,11 @@ export const GetMonthlyNotifcations = async (req, res) => {
       }
     })
 
+    // Return result (even if notifications array is empty)
     return res.status(200).json({
-      message: 'Notifications fetched successfully',
+      message: notifications.length
+        ? 'Notifications fetched successfully'
+        : 'No notifications found for the given filters',
       total: notifications.length,
       tagCounts,
       notifications,
