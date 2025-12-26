@@ -15,6 +15,7 @@ export const addTransaction = async (req, res) => {
       mode,
       bankName,
       createdBy,
+      currency,
       meta,
       type,
       country,
@@ -41,6 +42,7 @@ export const addTransaction = async (req, res) => {
       createdBy: createdBy || null,
       meta: meta || {},
       country: country,
+      currency,
     })
 
     const saved = await tx.save()
