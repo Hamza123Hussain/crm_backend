@@ -13,8 +13,8 @@ const createNotificationsForRecentStudents = async () => {
     await mongoose.connect(MONGO_URI)
 
     // 📅 Define July date range
-    const startDate = new Date('2025-11-04T00:00:00Z')
-    const endDate = new Date('2025-11-09T23:59:59Z')
+    const startDate = new Date('2025-12-30T03:00:00Z')
+    const endDate = new Date('2025-12-30T23:59:59Z')
 
     console.log('🔍 Fetching students ...')
     const students = await Student.find({
