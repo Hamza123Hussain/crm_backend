@@ -17,4 +17,8 @@ NotificationRouter.get('/GetSignedUpNotifications', GetSignedUpNotifcations)
 NotificationRouter.get('/GetYearlyCallReminders', GetYearlyCallReminders)
 NotificationRouter.get('/GetYearlyNotifications', GetYearlyNotifications)
 NotificationRouter.get('/GetYearlyMeetings', GetYearlyMeetings)
+NotificationRouter.get(
+  '/GetBangalMonthlyNotifications',
+  GetBanglaMonthlyNotifcations
+)
 export default NotificationRouter
