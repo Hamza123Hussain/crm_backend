@@ -7,6 +7,7 @@ import { GetSignedUpNotifcations } from '../Controller/Notifications/GetallSigne
 import { GetYearlyCallReminders } from '../Controller/Student/Reminders/GetYearlyCalls.js'
 import { GetYearlyNotifications } from '../Controller/Notifications/GetYearNotifications.js'
 import { GetYearlyMeetings } from '../Controller/Student/Reminders/GetYearlyMeetings.js'
+import { GetBanglaMonthlyNotifcations } from '../Controller/Student/Reminders/BanglaMonthlyNotifcations.js'
 
 const NotificationRouter = Router()
 NotificationRouter.post('/CreateNotification', CreateNotification)
