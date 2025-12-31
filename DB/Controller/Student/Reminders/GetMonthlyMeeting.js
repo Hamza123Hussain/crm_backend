@@ -19,7 +19,7 @@ const monthNameToIndex = {
 
 export const GetMonthlyMeetings = async (req, res) => {
   try {
-    const { UserEmail, year, month, email } = req.query // optional email
+    const { UserEmail, year, month, email, date } = req.query // optional email + date
 
     // Step 1: Check if user exists
     const existingUser = await User.findOne({ Email: UserEmail })
@@ -27,27 +27,39 @@ export const GetMonthlyMeetings = async (req, res) => {
       return res.status(404).json({ message: 'User not found' })
     }
 
-    // Step 2: Convert year and month
-    const selectedYear = parseInt(year)
-    const selectedMonth = monthNameToIndex[month?.toLowerCase()]
-    if (isNaN(selectedYear) || selectedMonth === undefined) {
-      return res.status(400).json({ message: 'Invalid year or month name' })
+    let startDate, endDate
+
+    if (date) {
+      // Step 2a: If exact date is provided, filter by that day
+      const selectedDate = new Date(date)
+      if (isNaN(selectedDate.getTime())) {
+        return res.status(400).json({ message: 'Invalid date format' })
+      }
+      startDate = new Date(selectedDate.setHours(0, 0, 0, 0))
+      endDate = new Date(selectedDate.setHours(23, 59, 59, 999))
+    } else {
+      // Step 2b: Otherwise filter by month + year
+      const selectedYear = parseInt(year)
+      const selectedMonth = monthNameToIndex[month?.toLowerCase()]
+
+      if (isNaN(selectedYear) || selectedMonth === undefined) {
+        return res.status(400).json({ message: 'Invalid year or month name' })
+      }
+
+      startDate = new Date(selectedYear, selectedMonth, 1)
+      endDate = new Date(selectedYear, selectedMonth + 1, 0, 23, 59, 59)
     }
 
-    // Step 3: Create date range for the month
-    const startOfMonth = new Date(selectedYear, selectedMonth, 1)
-    const endOfMonth = new Date(selectedYear, selectedMonth + 1, 0, 23, 59, 59)
-
-    // Step 4: Build dynamic query
+    // Step 3: Build query
     const query = {
-      MeetingDate: { $gte: startOfMonth, $lte: endOfMonth },
+      MeetingDate: { $gte: startDate, $lte: endDate },
     }
 
     if (email && email.trim() !== '') {
       query.UpdatedBy = email
     }
 
-    // Step 5: Fetch meetings
+    // Step 4: Fetch meetings
     const MeetingReminders = await MeetingReminderModel.find(query).sort({
       MeetingDate: 1,
     })
