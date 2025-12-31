@@ -26,7 +26,7 @@ const monthNameToIndex = {
 
 export const GetBanglaMonthlyMeetings = async (req, res) => {
   try {
-    const { UserEmail, year, month } = req.query
+    const { UserEmail, year, month, date } = req.query
 
     // Step 1: Check if the user exists
     const existingUser = await User.findOne({ Email: UserEmail })
@@ -34,25 +34,36 @@ export const GetBanglaMonthlyMeetings = async (req, res) => {
       return res.status(404).json({ message: 'User not found' })
     }
 
-    // Step 2: Convert year and month
-    const selectedYear = parseInt(year)
-    const selectedMonth = monthNameToIndex[month?.toLowerCase()]
+    let startDate, endDate
 
-    if (isNaN(selectedYear) || selectedMonth === undefined) {
-      return res.status(400).json({ message: 'Invalid year or month name' })
+    if (date) {
+      // Step 2a: filter by exact date
+      const selectedDate = new Date(date)
+      if (isNaN(selectedDate.getTime())) {
+        return res.status(400).json({ message: 'Invalid date format' })
+      }
+      startDate = new Date(selectedDate.setHours(0, 0, 0, 0))
+      endDate = new Date(selectedDate.setHours(23, 59, 59, 999))
+    } else {
+      // Step 2b: filter by month + year
+      const selectedYear = parseInt(year)
+      const selectedMonth = monthNameToIndex[month?.toLowerCase()]
+
+      if (isNaN(selectedYear) || selectedMonth === undefined) {
+        return res.status(400).json({ message: 'Invalid year or month name' })
+      }
+
+      startDate = new Date(selectedYear, selectedMonth, 1)
+      endDate = new Date(selectedYear, selectedMonth + 1, 0, 23, 59, 59)
     }
 
-    // Step 3: Date range
-    const startOfMonth = new Date(selectedYear, selectedMonth, 1)
-    const endOfMonth = new Date(selectedYear, selectedMonth + 1, 0, 23, 59, 59)
-
-    // Step 4: Fetch meetings WITH UpdatedBy restriction
+    // Step 3: Fetch meetings with UpdatedBy restriction
     const MeetingReminders = await MeetingReminderModel.find({
-      MeetingDate: { $gte: startOfMonth, $lte: endOfMonth },
-      UpdatedBy: { $in: allowedUpdaters }, // <--- ADDED FILTER
+      MeetingDate: { $gte: startDate, $lte: endDate },
+      UpdatedBy: { $in: allowedUpdaters },
     }).sort({ MeetingDate: 1 })
 
-    // Step 5: Response
+    // Step 4: Response
     return res.status(200).json({
       message: 'Meeting reminders fetched successfully',
       count: MeetingReminders.length,
