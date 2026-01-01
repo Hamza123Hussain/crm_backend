@@ -16,11 +16,19 @@ const monthNameToIndex = {
   december: 11,
 }
 
+// Allowed UpdatedBy users to EXCLUDE
+const allowedUpdaters = [
+  'nijhum.jan24@gmail.com',
+  'fahadpccl@gmail.com',
+  'meem741@gmail.com',
+  '',
+]
+
 export const GetMonthlyCallReminders = async (req, res) => {
   try {
     const { UserEmail, year, month, email, date } = req.query
 
-    // Step 1: Check if the user exists
+    // Step 1: Check if user exists
     const existingUser = await User.findOne({ Email: UserEmail })
     if (!existingUser) {
       return res.status(404).json({ message: 'User not found' })
@@ -29,7 +37,7 @@ export const GetMonthlyCallReminders = async (req, res) => {
     let startDate, endDate
 
     if (date) {
-      // Step 2a: If exact date is provided, filter by that day
+      // Filter by exact date
       const selectedDate = new Date(date)
       if (isNaN(selectedDate.getTime())) {
         return res.status(400).json({ message: 'Invalid date format' })
@@ -37,14 +45,12 @@ export const GetMonthlyCallReminders = async (req, res) => {
       startDate = new Date(selectedDate.setHours(0, 0, 0, 0))
       endDate = new Date(selectedDate.setHours(23, 59, 59, 999))
     } else {
-      // Step 2b: Otherwise filter by month + year
+      // Filter by month & year
       const selectedYear = parseInt(year)
       const selectedMonth = monthNameToIndex[month?.toLowerCase()]
-
       if (isNaN(selectedYear) || selectedMonth === undefined) {
         return res.status(400).json({ message: 'Invalid year or month name' })
       }
-
       startDate = new Date(selectedYear, selectedMonth, 1)
       endDate = new Date(selectedYear, selectedMonth + 1, 0, 23, 59, 59)
     }
@@ -52,9 +58,11 @@ export const GetMonthlyCallReminders = async (req, res) => {
     // Step 3: Build query
     const query = {
       ContactedDate: { $gte: startDate, $lte: endDate },
+      UpdatedBy: { $nin: allowedUpdaters }, // 🚨 Exclude these users
     }
 
     if (email && email.trim() !== '') {
+      // When filtering specifically by email, override exclusion
       query.UpdatedBy = email
     }
 
