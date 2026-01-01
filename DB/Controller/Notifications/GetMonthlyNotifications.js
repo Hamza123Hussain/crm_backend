@@ -1,7 +1,7 @@
 import Notifications from '../../Models/Notifications.js'
 import { User } from '../../Models/User.js'
 
-// Utility to convert month name to JS month index
+// Convert month names → JS index
 const monthNameToIndex = {
   january: 0,
   february: 1,
@@ -17,43 +17,50 @@ const monthNameToIndex = {
   december: 11,
 }
 
-// Controller to fetch notifications for a specific user and month
+// Users whose notifications should be excluded
+const excludedUpdaters = [
+  'nijhum.jan24@gmail.com',
+  'fahadpccl@gmail.com',
+  'meem741@gmail.com',
+  '',
+]
+
 export const GetMonthlyNotifcations = async (req, res) => {
   try {
     const { UserEmail, year, month, email } = req.query
 
-    // Check if user exists
+    // Validate user
     const existingUser = await User.findOne({ Email: UserEmail })
-    if (!existingUser) {
+    if (!existingUser)
       return res.status(404).json({ message: 'User not found' })
-    }
 
-    // Parse year and month
+    // Validate month + year
     const selectedYear = parseInt(year)
     const selectedMonth = monthNameToIndex[month?.toLowerCase()]
-
     if (isNaN(selectedYear) || selectedMonth === undefined) {
       return res.status(400).json({ message: 'Invalid year or month name' })
     }
 
+    // Date range for filtering
     const startOfMonth = new Date(selectedYear, selectedMonth, 1)
     const endOfMonth = new Date(selectedYear, selectedMonth + 1, 0, 23, 59, 59)
 
-    // Build query dynamically
+    // Build query
     const query = {
       createdAt: { $gte: startOfMonth, $lte: endOfMonth },
+      UpdatedBy: { $nin: excludedUpdaters }, // Exclude notifications updated by "blocked" users
     }
 
+    // If filtering a specific staff email – override exclusion & show only that user
     if (email && email.trim() !== '') {
-      query.UpdatedBy = email
+      query.UpdatedBy = email.trim()
     }
 
-    // Fetch notifications
     const notifications = await Notifications.find(query).sort({
       createdAt: -1,
     })
 
-    // Count StudentTag occurrences
+    // Count tag occurrences
     const tagCounts = {
       NEW: 0,
       'Signed Up': 0,
@@ -62,25 +69,24 @@ export const GetMonthlyNotifcations = async (req, res) => {
     }
 
     notifications.forEach((notif) => {
-      const tag = notif.StudentTag
-      if (tagCounts.hasOwnProperty(tag)) {
-        tagCounts[tag] += 1
+      if (tagCounts[notif.StudentTag] !== undefined) {
+        tagCounts[notif.StudentTag]++
       }
     })
 
-    // Return result (even if notifications array is empty)
     return res.status(200).json({
-      message: notifications.length
-        ? 'Notifications fetched successfully'
-        : 'No notifications found for the given filters',
+      message:
+        notifications.length > 0
+          ? 'Notifications fetched successfully'
+          : 'No notifications found',
       total: notifications.length,
       tagCounts,
       notifications,
     })
   } catch (error) {
     console.error('Error fetching notifications:', error)
-    return res.status(500).json({
-      message: 'Server error. Please try again later.',
-    })
+    return res
+      .status(500)
+      .json({ message: 'Server error. Please try again later.' })
   }
 }
