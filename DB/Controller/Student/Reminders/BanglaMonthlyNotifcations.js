@@ -25,23 +25,36 @@ const allowedUpdaters = [
 
 export const GetBanglaMonthlyNotifcations = async (req, res) => {
   try {
-    const { UserEmail, year, month } = req.query
+    const { UserEmail, year, month, date } = req.query
 
     const existingUser = await User.findOne({ Email: UserEmail })
     if (!existingUser)
       return res.status(404).json({ message: 'User not found' })
 
-    const selectedYear = parseInt(year)
-    const selectedMonth = monthNameToIndex[month?.toLowerCase()]
-    if (isNaN(selectedYear) || selectedMonth === undefined)
-      return res.status(400).json({ message: 'Invalid year or month name' })
+    let startDate, endDate
 
-    const startOfMonth = new Date(selectedYear, selectedMonth, 1)
-    const endOfMonth = new Date(selectedYear, selectedMonth + 1, 0, 23, 59, 59)
+    if (date) {
+      // If exact date is provided
+      const selectedDate = new Date(date)
+      if (isNaN(selectedDate.getTime())) {
+        return res.status(400).json({ message: 'Invalid date format' })
+      }
+      startDate = new Date(selectedDate.setHours(0, 0, 0, 0))
+      endDate = new Date(selectedDate.setHours(23, 59, 59, 999))
+    } else {
+      // Filter by month + year
+      const selectedYear = parseInt(year)
+      const selectedMonth = monthNameToIndex[month?.toLowerCase()]
+      if (isNaN(selectedYear) || selectedMonth === undefined) {
+        return res.status(400).json({ message: 'Invalid year or month name' })
+      }
+      startDate = new Date(selectedYear, selectedMonth, 1)
+      endDate = new Date(selectedYear, selectedMonth + 1, 0, 23, 59, 59)
+    }
 
-    // ✅ Filter by UpdatedBy
+    // Fetch notifications for allowed updaters within date range
     const notifications = await Notifications.find({
-      createdAt: { $gte: startOfMonth, $lte: endOfMonth },
+      createdAt: { $gte: startDate, $lte: endDate },
       UpdatedBy: { $in: allowedUpdaters },
     }).sort({ createdAt: -1 })
 
@@ -54,6 +67,7 @@ export const GetBanglaMonthlyNotifcations = async (req, res) => {
       POTENTIAL: 0,
       'Not Interested': 0,
     }
+
     notifications.forEach((notif) => {
       const tag = notif.StudentTag
       if (tagCounts.hasOwnProperty(tag)) tagCounts[tag] += 1
