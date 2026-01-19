@@ -27,6 +27,7 @@ export const addTask = async (req, res) => {
       dueDate,
       createdBy,
       email,
+      completed1: false,
     })
 
     return res.status(201).json({
