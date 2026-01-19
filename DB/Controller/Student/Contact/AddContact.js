@@ -64,7 +64,7 @@ export const AddContactDetails = async (req, res) => {
       LocationShared,
       ContactedTime,
       StudentTag: student.studentTag,
-      UpdatedBy: student.updatedBy,
+      UpdatedBy: username,
     })
 
     return res.status(201).json({
