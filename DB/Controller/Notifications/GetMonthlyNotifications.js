@@ -27,27 +27,39 @@ const excludedUpdaters = [
 
 export const GetMonthlyNotifcations = async (req, res) => {
   try {
-    const { UserEmail, year, month, email } = req.query
+    const { UserEmail, year, month, email, date } = req.query
 
     // Validate user
     const existingUser = await User.findOne({ Email: UserEmail })
     if (!existingUser)
       return res.status(404).json({ message: 'User not found' })
 
-    // Validate month + year
-    const selectedYear = parseInt(year)
-    const selectedMonth = monthNameToIndex[month?.toLowerCase()]
-    if (isNaN(selectedYear) || selectedMonth === undefined) {
-      return res.status(400).json({ message: 'Invalid year or month name' })
-    }
+    let startDate, endDate
 
-    // Date range for filtering
-    const startOfMonth = new Date(selectedYear, selectedMonth, 1)
-    const endOfMonth = new Date(selectedYear, selectedMonth + 1, 0, 23, 59, 59)
+    if (date) {
+      // If exact date is provided, filter by that day
+      const selectedDate = new Date(date)
+      if (isNaN(selectedDate.getTime())) {
+        return res.status(400).json({ message: 'Invalid date format' })
+      }
+      startDate = new Date(selectedDate.setHours(0, 0, 0, 0))
+      endDate = new Date(selectedDate.setHours(23, 59, 59, 999))
+    } else {
+      // Otherwise filter by month + year
+      const selectedYear = parseInt(year)
+      const selectedMonth = monthNameToIndex[month?.toLowerCase()]
+
+      if (isNaN(selectedYear) || selectedMonth === undefined) {
+        return res.status(400).json({ message: 'Invalid year or month name' })
+      }
+
+      startDate = new Date(selectedYear, selectedMonth, 1)
+      endDate = new Date(selectedYear, selectedMonth + 1, 0, 23, 59, 59)
+    }
 
     // Build query
     const query = {
-      createdAt: { $gte: startOfMonth, $lte: endOfMonth },
+      createdAt: { $gte: startDate, $lte: endDate },
       UpdatedBy: { $nin: excludedUpdaters }, // Exclude notifications updated by "blocked" users
     }
 
