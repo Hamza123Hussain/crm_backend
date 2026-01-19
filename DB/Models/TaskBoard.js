@@ -1,10 +1,52 @@
 import mongoose from 'mongoose'
 
-const TaskSchema = new mongoose.Schema({
-  description: { type: String, required: true },
-  createdBy: { type: String, required: true },
-  email: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
-})
+const TaskSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
 
-export default mongoose.models.Task || mongoose.model('Task', TaskSchema)
+      trim: true,
+    },
+
+    description: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    assignedTo: {
+      type: String,
+    },
+
+    priority: {
+      type: String,
+      enum: ['Low', 'Medium', 'High'],
+      default: 'Medium',
+    },
+
+    dueDate: {
+      type: Date,
+    },
+
+    createdBy: {
+      type: String,
+      required: true,
+    },
+
+    email: {
+      type: String,
+      required: true,
+    },
+
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  {
+    timestamps: false,
+  },
+)
+
+export default mongoose.models.TaskBoard ||
+  mongoose.model('TaskBoard', TaskSchema)
