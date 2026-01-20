@@ -41,12 +41,18 @@ const TaskSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
+    status: {
+      type: String,
+    },
+    completedDate: {
+      type: Date,
+    },
 
     createdAt: {
       type: Date,
       default: Date.now,
     },
-     notes: [
+    notes: [
       {
         description: { type: String, required: true },
         addedBy: { type: String, required: true },
