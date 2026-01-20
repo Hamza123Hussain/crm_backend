@@ -15,7 +15,7 @@ export const updateTaskStatus = async (req, res) => {
     if (status) {
       updateData.status = status
       if (status === 'Completed') {
-        updateData.completedAt = new Date() // set completed date
+        updateData.completeddate = new Date() // set completed date
       }
     }
 
