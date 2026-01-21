@@ -12,6 +12,7 @@ import ReminderRouter from './DB/Router/ReminderRouter.js'
 import NotesRouter from './DB/Router/NotesRouter.js'
 import { TransactionRouter } from './DB/Router/TransactionRouter.js'
 import { TaskBoardRouter } from './DB/Router/TaskRouter.js'
+import './TaskSchduler.js'
 const app = express()
 // Body-parser middleware to parse JSON and URL-encoded data
 app.use(express.json()) // To parse JSON bodies
