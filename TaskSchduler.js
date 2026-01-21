@@ -1,6 +1,11 @@
+// ./api/run-tasks.js
+import { Router } from 'express'
 import TaskBoard from './DB/Models/TaskBoard.js'
-import cron from 'node-cron'
-// Daily tasks (due today)
+
+const router = Router()
+// ------------------------
+// Daily tasks (Mon-Fri, due today)
+// ------------------------
 const dailyTasks = [
   {
     name: 'Global Grads Stories',
@@ -12,7 +17,10 @@ const dailyTasks = [
   },
 ]
 
-// Weekly tasks (due 7 days from now)
+// ------------------------
+// Weekly tasks with frequency
+// ------------------------
+// Weekly tasks (every Monday, due 7 days from now)
 const weeklyTasks = [
   {
     name: 'Octtoppus Stories',
@@ -21,6 +29,7 @@ const weeklyTasks = [
     priority: 'Low',
     createdBy: 'Faheem Butt',
     email: 'globalgrads.org@gmail.com',
+    frequency: 3,
   },
   {
     name: 'Weekly Data Arrangement',
@@ -29,6 +38,7 @@ const weeklyTasks = [
     priority: 'High',
     createdBy: 'Faheem Butt',
     email: 'globalgrads.org@gmail.com',
+    frequency: 1,
   },
   {
     name: 'PowerPulse Stories',
@@ -37,85 +47,114 @@ const weeklyTasks = [
     priority: 'Low',
     createdBy: 'Faheem Butt',
     email: 'globalgrads.org@gmail.com',
+    frequency: 3,
   },
   {
     name: 'Blogs Octtoppus',
-    description: 'A Story to be posted on Instagram',
+    description: 'A Blog to be posted on Octtoppus Website',
     assignedTo: 'Hamza Hussain',
     priority: 'High',
     createdBy: 'Faheem Butt',
     email: 'globalgrads.org@gmail.com',
+    frequency: 3,
   },
   {
     name: 'Linkedin GG',
-    description: 'A Story to be posted on Instagram',
+    description: 'Promote Blog on Linkedin',
     assignedTo: 'Hamza Hussain',
     priority: 'Low',
     createdBy: 'Faheem Butt',
     email: 'globalgrads.org@gmail.com',
+    frequency: 3,
   },
   {
     name: 'Website Backup',
-    description: 'A Story to be posted on Instagram',
+    description: 'All Websites Backup on OneDrive and Gdrive',
     assignedTo: 'Hamza Hussain',
     priority: 'Medium',
     createdBy: 'Faheem Butt',
     email: 'globalgrads.org@gmail.com',
+    frequency: 1,
   },
   {
     name: 'Blogs Global Grads',
-    description: 'A Story to be posted on Instagram',
+    description: 'Blog To Be Posted on Global Grads Website',
     assignedTo: 'Hamza Hussain',
     priority: 'High',
     createdBy: 'Faheem Butt',
     email: 'globalgrads.org@gmail.com',
+    frequency: 3,
   },
 ]
+// ------------------------
+// Helper Functions
+// ------------------------
 
 // ------------------------
-// Step 3: Helper function to create a task
+// Helpers
 // ------------------------
-// Helper function to create a task
+const getFridayOfWeek = () => {
+  const now = new Date()
+  const day = now.getDay()
+  const diff = (5 - day + 7) % 7
+  const friday = new Date(now)
+  friday.setDate(now.getDate() + diff)
+  friday.setHours(23, 59, 59, 999)
+  return friday
+}
+
 const createTask = async (task, isWeekly = false) => {
-  try {
-    const dueDate = isWeekly
-      ? new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-      : new Date()
-    await TaskBoard.create({
-      ...task,
-      completed: false,
-      dueDate,
-    })
-    console.log(
-      `Task "${task.name}" created successfully. Due: ${dueDate.toDateString()}`,
-    )
-  } catch (error) {
-    console.error('Error creating task:', error)
-  }
+  const dueDate = isWeekly ? getFridayOfWeek() : new Date()
+
+  // prevent duplicates
+  const exists = await TaskBoard.findOne({
+    name: task.name,
+    dueDate,
+  })
+
+  if (exists) return
+
+  await TaskBoard.create({
+    ...task,
+    completed: false,
+    dueDate,
+  })
+}
+
+const frequencyDays = {
+  1: [1],
+  2: [1, 3],
+  3: [1, 3, 5],
 }
 
 // ------------------------
-// TEST: Run tasks 30 minutes from now (Pakistan Time)
+// ROUTE CALLED BY EXTERNAL CRON
 // ------------------------
+router.post('/run', async (req, res) => {
+  try {
+    const today = new Date()
+    const day = today.getDay() // 0=Sun
 
-// Calculate current Pakistan time
-const now = new Date()
-const pakistanOffset = 5 * 60 // PKT is UTC+5
-const localUTCOffset = now.getTimezoneOffset() // in minutes
-const nowInPKT = new Date(
-  now.getTime() + (pakistanOffset + localUTCOffset) * 60 * 1000,
-)
+    // Daily (Mon–Fri)
+    if (day >= 1 && day <= 5) {
+      for (const task of dailyTasks) {
+        await createTask(task)
+      }
+    }
 
-// Add 30 minutes
-const testTime = new Date(nowInPKT.getTime() + 30 * 60 * 1000)
-const minute = testTime.getMinutes()
-const hour = testTime.getHours()
+    // Weekly (frequency-based)
+    for (const task of weeklyTasks) {
+      const days = frequencyDays[task.frequency] || [1]
+      if (days.includes(day)) {
+        await createTask(task, true)
+      }
+    }
 
-console.log(`Test scheduled for ${hour}:${minute} PKT (30 minutes from now)`)
-
-// Schedule cron job for that time
-cron.schedule(`${minute} ${hour} * * *`, () => {
-  console.log('--- Running test tasks 30 minutes from now ---')
-  dailyTasks.forEach((task) => createTask(task))
-  weeklyTasks.forEach((task) => createTask(task, true))
+    res.json({ success: true, message: 'Tasks executed successfully' })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ success: false })
+  }
 })
+
+export default router
