@@ -10,7 +10,7 @@ export const addTask = async (req, res) => {
       priority,
       dueDate,
       createdBy,
-      email,
+      email,type
     } = req.body
 
     if (!name || !description || !assignedTo || !priority || !dueDate) {
@@ -26,7 +26,7 @@ export const addTask = async (req, res) => {
       priority,
       dueDate,
       createdBy,
-      email,
+      email,type,
       completed: false,
     })
 
