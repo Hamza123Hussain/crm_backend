@@ -64,7 +64,7 @@ export const AddContactDetails = async (req, res) => {
       LocationShared,
       ContactedTime,
       StudentTag: student.studentTag,
-      UpdatedBy: 'gptprompts87@gmail.com',
+      UpdatedBy: 'was6282785@gmail.com',
     })
 
     return res.status(201).json({
