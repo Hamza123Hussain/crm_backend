@@ -3,7 +3,7 @@ import TaskBoard from '../../Models/TaskBoard.js'
 // ✅ Update posting status for Instagram-style tasks
 export const updatePostingStatus = async (req, res) => {
   try {
-    const { taskId } = req.params
+    const { taskId } = req.query
     const { platform, status } = req.body // platform = 'LinkedIn'/'YouTube'/'TikTok', status = true/false
 
     if (!platform || typeof status !== 'boolean') {
@@ -26,11 +26,9 @@ export const updatePostingStatus = async (req, res) => {
 
     // Only allow updating Posting for Instagram types
     if (!instagramTypes.includes(task.type)) {
-      return res
-        .status(400)
-        .json({
-          message: 'Posting can only be updated for Instagram-style tasks',
-        })
+      return res.status(400).json({
+        message: 'Posting can only be updated for Instagram-style tasks',
+      })
     }
 
     // Update the specific platform status
