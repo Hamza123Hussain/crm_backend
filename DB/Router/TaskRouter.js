@@ -6,6 +6,7 @@ import { updateTask } from '../Controller/Task/UpdateTask.js'
 import { CompleteTask } from '../Controller/Task/CompleteTask.js'
 import { AddNote } from '../Controller/Task/AddNote.js'
 import { updateTaskStatus } from '../Controller/Task/UpdateTaskStatus.js'
+import { updatePostingStatus } from '../Controller/Task/UpdatePlatform.js'
 
 export const TaskBoardRouter = Router()
 TaskBoardRouter.post('/AddTaskDetails', addTask)
@@ -15,3 +16,4 @@ TaskBoardRouter.put('/UpdateTask', updateTask)
 TaskBoardRouter.put('/CompleteTask', CompleteTask)
 TaskBoardRouter.put('/AddNotes', AddNote)
 TaskBoardRouter.put('/UpdateTaskStatus', updateTaskStatus)
+TaskBoardRouter.put('/UpdatePosting', updatePostingStatus)
