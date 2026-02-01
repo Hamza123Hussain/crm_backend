@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import { ContactReminderModel } from '../../../Models/Reminders.js'
 import { Student } from '../../../Models/Student.js'
-
+import { User } from '../../../Models/User.js'
 export const AddContactDetails = async (req, res) => {
   try {
     const { studentId } = req.query
@@ -51,8 +51,12 @@ export const AddContactDetails = async (req, res) => {
     student.markModified('ContactDetails')
 
     await student.save()
+    const existingUser = await User.findOne({ Name: username })
 
-    // Create new contact reminder document
+    if (!existingUser) {
+      return res.status(404).json({ message: 'User not found' })
+    }
+
     await ContactReminderModel.create({
       _id: contactId,
       UserID: studentId,
@@ -64,7 +68,7 @@ export const AddContactDetails = async (req, res) => {
       LocationShared,
       ContactedTime,
       StudentTag: student.studentTag,
-      UpdatedBy: 'was6282785@gmail.com',
+      UpdatedBy: existingUser.Email, // ✅ guaranteed user email
     })
 
     return res.status(201).json({
