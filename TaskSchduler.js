@@ -15,6 +15,14 @@ const dailyTasks = [
     createdBy: 'Faheem Butt',
     email: 'globalgrads.org@gmail.com',
   },
+  {
+    name: 'Global Grads Stories',
+    description: 'A Story to be posted on Instagram',
+    assignedTo: 'Waqas Ali',
+    priority: 'Low',
+    createdBy: 'Faheem Butt',
+    email: 'globalgrads.org@gmail.com',
+  },
 ]
 
 // ------------------------
