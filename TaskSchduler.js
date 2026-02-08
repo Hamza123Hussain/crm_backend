@@ -11,6 +11,7 @@ const dailyTasks = [
     name: 'Global Grads Stories',
     description: 'A Story to be posted on Instagram',
     assignedTo: 'Saad Ali',
+    type: 'Global Grads Stories',
     priority: 'Low',
     createdBy: 'Faheem Butt',
     email: 'globalgrads.org@gmail.com',
@@ -19,6 +20,7 @@ const dailyTasks = [
     name: 'Global Grads Stories',
     description: 'A Story to be posted on Instagram',
     assignedTo: 'Waqas Ali',
+    type: 'GG Stories',
     priority: 'Low',
     createdBy: 'Faheem Butt',
     email: 'globalgrads.org@gmail.com',
@@ -27,6 +29,7 @@ const dailyTasks = [
     name: 'Global Grads Stories',
     description: 'A Story to be posted on Instagram',
     assignedTo: 'Inza Riaz',
+    type: 'GG Stories',
     priority: 'Low',
     createdBy: 'Faheem Butt',
     email: 'globalgrads.org@gmail.com',
@@ -42,6 +45,7 @@ const weeklyTasks = [
     name: 'Octtoppus Stories',
     description: 'A Story to be posted on Instagram',
     assignedTo: 'Saad Ali',
+    type: 'Octtoppus Stories',
     priority: 'Low',
     createdBy: 'Faheem Butt',
     email: 'globalgrads.org@gmail.com',
@@ -50,6 +54,8 @@ const weeklyTasks = [
   {
     name: 'Weekly Data Arrangement',
     description: '',
+    type: 'Weekly Data Arrangement',
+
     assignedTo: 'Saad Ali',
     priority: 'High',
     createdBy: 'Faheem Butt',
@@ -59,6 +65,7 @@ const weeklyTasks = [
   {
     name: 'PowerPulse Stories',
     description: 'A Story to be posted on Instagram',
+    type: 'PowerPulse Stories',
     assignedTo: 'Saad Ali',
     priority: 'Low',
     createdBy: 'Faheem Butt',
@@ -71,6 +78,8 @@ const weeklyTasks = [
     assignedTo: 'Hamza Hussain',
     priority: 'High',
     createdBy: 'Faheem Butt',
+
+    type: 'Blogs Octtoppus',
     email: 'globalgrads.org@gmail.com',
     frequency: 3,
   },
@@ -78,6 +87,7 @@ const weeklyTasks = [
     name: 'Linkedin GG',
     description: 'Promote Blog on Linkedin',
     assignedTo: 'Hamza Hussain',
+    type: 'Linkedin GG',
     priority: 'Low',
     createdBy: 'Faheem Butt',
     email: 'globalgrads.org@gmail.com',
@@ -87,6 +97,8 @@ const weeklyTasks = [
     name: 'Website Backup',
     description: 'All Websites Backup on OneDrive and Gdrive',
     assignedTo: 'Hamza Hussain',
+
+    type: 'Website Backup',
     priority: 'Medium',
     createdBy: 'Faheem Butt',
     email: 'globalgrads.org@gmail.com',
@@ -96,6 +108,8 @@ const weeklyTasks = [
     name: 'Blogs Global Grads',
     description: 'Blog To Be Posted on Global Grads Website',
     assignedTo: 'Hamza Hussain',
+
+    type: 'Blogs Global Grads',
     priority: 'High',
     createdBy: 'Faheem Butt',
     email: 'globalgrads.org@gmail.com',
