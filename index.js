@@ -14,7 +14,10 @@ import { TransactionRouter } from './DB/Router/TransactionRouter.js'
 import { TaskBoardRouter } from './DB/Router/TaskRouter.js'
 import router from './TaskSchduler.js'
 
+import compression from 'compression'
 const app = express()
+// ...
+app.use(compression()) // Compresses every response
 // Body-parser middleware to parse JSON and URL-encoded data
 app.use(express.json()) // To parse JSON bodies
 app.use(express.urlencoded({ extended: true })) // To parse form data if needed
