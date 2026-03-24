@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import { ContactReminderModel } from '../../../Models/Reminders.js'
 import { Student } from '../../../Models/Student.js'
 import { User } from '../../../Models/User.js'
+
 export const AddContactDetails = async (req, res) => {
   try {
     const { studentId } = req.query
@@ -27,6 +28,24 @@ export const AddContactDetails = async (req, res) => {
       student.ContactDetails = []
     }
 
+    // --- DATE COMPARISON LOGIC ---
+    if (student.ContactReminder && ContactedDate) {
+      // Normalize both to YYYY-MM-DD strings for a "same day" check
+      const reminderDateString = new Date(student.ContactReminder)
+        .toISOString()
+        .split('T')[0]
+      const contactedDateString = new Date(ContactedDate)
+        .toISOString()
+        .split('T')[0]
+
+      if (reminderDateString === contactedDateString) {
+        student.ContactReminder = null
+        // Explicitly tell Mongoose this field changed to ensure it saves
+        student.markModified('ContactReminder')
+      }
+    }
+    // -----------------------------
+
     // Generate shared ObjectId for both records
     const contactId = new mongoose.Types.ObjectId()
 
@@ -45,16 +64,14 @@ export const AddContactDetails = async (req, res) => {
       ContactText: ContactText || '',
       AddedBy: username,
     }
-    if (student.ContactReminder === ContactedDate) {
-      student.ContactReminder = null
-    }
+
     // Push new contact into student record
     student.ContactDetails.push(newContact)
     student.markModified('ContactDetails')
 
     await student.save()
-    const existingUser = await User.findOne({ Name: username })
 
+    const existingUser = await User.findOne({ Name: username })
     if (!existingUser) {
       return res.status(404).json({ message: 'User not found' })
     }
@@ -70,7 +87,7 @@ export const AddContactDetails = async (req, res) => {
       LocationShared,
       ContactedTime,
       StudentTag: student.studentTag,
-      UpdatedBy: existingUser.Email, // ✅ guaranteed user email
+      UpdatedBy: existingUser.Email,
     })
 
     return res.status(201).json({
