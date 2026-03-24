@@ -45,7 +45,9 @@ export const AddContactDetails = async (req, res) => {
       ContactText: ContactText || '',
       AddedBy: username,
     }
-
+    if (student.ContactReminder === ContactedDate) {
+      student.ContactReminder = null
+    }
     // Push new contact into student record
     student.ContactDetails.push(newContact)
     student.markModified('ContactDetails')
