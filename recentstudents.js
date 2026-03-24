@@ -13,8 +13,8 @@ const createNotificationsForRecentStudents = async () => {
     await mongoose.connect(MONGO_URI)
 
     // 📅 Define July date range
-    const startDate = new Date('2025-12-29T03:00:00Z')
-    const endDate = new Date('2026-01-01T23:59:59Z')
+    const startDate = new Date('2026-03-03T00:00:00Z')
+    const endDate = new Date('2026-03-04T00:00:59Z')
 
     console.log('🔍 Fetching students ...')
     const students = await Student.find({
@@ -27,7 +27,7 @@ const createNotificationsForRecentStudents = async () => {
     }
 
     console.log(
-      `✅ Found ${students.length} students. Creating notifications...`
+      `✅ Found ${students.length} students. Creating notifications...`,
     )
 
     // 🔁 Create notifications in parallel
@@ -41,8 +41,8 @@ const createNotificationsForRecentStudents = async () => {
           FormFilledOn: student.formFilledOn || student.createdAt,
           createdAt: student.createdAt, // 👈 match notification timestamp to student
           UpdatedBy: 'nijhum.jan24@gmail.com',
-        })
-      )
+        }),
+      ),
     )
 
     console.log(`🎉 Success! Created ${notifications.length} notifications.`)
