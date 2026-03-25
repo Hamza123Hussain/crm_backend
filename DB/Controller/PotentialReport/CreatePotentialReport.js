@@ -14,21 +14,26 @@ export const CreatePotentialReport = async (req, res) => {
         .json({ message: 'Original student record not found' })
     }
 
-    // 2. Duplicate Prevention: Check if a report with this phone already exists
-    const existingReport = await PotentialReport.findOne({ phone: phone })
+    // 2. Duplicate Check & Toggle Off: Check if report exists by email
+    const existingReport = await PotentialReport.findOne({ email: email })
+
     if (existingReport) {
-      return res.status(400).json({
-        message: 'A report for this phone number already exists.',
+      // If it exists, we DELETE it and set status to false
+      await PotentialReport.findByIdAndDelete(existingReport._id)
+
+      student.markaspotential = false
+      await student.save()
+
+      return res.status(200).json({
+        message: 'Report removed and student status updated to false',
+        markaspotential: false,
       })
     }
 
-    // 3. Update the student's status
-    // We set it to 'true' explicitly rather than toggling it (!)
-    // to keep the data consistent with the report creation.
-    student.markaspotential = !student.markaspotential
+    // 3. Create Mode: If no report exists, create one and set status to true
+    student.markaspotential = true
     await student.save()
 
-    // 4. Create the new report
     const newReport = new PotentialReport({
       name,
       email,
@@ -43,6 +48,7 @@ export const CreatePotentialReport = async (req, res) => {
     return res.status(201).json({
       message: 'Student promoted to Potential Report successfully',
       student: newReport,
+      markaspotential: true,
     })
   } catch (error) {
     console.error('CreatePotentialReport Error:', error)
