@@ -1,3 +1,6 @@
+import { PotentialReport } from '../../Models/PotentialReportModel.js'
+import { Student } from '../../Models/Student.js'
+
 export const CreatePotentialReport = async (req, res) => {
   try {
     const { name, email, phone, country, LastNote, ContactedDate, id } =
