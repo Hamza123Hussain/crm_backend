@@ -223,10 +223,14 @@ export const StudentSchema = new mongoose.Schema(
       type: Boolean,
       default: null,
     },
+    markaspotential: {
+      type: Boolean,
+      default: null,
+    },
   },
   {
     timestamps: true, // ✅ Automatically handles createdAt and updatedAt
-  }
+  },
 )
 
 export const Student = mongoose.model('Student', StudentSchema)
