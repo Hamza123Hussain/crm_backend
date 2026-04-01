@@ -13,8 +13,8 @@ const createNotificationsForRecentStudents = async () => {
     await mongoose.connect(MONGO_URI)
 
     // 📅 Define July date range
-    const startDate = new Date('2026-03-03T00:00:00Z')
-    const endDate = new Date('2026-03-04T00:00:59Z')
+    const startDate = new Date('2026-03-29T00:00:00Z')
+    const endDate = new Date('2026-03-30T00:00:59Z')
 
     console.log('🔍 Fetching students ...')
     const students = await Student.find({
@@ -40,7 +40,7 @@ const createNotificationsForRecentStudents = async () => {
           NotificationType: 'New',
           FormFilledOn: student.formFilledOn || student.createdAt,
           createdAt: student.createdAt, // 👈 match notification timestamp to student
-          UpdatedBy: 'nijhum.jan24@gmail.com',
+          UpdatedBy: 'gptprompts87@gmail.com',
         }),
       ),
     )
