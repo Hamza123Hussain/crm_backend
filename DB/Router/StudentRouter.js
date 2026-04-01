@@ -153,4 +153,5 @@ StudentRouter.put('/UpdateEduandCourses', UpdateEDULevelandcourses)
 StudentRouter.get('/GetCommissionStudents', GetCommissionStudents)
 StudentRouter.post('/CreatePotentialReport', CreatePotentialReport)
 StudentRouter.get('/GetPotentialStudents', GetPotentialStudents)
+
 export default StudentRouter
