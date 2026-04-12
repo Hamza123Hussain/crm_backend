@@ -227,6 +227,10 @@ export const StudentSchema = new mongoose.Schema(
       type: Boolean,
       default: null,
     },
+    markerror: {
+      type: Boolean,
+      default: null,
+    },
   },
   {
     timestamps: true, // ✅ Automatically handles createdAt and updatedAt
