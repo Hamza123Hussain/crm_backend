@@ -2,10 +2,11 @@ import { Student } from '../../../Models/Student.js'
 import { sendErrorAlertEmail } from './ErrorMail.js'
 
 export const ToggleMarkError = async (req, res) => {
-  const { studentid } = req.body // Usually better in body for POST/PATCH
+  const { studentid } = req.body
 
   try {
-    const student = await Student.findById(studentid)
+    // FIX: Pass the value directly. Use Number() since your schema _id is a Number.
+    const student = await Student.findById(Number(studentid))
 
     if (!student) {
       return res.status(404).json({ message: 'Student not found' })
@@ -15,11 +16,10 @@ export const ToggleMarkError = async (req, res) => {
     student.markerror = !student.markerror
     await student.save()
 
-    // 2. If it's now true, trigger the alert
+    // 2. Alert logic
     if (student.markerror) {
-      // We don't 'await' this if we don't want to make the user wait for the email to send
       sendErrorAlertEmail(student).catch((err) =>
-        console.error('Email failed:', err),
+        console.error('Email alert failed:', err)
       )
     }
 
