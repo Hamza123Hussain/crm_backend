@@ -5,30 +5,30 @@ export const ToggleMarkError = async (req, res) => {
   const { studentid } = req.body
 
   try {
-    // FIX: Pass the value directly. Use Number() since your schema _id is a Number.
     const student = await Student.findById(Number(studentid))
 
     if (!student) {
       return res.status(404).json({ message: 'Student not found' })
     }
 
-    // 1. Toggle the boolean
+    // Toggle the boolean
     student.markerror = !student.markerror
     await student.save()
 
-    // 2. Alert logic
+    // Send email only if flagged as TRUE
     if (student.markerror) {
+      // We don't 'await' this so the user doesn't wait for the email to send
       sendErrorAlertEmail(student).catch((err) =>
-        console.error('Email alert failed:', err)
+        console.error('Email background task failed:', err.message)
       )
     }
 
     return res.status(200).json({
-      message: `Student error status updated to ${student.markerror}`,
+      message: `Status updated`,
       markerror: student.markerror,
     })
   } catch (error) {
-    console.error('Error toggling markerror:', error)
+    console.error('Controller Error:', error)
     return res.status(500).json({ message: 'Server error' })
   }
 }
