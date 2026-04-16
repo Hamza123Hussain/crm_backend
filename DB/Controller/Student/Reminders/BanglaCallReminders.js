@@ -6,7 +6,7 @@ const allowedUpdaters = [
   'nijhum.jan24@gmail.com',
   'fahadpccl@gmail.com',
   'meem741@gmail.com',
-  '',
+  'janntulferdousbristy576@gmail.com'
 ]
 
 // Utility to convert month name to index (0 = Jan, 11 = Dec)
