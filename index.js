@@ -40,7 +40,7 @@ app.use('/Api/Transaction', TransactionRouter)
 app.use('/Api/TaskBoard', TaskBoardRouter)
 app.use('/Api/Cron', router)
 DB_CONNECTED()
-app.use('/api/recentstudents',handler)
+app.get('/api/recentstudents',handler)
 app.listen(PORT, () => {
   console.log('port is on')
 })
