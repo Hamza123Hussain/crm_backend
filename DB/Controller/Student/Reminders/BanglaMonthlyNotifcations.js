@@ -20,7 +20,7 @@ const allowedUpdaters = [
   'nijhum.jan24@gmail.com',
   'fahadpccl@gmail.com',
   'meem741@gmail.com',
-  '',
+  'janntulferdousbristy576@gmail.com'
 ]
 
 export const GetBanglaMonthlyNotifcations = async (req, res) => {
