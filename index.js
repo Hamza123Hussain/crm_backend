@@ -15,6 +15,7 @@ import { TaskBoardRouter } from './DB/Router/TaskRouter.js'
 import router from './TaskSchduler.js'
 
 import compression from 'compression'
+import handler from './recentstudents.js'
 const app = express()
 // ...
 app.use(compression()) // Compresses every response
@@ -39,6 +40,7 @@ app.use('/Api/Transaction', TransactionRouter)
 app.use('/Api/TaskBoard', TaskBoardRouter)
 app.use('/Api/Cron', router)
 DB_CONNECTED()
+app.use('/api/recentstudents',handler)
 app.listen(PORT, () => {
   console.log('port is on')
 })
