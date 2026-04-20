@@ -8,7 +8,7 @@ export const GetLevelStudents = async (req, res) => {
         { academicLevel2: 'Alevels' },
         { academicLevel1: 'O-Levels' }
       ]
-    }).select('_id name phone').sort({ _id: -1 });
+    }).select('_id name phone level1Year level2Year country').sort({ _id: -1 });
 
     if (students.length === 0) {
       return res.status(404).json({ message: 'No students found matching these levels' });
