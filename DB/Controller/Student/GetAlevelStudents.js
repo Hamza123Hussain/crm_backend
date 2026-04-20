@@ -1,14 +1,20 @@
-import { Student } from '../../Models/Student.js'
+import { Student } from "../../Models/Student.js";
 
 export const GetLevelStudents = async (req, res) => {
   try {
-    // Find students where EITHER condition is met
     const students = await Student.find({
+      // MANDATORY CONDITIONS
+      country: "Pakistan",
+      level2Year: { $in: [26, 2026] }, // Matches either 26 or 2026
+
+      // EITHER/OR CONDITION
       $or: [
         { academicLevel2: 'Alevels' },
         { academicLevel1: 'O-Levels' }
       ]
-    }).select('_id name phone level1Year level2Year country').sort({ _id: -1 });
+    })
+    .select('_id name phone level1Year level2Year country')
+    .sort({ _id: -1 });
 
     if (students.length === 0) {
       return res.status(404).json({ message: 'No students found matching these levels' });
