@@ -7,7 +7,7 @@ export const GetPotentialStudents = async (req, res) => {
   try {
     // .select() tells MongoDB to only return these specific fields
     const PotentialStudents = await Student.find({ markaspotential: true })
-      .select('_id name email phone country ContactDetails')
+      .select('_id name email phone country ContactDetails YearIntake')
       .sort({ _id: -1 })
       .lean()
 
