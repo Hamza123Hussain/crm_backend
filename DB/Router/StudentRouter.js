@@ -158,5 +158,5 @@ StudentRouter.post('/CreatePotentialReport', CreatePotentialReport)
 StudentRouter.get('/GetPotentialStudents', GetPotentialStudents)
 StudentRouter.post('/ToogleError', ToggleMarkError)
 StudentRouter.get('/GetAlevelStudents', GetLevelStudents)
-StudentRouter.get('/GetSignedUpStudents',GetSignedUpStudentsonly)
+StudentRouter.get('/GetSignedUpStudentsonly',GetSignedUpStudentsonly)
 export default StudentRouter
