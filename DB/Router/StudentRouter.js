@@ -73,6 +73,7 @@ import { GetPotentialStudents } from '../Controller/PotentialReport/GetPotential
 import { ToggleMarkError } from '../Controller/Student/Error/ToggleError.js'
 import { GetLevelStudents } from '../Controller/Student/GetAlevelStudents.js'
 import { GetSignedUpStudentsonly } from '../Controller/PotentialReport/GetSignedUpStudents.js'
+import { GetErrorStudents } from '../Controller/Student/Error/GetErrorStudents.js'
 const StudentRouter = Router()
 // POST endpoint for user registration (without image upload)
 StudentRouter.post('/NewStudent', createStudent)
@@ -159,4 +160,5 @@ StudentRouter.get('/GetPotentialStudents', GetPotentialStudents)
 StudentRouter.post('/ToogleError', ToggleMarkError)
 StudentRouter.get('/GetAlevelStudents', GetLevelStudents)
 StudentRouter.get('/GetSignedUpStudentsonly',GetSignedUpStudentsonly)
+StudentRouter.get('/GetErrorStudents',GetErrorStudents)
 export default StudentRouter
