@@ -1,5 +1,6 @@
-import { Student } from '../../Models/Student.js'
+
 import { performance } from 'perf_hooks'
+import { Student } from '../../../Models/Student.js'
 
 export const GetErrorStudents = async (req, res) => {
   const startTime = performance.now()
