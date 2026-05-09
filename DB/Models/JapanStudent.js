@@ -19,10 +19,6 @@ const JapanStudentSchema = new mongoose.Schema({
     fatherOccupation: { type: String },
     fatherEmployer: { type: String },
     fatherContact: { type: String, required: true },
-    monthlyIncomeRange: { 
-      type: String, 
-      required: true 
-    }
   },
   // School / Academic Information
   academicInfo: {
