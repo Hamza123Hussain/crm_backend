@@ -2,33 +2,33 @@ import mongoose from "mongoose";
 const JapanStudentSchema = new mongoose.Schema({
   // Personal Information
   personalInfo: {
-    fullName: { type: String, required: true, trim: true },
-    dateOfBirth: { type: Date, required: true },
-    gender: { type: String, enum: ['Male', 'Female', 'Other'], required: true },
-    nationality: { type: String, required: true },
+    fullName: { type: String,  trim: true },
+    dateOfBirth: { type: Date, },
+    gender: { type: String, enum: ['Male', 'Female', 'Other'], },
+    nationality: { type: String, },
     placeOfBirth: {
-      city: { type: String, required: true },
-      country: { type: String, required: true }
+      city: { type: String, },
+      country: { type: String, }
     },
-    nationalID: { type: String, required: true, unique: true } // CNIC or B-Form
+    nationalID: { type: String,  unique: true } // CNIC or B-Form
   },
   // Guardian / Parent Information
   guardianInfo: {
-    fatherName: { type: String, required: true },
-    fatherCNIC: { type: String, required: true },
+    fatherName: { type: String, },
+    fatherCNIC: { type: String, },
     fatherOccupation: { type: String },
     fatherEmployer: { type: String },
-    fatherContact: { type: String, required: true },
+    fatherContact: { type: String, },
 fatherEmail:{type:String,required:true},   
- motherName: { type: String, required: true },
-    motherCNIC: { type: String, required: true },
+ motherName: { type: String, },
+    motherCNIC: { type: String, },
   },
   // School / Academic Information
   academicInfo: {
-    grade: { type: String, required: true },
-    rollNumber: { type: String, required: true },
+    grade: { type: String, },
+    rollNumber: { type: String, },
     schoolName: { type: String, default: 'Trinity Lahore' },
-    schoolAddress: { type: String, required: true }
+    schoolAddress: { type: String, }
   },
   // Health & Special Requirements
   healthInfo: {
@@ -49,9 +49,9 @@ fatherEmail:{type:String,required:true},
   },
   // Consent & Metadata
   consent: {
-    parentSignatureConsent: { type: Boolean, required: true },
-    mediaConsent: { type: Boolean, required: true },
-    accuracyDeclaration: { type: Boolean, required: true }
+    parentSignatureConsent: { type: Boolean, },
+    mediaConsent: { type: Boolean, },
+    accuracyDeclaration: { type: Boolean, }
   },
   submissionDate: { type: Date, default: Date.now }
 }, {
