@@ -19,11 +19,8 @@ const JapanStudentSchema = new mongoose.Schema({
     fatherOccupation: { type: String },
     fatherEmployer: { type: String },
     fatherContact: { type: String, required: true },
-    motherName: { type: String, required: true },
-    motherCNIC: { type: String, required: true },
     monthlyIncomeRange: { 
       type: String, 
-      enum: ['Under 50k', '50k-100k', '100k-200k', '200k+'], // Example ranges
       required: true 
     }
   },
