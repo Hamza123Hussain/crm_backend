@@ -19,6 +19,9 @@ const JapanStudentSchema = new mongoose.Schema({
     fatherOccupation: { type: String },
     fatherEmployer: { type: String },
     fatherContact: { type: String, required: true },
+fatherEmail:{type:String,required:true},   
+ motherName: { type: String, required: true },
+    motherCNIC: { type: String, required: true },
   },
   // School / Academic Information
   academicInfo: {
